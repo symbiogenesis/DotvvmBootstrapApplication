@@ -1,0 +1,96 @@
+﻿@viewModel RingDownConsole.ViewModels.MasterViewModel, RingDownConsole
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{value: SiteTitle}} > {{value: PageTitle}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css" integrity="sha256-T8M8tt1CqWbH1U2VJnjN1hHz1Zg/yObaabC3hSawWAg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/fa.css" />
+    <dot:RequiredResource Name="jquery" />
+</head>
+<body Validator.InvalidCssClass="is-invalid">
+
+    <!--Navbar-->
+    <nav ID="top" class="navbar navbar-expand-lg navbar-dark bg-dark" Validation.Enabled="false">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="/">
+            <img src="/img/cda_logo.svg" class="navbar-brand-img" alt="Chicago Department of Aviation" />
+        </a>
+
+        <!-- Collapse button -->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" ID="navbarSupportedContent">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <dot:RoleView Roles="Administrator">
+                    <IsMemberTemplate>
+                        <li class="nav-item">
+                            <dot:RouteLink class="nav-link fa fa-home" RouteName="AdminDashboard" Text="Home" />
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fa fa-cog" ID="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <dot:RouteLink class="dropdown-item" RouteName="AdminSettings" Text="Settings" />
+                                <dot:RouteLink class="dropdown-item" RouteName="AdminUsers" Text="Users" />
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <dot:RouteLink class="nav-link fa fa-chart-bar" RouteName="Reporting" Text="Reporting" />
+                        </li>
+                    </IsMemberTemplate>
+                    <IsNotMemberTemplate>
+                        <li class="nav-item">
+                            <a class="nav-link fa fa-home" href="/">Home</a>
+                        </li>
+                    </IsNotMemberTemplate>
+                </dot:RoleView>
+            </ul>
+            <!-- Links -->
+
+            <div class="d-flex flex-column align-context-end">
+                <dot:AuthenticatedView RenderWrapperTag="false">
+                    <AuthenticatedTemplate>
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="navbar-text white-text text-right fa fa-user pt-0"> {{value: UserName}}&nbsp;&nbsp;</span>
+                        </div>
+                        <dot:LinkButton class="navbar-text white-text text-right fa fa-logout pt-0" Click="{command: SignOut()}">Logout</dot:LinkButton>
+                    </AuthenticatedTemplate>
+                    <NotAuthenticatedTemplate>
+                        <dot:LinkButton class="navbar-text white-text text-right fa fa-login" Click="{command: SignIn()}" Visible="{value: ShowLogout}">Login</dot:LinkButton>
+                    </NotAuthenticatedTemplate>
+                </dot:AuthenticatedView>
+            </div>
+
+        </div>
+        <!-- Collapsible content -->
+    </nav>
+    <!--/.Navbar-->
+
+    <nav class="navbar navbar-dark bg-dark indigo text-white" Visible="{value: ShowPageTitle}">{{value: PageTitle}}</nav>
+
+    <div class="alert alert-danger p-5" role="alert" Visible="{{value: ErrorShow}}">
+        <strong>{{value: ErrorTitle}}</strong> {{value: ErrorMessage}}
+    </div>
+
+    <dot:ContentPlaceHolder ID="MainContent" />
+
+    <script src="https://unpkg.com/popper.js@1.12.5/dist/umd/popper.js" integrity="sha384-KlVcf2tswD0JOTQnzU4uwqXcbAy57PvV48YUiLjqpk/MJ2wExQhg9tuozn5A1iVw" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js" integrity="sha256-h2/8EdKXjCTuZkRAK+smzKj5VGgB6qOfIHfgkySLaR0=" crossorigin="anonymous" defer></script>
+
+</body>
+</html>
+
+

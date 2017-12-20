@@ -1,0 +1,23 @@
+﻿@viewModel RingDownConsole.ViewModels.LoginViewModel, RingDownConsole
+@masterPage  Views/master.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent" Validation.Enabled="false">
+    <div class="container-fluid">
+        <div class="d-flex flex-column align-items-center">
+            <form class="text-center mt-4">
+                <div class="md-form">
+                    <i class="fa-user prefix" style="font-size: 24px;" />
+                    <dot:TextBox ID="userField" ClientIDMode="Static" Text="{value: UserNameInput}" autofocus />
+                    <label for="userField">Username</label>
+                </div>
+                <div class="md-form">
+                    <i class="fa-key prefix" style="font-size: 24px;" />
+                    <dot:TextBox ID="passField" ClientIDMode="Static" Text="{value: PasswordInput}" Type="Password" />
+                    <label for="passField">Password</label>
+                </div>
+
+                <dot:Button class="btn btn-primary mx-auto" Text="Login" Click="{command: LogIn()}" IsSubmitButton="true" />
+            </form>
+        </div>
+    </div>
+</dot:Content>

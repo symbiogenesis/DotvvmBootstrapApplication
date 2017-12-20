@@ -1,0 +1,24 @@
+﻿@viewModel RingDownConsole.ViewModels.SettingsViewModel, RingDownConsole
+@masterPage  Views/master.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <div class="container-fluid form-page">
+        <div class="p-2 mb-3 grey lighten-2 z-depth-1">
+            <fieldset class="d-flex flex-column bg-light panel search-panel px-4">
+                <legend>
+                    <div class="d-flex flex-row align-items-center px-1">
+                        <i class="fa-cog m-0 pr-1" />
+                        <p class="m-0">Settings</p>
+                    </div>
+                </legend>
+
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="d-flex flex-row">
+                        <strong class="vehicleinfo-row">Maximum days shown on User Dashboard:</strong>
+                        <dot:TextBox class="vehicleinfo-row" Text="{value: Settings.DaysOnUserDashboard}" Type="number" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</dot:Content>

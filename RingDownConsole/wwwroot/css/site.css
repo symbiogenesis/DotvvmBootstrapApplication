@@ -1,0 +1,416 @@
+﻿/* Put your CSS code in the left column, instead of example, to put or remove unnecessary prefixes. */
+
+.btn-badge-id-search {
+    width: 100%;
+}
+
+.jumbotron-gradient {
+    background-image: -o-linear-gradient(315deg, #667eea 0%, #764ba2 100%);
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    padding: 0px !important;
+}
+
+.navbar-brand-img {
+    height: 60px;
+    width: 175px;
+}
+
+.navbar-header-text {
+    color: white;
+    width: 200px;
+    padding-top: 10px;
+}
+
+.table-header-text {
+    width: auto;
+    display: block;
+}
+
+.table {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+abbr[data-original-title], abbr[title] {
+    text-decoration: none;
+}
+
+/*Dashboard Grid*/
+.btn.btn-sm {
+    font-size: .6rem;
+    padding: .4rem 1.6rem;
+}
+/*Dashboard Grid*/
+
+.thead-inverse thead > tr > th > a,
+.thead-inverse thead > tr > th > input,
+.thead-inverse thead > tr > th span {
+    color: white;
+    box-sizing: content-box;
+    display: block;
+}
+
+table.table > thead > tr > th,
+table.table > tbody > tr > td,
+table.table > tbody > tr > td > span {
+    vertical-align: middle;
+}
+
+@media (max-width:1200px) {
+    .responsive thead > tr > th:nth-child(7),
+    .responsive tbody > tr > td:nth-child(7) {
+        display: none;
+    }
+}
+
+@media (max-width:991px) {
+    .responsive thead > tr > th:nth-child(6),
+    .responsive tbody > tr > td:nth-child(6) {
+        display: none;
+    }
+
+    table.table > thead > tr > th,
+    table.table > tbody > tr > td {
+        padding: 14px 12px;
+    }
+}
+
+@media (max-width:791px) {
+    .responsive thead > tr > th:nth-child(5),
+    .responsive tbody > tr > td:nth-child(5) {
+        display: none;
+    }
+
+    .btn.btn-lg {
+        padding: 12px 10px;
+    }
+
+    .text-white > h2 {
+        font-size: 1.4rem;
+    }
+
+    ul.bottom-validation {
+        display: block;
+    }
+
+    ul.guest-validation {
+        display: none;
+    }
+
+    div.vehicle-panel {
+        margin: 0;
+    }
+}
+
+@media (max-width:500px) {
+    button.popover-button {
+        position: unset;
+        margin-left: 6px;
+        margin: 0 0 1rem 6px;
+    }
+}
+
+@media (max-width:484px) {
+    .responsive thead > tr > th:nth-child(4),
+    .responsive tbody > tr > td:nth-child(4) {
+        display: none;
+    }
+
+    .jumbotron {
+        padding-bottom: 5px !important;
+    }
+
+    .jumbotron p {
+        margin-bottom: 0;
+    }
+}
+
+.table-sortable > thead > tr > th {
+    cursor: pointer;
+    position: relative;
+}
+    
+    .table-sortable > thead > tr > th > a:after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 5px;
+        height: 0;
+        width: 0;
+        /** As pointed out by Dave Everitt in 
+   * https://css-tricks.com/snippets/css/css-triangle/
+   * The arrow is not an equilateral triangle.
+   * the height is 86.6% of the width.
+   * Notice the above code does not subract the border 
+   * width exactly. It is subtracting
+   * (rounded) border width * 86.6%
+   **/
+    }
+
+    /* Ascending sortable indicator */
+    .table-sortable > thead > tr > th.asc > a:after {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 0px solid transparent;
+        border-bottom: 6px solid #888;
+    }
+
+    .table-sortable > thead > tr > th.asc > a:hover:after {
+        border-bottom: 6px solid #FFF;
+    }
+    /* !Ascending */
+
+    /* Descending sortable indicator */
+    .table-sortable > thead > tr > th.desc > a:after {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 0px solid transparent;
+        border-bottom: 6px solid #888;
+        transform: scaleY(-1);
+    }
+
+    .table-sortable > thead > tr > th.desc > a:hover:after {
+        border-bottom: 6px solid #FFF;
+    }
+/* !Descending */
+
+
+/* - Internet Explorer 10–11
+   - Internet Explorer Mobile 10-11 */
+:-ms-input-placeholder {
+    color: #777 !important;
+    font-weight: 400 !important;
+}
+
+/* body select.select_box */
+body select {
+    display: block;
+    padding: 7px 33px 7px 7px;
+    border: 1px solid #bdbdbd;
+    width: 100%;
+    background: url("/img/selectbox_arrow.png") right center no-repeat;
+    background-color: #fff;
+    color: #444444;
+    appearance: none; /* this is must */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+    /* body select.select_box option */
+    body select option {
+        padding: 0 4px;
+    }
+
+/* for IE and Edge */
+select::-ms-expand {
+    display: none;
+}
+
+select:disabled::-ms-expand {
+    background: #f60;
+}
+
+select.combobox-disabled {
+    background-color: #f2f2f2;
+    background-image: none;
+    border: 0;
+    padding: 7px;
+}
+
+/* body select.select_box option */
+body select.combobox-disabled option {
+    padding: 0;
+}
+
+.btn {
+    z-index: 1;
+}
+
+.form-page {
+    max-width: calc(60% + 10em);
+    margin-top: 16px;
+    padding: 0;
+}
+
+.panel {
+    border: 1px solid #888;
+}
+
+.vehicle-panel {
+    margin: 0 .5em 0 .5em;
+}
+
+    .vehicle-panel:last-child {
+        margin-left: 0;
+    }
+
+    .vehicle-panel:first-child {
+        margin-right: 0;
+    }
+
+.btn.btn-md.delete-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    top: 18px;
+    right: 12px;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    margin: 0 0 0 auto;
+    background-color: white;
+}
+
+.btn.btn-md.delete-button:before {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-md.delete-button:hover {
+    background-color: white;
+}
+
+.vehicle-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 .25rem;
+}
+
+fieldset > legend {
+    font-size: 20px;
+    line-height: 0;
+    width: auto;
+}
+
+fieldset > legend > .vehicle-title {
+    font-size: 18px;
+}
+
+fieldset > legend > .guest-title {
+    font-size: 16px;
+}
+
+.search-panel > input,
+.search-panel > select,
+.search-panel > button {
+    margin: 10px 0;
+}
+
+input[type="text"].is-invalid {
+    background-image: radial-gradient(red 20%, transparent 25%);
+    background-size: 1em 1em;
+    background-position: top right;
+    background-repeat: no-repeat;
+    border-color: #dc3545;
+    border-width: 2px;
+}
+
+select.is-invalid {
+    border: #dc3545 solid 2px;
+}
+
+li.dropdown div.dropdown-menu a.dropdown-item:hover {
+    background-color: #444;
+}
+
+a.fa-chart-bar:before {
+    margin-right: 5px;
+}
+
+select:disabled.vehicleinfo-row,
+select:disabled.summary-row {
+    border: 0;
+    padding: 0;
+    background: none;
+    font-weight: 300;
+}
+
+.bottom-validation {
+    display: none;
+    list-style-type: none;
+    text-align: right;
+    color: #dc3545;
+}
+
+    ul.bottom-validation {
+        margin-bottom: 0;
+    }
+
+/* CSS Popup */
+.button {
+    transition: all 0.3s ease-out;
+}
+
+.overlay {
+    z-index: 9999999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    z-index: 9999999;
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    max-width: 500px;
+    position: relative;
+    transition: all 1s ease-in-out;
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+    .popup .close:hover {
+        color: #06D85F;
+    }
+
+.popup .content {
+    display: flex;
+    flex-direction: column;
+    max-height: 30%;
+    overflow: auto;
+}
+
+input.upper {
+    text-transform: uppercase;
+}
