@@ -1,0 +1,39 @@
+﻿<Window x:Class="RingDownConsole.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RingDownConsole.App"
+        xmlns:tb="http://www.hardcodet.net/taskbar" Loaded="Window_Loaded"
+        mc:Ignorable="d" Icon="/Images/blk_connected_t.ico"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Background="Teal">
+        <tb:TaskbarIcon x:Name="myNotifyIcon"
+                    Visibility="Visible"
+                    ToolTipText="Ring Down status monitor"
+                    IconSource="/Images/connected_t.ico"
+                    MenuActivation="LeftOrRightClick"
+                    DoubleClickCommand="{Binding ShowWindowCommand}"
+                    ContextMenu="{StaticResource SysTrayMenu}">
+
+            <tb:TaskbarIcon.TrayToolTip>
+                <!-- the control will be put into a tooltip with an explicit DataContext -->
+                <Grid></Grid>
+            </tb:TaskbarIcon.TrayToolTip>
+
+            <!-- self-assign a data context (could also be done programmatically) -->
+            <tb:TaskbarIcon.DataContext>
+                <local:NotifyIconViewModel />
+            </tb:TaskbarIcon.DataContext>
+        </tb:TaskbarIcon>
+        
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="207,143,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" RenderTransformOrigin="1.013,0.293" FontFamily="Arial Unicode MS"/>
+        <Label Content="Enter your name:" HorizontalAlignment="Left" Margin="74,141,0,0" VerticalAlignment="Top" Height="29" FontWeight="Bold" FontFamily="Arial Unicode MS"/>
+
+        <StackPanel Name="grpDeviceNotFound" Visibility="Hidden">
+            <Label Content="Device Not Found" />
+            <Button Name="btnSearch" Click="btnSearch_Click"  Content="Search Again" />
+        </StackPanel>
+
+    </Grid>
+</Window>
