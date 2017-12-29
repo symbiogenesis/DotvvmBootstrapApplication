@@ -26,13 +26,15 @@
                 <local:NotifyIconViewModel />
             </tb:TaskbarIcon.DataContext>
         </tb:TaskbarIcon>
-        
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="207,143,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="180" RenderTransformOrigin="1.013,0.293" FontFamily="Arial Unicode MS"/>
-        <Label Content="Enter your name:" HorizontalAlignment="Left" Margin="74,141,0,0" VerticalAlignment="Top" Height="29" FontWeight="Bold" FontFamily="Arial Unicode MS"/>
 
-        <StackPanel Name="grpDeviceNotFound" Visibility="Hidden">
-            <Label Content="Device Not Found" />
-            <Button Name="btnSearch" Click="btnSearch_Click"  Content="Search Again" />
+        <StackPanel Name="grpDeviceNotFound" Visibility="Hidden" Height="50" VerticalAlignment="Top" Background="OrangeRed">
+            <Label Content="Device Not Found" HorizontalAlignment="Center"/>
+            <Button Name="btnSearch" Click="btnSearch_Click"  Content="Search Again" Width="100" />
+        </StackPanel>
+
+        <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Enter your name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial Unicode MS"/>
+            <TextBox ToolTip="Enter your name" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontFamily="Arial Unicode MS"/>
         </StackPanel>
 
     </Grid>
