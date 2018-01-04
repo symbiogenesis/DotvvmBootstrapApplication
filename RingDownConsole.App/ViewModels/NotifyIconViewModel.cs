@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace RingDownConsole.App
+namespace RingDownConsole.App.ViewModels
 {
     /// <summary>
     /// Provides bindable properties and commands for the NotifyIcon. In this sample, the

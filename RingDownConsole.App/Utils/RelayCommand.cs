@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace RingDownConsole.App
+namespace RingDownConsole.App.Utils
 {
     /// <summary>
     /// A command whose sole purpose is to 

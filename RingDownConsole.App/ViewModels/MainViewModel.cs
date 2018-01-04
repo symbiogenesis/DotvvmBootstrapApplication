@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,29 +11,22 @@ using Dataq.Misc;
 using Dataq.Protocols.Enums;
 using Serilog;
 
-namespace RingDownConsole.App
+namespace RingDownConsole.App.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : BaseViewModel
     {
         private const int SAMPLE_RATE = 39000;
 
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
-        private ICommand findDeviceCommand;
         private Device _targetDevice;
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
-        private IProgress<string> _progress;
-        private List<string> _output;
+        private PhoneStatus _currentPhoneStatus;
 
         public MainViewModel()
         {
-            _output = new List<string>();
-            _progress = new Progress<string>(_output.Add);
-
-            FindDeviceCommand = new RelayCommand(SearchDevices);
-
             PopulateColors();
 
             new Action(async () =>
@@ -45,6 +36,19 @@ namespace RingDownConsole.App
                 if (deviceFound)
                     await ToggleDataAcquisition();
             }).Invoke();
+        }
+
+        public PhoneStatus CurrentPhoneStatus
+        {
+            get { return _currentPhoneStatus; }
+            set
+            {
+                if (_currentPhoneStatus != value)
+                {
+                    _currentPhoneStatus = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public bool ShowSettings
@@ -90,14 +94,13 @@ namespace RingDownConsole.App
         {
             get
             {
-                return findDeviceCommand;
-            }
-            set
-            {
-                findDeviceCommand = value;
+                return new DelegateCommand
+                {
+                    CanExecuteFunc = () => ShowDeviceNotFound,
+                    CommandAction = async () => await FindDevice()
+                };
             }
         }
-
 
         private void PopulateColors()
         {
@@ -134,10 +137,6 @@ namespace RingDownConsole.App
                 //  Query device for some info
                 await _targetDevice.QueryDeviceAsync();
                 //  Print queried info to GUI
-                Log.Information($"Manufacturer: {_targetDevice.Manufacturer}");
-                Log.Information($"Model: {_targetDevice.Model}");
-                Log.Information($"Serial number: {_targetDevice.Serial}");
-                Log.Information($"Firmware revision: {_targetDevice.FirmwareRevision.ToString()}");
             }
             else
             {
@@ -187,10 +186,15 @@ namespace RingDownConsole.App
                 }
 
                 //  We have data. Convert it to strings
-                string temp = "";
-                string temp1 = "";
-                for (int index = 0; (index <= (MasterChannel.DataIn.Count - 1)); index++)
+                double voltage = 0;
+                for (var index = 0; (index <= (MasterChannel.DataIn.Count - 1)); index++)
                 {
+                    if (_targetDevice.Channels.Count > 1)
+                    {
+                        const string message = "Too many channels found";
+                        ShowError(message);
+                    }
+
                     //  this is the row (scan) counter
                     foreach (var ch in _targetDevice.Channels)
                     {
@@ -198,23 +202,12 @@ namespace RingDownConsole.App
                         // get a channel value and convert it to a string
                         if (ch.GetType().GetInterfaces().Contains(typeof(IChannelIn)))
                         {
-                            temp1 = ((IChannelIn) (ch)).DataIn[index].ToString();
-                            // trim the lstOutput to prevent overrunning the display
-                            if (temp1.Length > 7)
-                            {
-                                temp1 = (temp1.Substring(0, 7) + ", ");
-                            }
-                            else
-                            {
-                                temp1 = (temp1 + ", ");
-                            }
-
-                            temp = (temp + temp1);
-                            // append the channel value to the lstOutput
+                            voltage = ((IChannelIn) (ch)).DataIn[index];
                         }
                     }
 
-                    _progress.Report(temp);
+                    SetStatus(voltage);
+                    SendVoltageData(voltage);
                 }
 
                 // get the next row
@@ -227,13 +220,21 @@ namespace RingDownConsole.App
                     }
                 }
             }
+        }
+        
+        private void SetStatus(double voltage)
+        {
+            throw new NotImplementedException();
+        }
 
-            _progress.Report($"Stopped{Environment.NewLine}");
+        private void SendVoltageData(double voltage)
+        {
+            //throw new NotImplementedException();
         }
 
         private void ConfigureAnalogChannels()
         {
-            AnalogVoltageIn AnalogChan = ((AnalogVoltageIn) (_targetDevice.ChannelFactory(typeof(AnalogVoltageIn), 1)));
+            var AnalogChan = ((AnalogVoltageIn) (_targetDevice.ChannelFactory(typeof(AnalogVoltageIn), 1)));
         }
 
         private bool SampleRateBad()
@@ -334,16 +335,5 @@ namespace RingDownConsole.App
                 _taskRead = Task.Run(async () => await GetChannelData(), _cancelRead.Token);
             }
         }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
     }
 }

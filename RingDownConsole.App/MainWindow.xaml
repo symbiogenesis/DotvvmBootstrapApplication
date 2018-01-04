@@ -3,19 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RingDownConsole.App"
         xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:viewModels="clr-namespace:RingDownConsole.App.ViewModels"
+        xmlns:utils="clr-namespace:RingDownConsole.App.Utils"
         mc:Ignorable="d" Title="Ring Down status monitor" Height="350" Width="525">
     <Window.Resources>
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
         
-        <local:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
-        <local:BoolToVisibilityConverter x:Key="InvertedBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
+        <utils:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
+        <utils:BoolToVisibilityConverter x:Key="InvertedBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
     </Window.Resources>
     <Window.DataContext>
-        <local:MainViewModel />
+        <viewModels:MainViewModel />
     </Window.DataContext>
         <Grid Background="Teal">
         <tb:TaskbarIcon x:Name="myNotifyIcon"
@@ -33,7 +34,7 @@
 
             <!-- self-assign a data context (could also be done programmatically) -->
             <tb:TaskbarIcon.DataContext>
-                <local:NotifyIconViewModel />
+                <viewModels:NotifyIconViewModel />
             </tb:TaskbarIcon.DataContext>
         </tb:TaskbarIcon>
         

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace RingDownConsole.App
+namespace RingDownConsole.App.Utils
 {
     public class BoolToValueConverter<T> : IValueConverter
     {
