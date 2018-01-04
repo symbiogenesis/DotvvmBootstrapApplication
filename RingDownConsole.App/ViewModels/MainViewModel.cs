@@ -23,10 +23,14 @@ namespace RingDownConsole.App.ViewModels
         private Device _targetDevice;
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
-        private PhoneStatus _currentPhoneStatus;
+        private int _intervalSeconds;
+        private DateTime _lastSentDate;
+        private SettingsViewModel _settings;
 
         public MainViewModel()
         {
+            _settings = new SettingsViewModel();
+
             PopulateColors();
 
             new Action(async () =>
@@ -47,14 +51,27 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        public PhoneStatus CurrentPhoneStatus
+        public SettingsViewModel Settings
         {
-            get { return _currentPhoneStatus; }
+            get { return _settings; }
             set
             {
-                if (_currentPhoneStatus != value)
+                if (_settings != value)
                 {
-                    _currentPhoneStatus = value;
+                    _settings = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int IntervalSeconds
+        {
+            get { return _intervalSeconds; }
+            set
+            {
+                if (_intervalSeconds != value)
+                {
+                    _intervalSeconds = value;
                     RaisePropertyChanged();
                 }
             }
@@ -111,6 +128,18 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        public ICommand CloseSettingsCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CanExecuteFunc = () => ShowSettings,
+                    CommandAction = () => ShowSettings = false
+                };
+            }
+        }
+
         private void PopulateColors()
         {
             var colors = new List<string>();
@@ -131,8 +160,8 @@ namespace RingDownConsole.App.ViewModels
             if (anyDevice)
             {
                 ShowDeviceNotFound = false;
-
                 Log.Information("Found a DI-1100.");
+
                 //  Cast first device from generic device to specific DI-1100 type
                 _targetDevice = ((Device) (AllDevices[0]));
                 await _targetDevice.ConnectAsync();
@@ -209,8 +238,7 @@ namespace RingDownConsole.App.ViewModels
                         }
                     }
 
-                    SetStatus(voltage);
-                    SendVoltageData(voltage);
+                    SaveVoltageData(voltage);
                 }
 
                 // get the next row
@@ -224,15 +252,51 @@ namespace RingDownConsole.App.ViewModels
                 }
             }
         }
-        
-        private void SetStatus(double voltage)
+
+        private PhoneStatus? GetStatus(double voltage)
         {
-            //throw new NotImplementedException();
+            if (voltage >= Settings.MinConnectedVoltage && voltage <= Settings.MaxConnectedVoltage)
+            {
+                return PhoneStatus.Connected;
+            }
+
+            if (voltage >= Settings.MinOffHookVoltage && voltage <= Settings.MaxOffHookVoltage)
+            {
+                return PhoneStatus.OffHook;
+            }
+
+            if (voltage >= Settings.MinOnHookVoltage && voltage <= Settings.MaxOnHookVoltage)
+            {
+                return PhoneStatus.OnHook;
+            }
+
+            if (voltage >= Settings.MinNoDialToneVoltage && voltage <= Settings.MaxNoDialToneVoltage)
+            {
+                return PhoneStatus.NoDialTone;
+            }
+
+            return null;
         }
 
-        private void SendVoltageData(double voltage)
+        private void SaveVoltageData(double voltage)
         {
-            //throw new NotImplementedException();
+            if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
+            {
+                var status = GetStatus(voltage);
+
+                if (status == null)
+                {
+                    ShowError($"Voltage {voltage} does not correspond to a status");
+                    return;
+                }
+
+                SendStatusData(status.Value);
+            }
+        }
+
+        private void SendStatusData(PhoneStatus status)
+        {
+            _lastSentDate = DateTime.UtcNow;
         }
 
         private void ConfigureAnalogChannels()

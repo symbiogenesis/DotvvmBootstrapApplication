@@ -115,6 +115,7 @@
     <Compile Include="Utils\Converters.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\DelegateCommand.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

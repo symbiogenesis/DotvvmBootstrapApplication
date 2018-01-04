@@ -6,6 +6,7 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:viewModels="clr-namespace:RingDownConsole.App.ViewModels"
         xmlns:utils="clr-namespace:RingDownConsole.App.Utils"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d" Title="Ring Down status monitor" Height="350" Width="525">
     <Window.Resources>
         <Style TargetType="{x:Type Window}">
@@ -52,19 +53,38 @@
         </StackPanel>
 
         <StackPanel Name="grpSettings" Orientation="Vertical" Background="Gray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
-            <Label Content="Voltage Thresholds" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+            <Label Content="Settings Panel" Height="29" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">
-                <Label Content="Online:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+                <Label Content="Interval (seconds):" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:IntegerUpDown Value="{Binding IntegerSeconds}" />
+            </StackPanel>
+            <Label Content="Voltage Thresholds" Height="29" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Online:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOnlineVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOnlineVoltage}" Width="50" Margin="5" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="On Hook:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+                <Label Content="On Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Off Hook:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+                <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Connected:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectedVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectdVoltage}" Width="50" Margin="5" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" />
+            </StackPanel>
+            <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" />
         </StackPanel>
     </Grid>
 </Window>
