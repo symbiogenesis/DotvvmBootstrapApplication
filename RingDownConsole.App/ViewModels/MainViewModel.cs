@@ -38,6 +38,15 @@ namespace RingDownConsole.App.ViewModels
             }).Invoke();
         }
 
+        ~MainViewModel()
+        {
+            if (_targetDevice != null)
+            {
+                _targetDevice.Dispose();
+                _targetDevice = null;
+            }
+        }
+
         public PhoneStatus CurrentPhoneStatus
         {
             get { return _currentPhoneStatus; }
@@ -110,11 +119,6 @@ namespace RingDownConsole.App.ViewModels
             {
                 colors.Add(color.ToString());
             }
-        }
-
-        private async void SearchDevices(object obj)
-        {
-            await FindDevice();
         }
 
         private async Task<bool> FindDevice()
@@ -191,8 +195,7 @@ namespace RingDownConsole.App.ViewModels
                 {
                     if (_targetDevice.Channels.Count > 1)
                     {
-                        const string message = "Too many channels found";
-                        ShowError(message);
+                        ShowError("Too many channels found");
                     }
 
                     //  this is the row (scan) counter
@@ -224,7 +227,7 @@ namespace RingDownConsole.App.ViewModels
         
         private void SetStatus(double voltage)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void SendVoltageData(double voltage)
@@ -248,15 +251,6 @@ namespace RingDownConsole.App.ViewModels
             }
 
             return false;
-        }
-
-        private void Form1_FormClosing(object sender, EventArgs e)
-        {
-            if (_targetDevice != null)
-            {
-                _targetDevice.Dispose();
-                _targetDevice = null;
-            }
         }
 
         private async void SetLightColor(LedColor1 color)
