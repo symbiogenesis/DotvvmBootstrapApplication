@@ -1,12 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Blend for Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RingDownConsole", "RingDownConsole\RingDownConsole.csproj", "{B9DE0531-4E6C-416F-81A4-D207EEE7B01C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingDownConsole", "RingDownConsole\RingDownConsole.csproj", "{B9DE0531-4E6C-416F-81A4-D207EEE7B01C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RingDownConsole.Models", "RingDownConsole.Models\RingDownConsole.Models.csproj", "{7A5A7C17-E55E-4E2C-B439-D6D97C164C05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingDownConsole.Models", "RingDownConsole.Models\RingDownConsole.Models.csproj", "{7A5A7C17-E55E-4E2C-B439-D6D97C164C05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RingDownConsole.Tests", "RingDownConsole.Tests\RingDownConsole.Tests.csproj", "{06BFC0E4-83B7-4ACC-B610-0598128A3190}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingDownConsole.Tests", "RingDownConsole.Tests\RingDownConsole.Tests.csproj", "{06BFC0E4-83B7-4ACC-B610-0598128A3190}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingDownConsole.App", "RingDownConsole.App\RingDownConsole.App.csproj", "{E81DB6ED-6172-4C15-AF4F-859F760C4B43}"
 EndProject

@@ -4,10 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RingDownConsole.App"
-        xmlns:tb="http://www.hardcodet.net/taskbar" Loaded="Window_Loaded"
-        mc:Ignorable="d" Icon="/Images/blk_connected_t.ico"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid Background="Teal">
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d" Title="Ring Down status monitor" Height="350" Width="525">
+    <Window.Resources>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+        
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
+        <local:BoolToVisibilityConverter x:Key="InvertedBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+        <Grid Background="Teal">
         <tb:TaskbarIcon x:Name="myNotifyIcon"
                     Visibility="Visible"
                     ToolTipText="Ring Down status monitor"
@@ -26,16 +36,34 @@
                 <local:NotifyIconViewModel />
             </tb:TaskbarIcon.DataContext>
         </tb:TaskbarIcon>
-
-        <StackPanel Name="grpDeviceNotFound" Visibility="Hidden" Height="50" VerticalAlignment="Top" Background="OrangeRed">
-            <Label Content="Device Not Found" HorizontalAlignment="Center"/>
-            <Button Name="btnSearch" Click="btnSearch_Click"  Content="Search Again" Width="100" />
+        
+        <StackPanel VerticalAlignment="Top">
+            <StackPanel Name="grpDeviceNotFound" Height="50" Background="OrangeRed" Visibility="{Binding ShowDeviceNotFound, Converter={StaticResource BoolToVisibility}}"> 
+                <Label Content="Device Not Found" HorizontalAlignment="Center"/>
+                <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
+            </StackPanel>
+            <ToggleButton Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
         </StackPanel>
 
-        <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Enter your name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial Unicode MS"/>
-            <TextBox ToolTip="Enter your name" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontFamily="Arial Unicode MS"/>
+        <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="{Binding ShowNameEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Enter your name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+            <TextBox ToolTip="Enter your name" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
         </StackPanel>
 
+        <StackPanel Name="grpSettings" Orientation="Vertical" Background="Gray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
+            <Label Content="Voltage Thresholds" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Online:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="On Hook:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Off Hook:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBox ToolTip="" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
