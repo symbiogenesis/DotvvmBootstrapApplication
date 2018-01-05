@@ -7,7 +7,7 @@
         private double _minConnectedVoltage = 4;
         private double _maxConnectedVoltage = 4.9;
         private double _minOnHookVoltage = 0;
-        private double _maxOnHookVoltage = 0.1;
+        private double _maxOnHookVoltage = 0.3;
         private double _minOffHookVoltage = 8.8;
         private double _maxOffHookVoltage = 9.3;
         private double _minNoDialToneVoltage;
