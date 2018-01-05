@@ -4,5 +4,6 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Pending>", Scope = "member", Target = "~M:WpfApp1.MainWindow.ComboBox1_SelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)")]
+using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Pending>")]
