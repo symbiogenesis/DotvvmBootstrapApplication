@@ -15,7 +15,7 @@ namespace RingDownConsole.App.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private const int SAMPLE_RATE = 39000;
+        private const int SAMPLE_RATE = 970;
 
         private bool _showSettings;
         private bool _showNameEntry;
