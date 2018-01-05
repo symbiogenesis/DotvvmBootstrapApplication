@@ -9,8 +9,13 @@ namespace RingDownConsole.App.ViewModels
     {
         protected void ShowError(string message)
         {
-            Log.Information(message);
+            LogError(message);
             MessageBox.Show(message);
+        }
+
+        protected void LogError(string message)
+        {
+            Log.Information(message);
         }
 
         #region INotifyPropertyChanged Members

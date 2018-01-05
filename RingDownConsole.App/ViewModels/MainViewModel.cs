@@ -164,9 +164,13 @@ namespace RingDownConsole.App.ViewModels
 
                 //  Cast first device from generic device to specific DI-1100 type
                 _targetDevice = ((Device) (AllDevices[0]));
+
+                // Try to connect
                 await _targetDevice.ConnectAsync();
+
                 //  Ensure it's stopped
                 await _targetDevice.AcquisitionStopAsync();
+
                 //  Query device for some info
                 await _targetDevice.QueryDeviceAsync();
                 //  Print queried info to GUI
@@ -286,7 +290,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (status == null)
                 {
-                    ShowError($"Voltage {voltage} does not correspond to a status");
+                    //LogError($"Voltage {voltage} does not correspond to a status");
                     return;
                 }
 
