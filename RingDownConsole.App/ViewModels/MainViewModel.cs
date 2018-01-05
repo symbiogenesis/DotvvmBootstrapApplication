@@ -24,6 +24,7 @@ namespace RingDownConsole.App.ViewModels
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
         private int _intervalSeconds;
+        private PhoneStatus _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
 
@@ -288,10 +289,24 @@ namespace RingDownConsole.App.ViewModels
             {
                 var status = GetStatus(voltage);
 
-                if (status == null)
+                switch (status)
                 {
-                    //LogError($"Voltage {voltage} does not correspond to a status");
-                    return;
+                    case PhoneStatus.OffHook:
+                    case PhoneStatus.Connected:
+                        ShowNameEntry = true;
+                        break;
+                    case null:
+                        //LogError($"Voltage {voltage} does not correspond to a status");
+                        return;
+                    default:
+                        ShowNameEntry = false;
+                        break;
+                }
+
+                if (status != _lastPhoneStatus)
+                {
+                    ShowError($"Phone status changed to {status.ToString()}");
+                    _lastPhoneStatus = status.Value;
                 }
 
                 SendStatusData(status.Value);
