@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
@@ -24,7 +25,7 @@ namespace RingDownConsole.App.ViewModels
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
         private int _intervalSeconds;
-        private PhoneStatus _lastPhoneStatus;
+        private PhoneStatus? _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
 
@@ -294,6 +295,11 @@ namespace RingDownConsole.App.ViewModels
                     case PhoneStatus.OffHook:
                     case PhoneStatus.Connected:
                         ShowNameEntry = true;
+                        //var dispatcherOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
+                        //{
+                        //    if (Application.Current.MainWindow.Visibility == Visibility.Hidden)
+                        //        Application.Current.MainWindow.Show();
+                        //}));
                         break;
                     case null:
                         //LogError($"Voltage {voltage} does not correspond to a status");
@@ -303,13 +309,23 @@ namespace RingDownConsole.App.ViewModels
                         break;
                 }
 
-                if (status != _lastPhoneStatus)
-                {
-                    ShowError($"Phone status changed to {status.ToString()}");
-                    _lastPhoneStatus = status.Value;
-                }
-
+                CheckAndUpdateLastStatus(status);
                 SendStatusData(status.Value);
+            }
+        }
+
+        private void CheckAndUpdateLastStatus(PhoneStatus? status)
+        {
+            if (_lastPhoneStatus == null)
+            {
+                _lastPhoneStatus = status;
+                return;
+            }
+
+            if (status != _lastPhoneStatus)
+            {
+                ShowError($"Phone status changed to {status.ToString()}");
+                _lastPhoneStatus = status.Value;
             }
         }
 
