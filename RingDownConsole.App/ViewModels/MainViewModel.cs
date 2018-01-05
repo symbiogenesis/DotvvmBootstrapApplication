@@ -18,6 +18,8 @@ namespace RingDownConsole.App.ViewModels
     {
         private const int SAMPLE_RATE = 970;
 
+        private string _locationId = "FFATOW01";
+        private string _locationName = "FAA Tower";
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
@@ -25,6 +27,7 @@ namespace RingDownConsole.App.ViewModels
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
         private int _intervalSeconds;
+        private PhoneStatus? _currentPhoneStatus;
         private PhoneStatus? _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
@@ -61,6 +64,46 @@ namespace RingDownConsole.App.ViewModels
                 if (_settings != value)
                 {
                     _settings = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public PhoneStatus? CurrentPhoneStatus
+        {
+            get { return _currentPhoneStatus; }
+            set
+            {
+                if (_currentPhoneStatus != value)
+                {
+                    _currentPhoneStatus = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
+        public string LocationId
+        {
+            get { return _locationId; }
+            set
+            {
+                if (_locationId != value)
+                {
+                    _locationId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string LocationName
+        {
+            get { return _locationName; }
+            set
+            {
+                if (_locationName != value)
+                {
+                    _locationName = value;
                     RaisePropertyChanged();
                 }
             }
@@ -288,9 +331,9 @@ namespace RingDownConsole.App.ViewModels
         {
             if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
             {
-                var status = GetStatus(voltage);
+                CurrentPhoneStatus = GetStatus(voltage);
 
-                switch (status)
+                switch (_currentPhoneStatus)
                 {
                     case PhoneStatus.OffHook:
                     case PhoneStatus.Connected:
@@ -309,28 +352,29 @@ namespace RingDownConsole.App.ViewModels
                         break;
                 }
 
-                CheckAndUpdateLastStatus(status);
-                SendStatusData(status.Value);
+                CheckAndUpdateLastStatus();
+                SendStatusData();
             }
         }
 
-        private void CheckAndUpdateLastStatus(PhoneStatus? status)
+        private void CheckAndUpdateLastStatus()
         {
             if (_lastPhoneStatus == null)
             {
-                _lastPhoneStatus = status;
+                _lastPhoneStatus = _currentPhoneStatus;
                 return;
             }
 
-            if (status != _lastPhoneStatus)
+            if (_currentPhoneStatus != _lastPhoneStatus)
             {
-                ShowError($"Phone status changed to {status.ToString()}");
-                _lastPhoneStatus = status.Value;
+                _lastPhoneStatus = _currentPhoneStatus.Value;
             }
         }
 
-        private void SendStatusData(PhoneStatus status)
+        private void SendStatusData()
         {
+            // send _currentPhoneStatus
+
             _lastSentDate = DateTime.UtcNow;
         }
 

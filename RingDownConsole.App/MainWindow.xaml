@@ -15,6 +15,7 @@
         
         <utils:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
         <utils:BoolToVisibilityConverter x:Key="InvertedBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
+        <utils:PhoneStatusToStringConverter x:Key="PhoneStatusToStringConverter" />
     </Window.Resources>
     <Window.DataContext>
         <viewModels:MainViewModel />
@@ -44,7 +45,16 @@
                 <Label Content="Device Not Found" HorizontalAlignment="Center"/>
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
-            <ToggleButton Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch">
+                <Label  Content="Status:" FontWeight="Bold" />
+                <!--<Image "{Binding CurrentPhoneStatus}" />-->
+                <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" />
+                <Label Content="Location ID:" FontWeight="Bold" />
+                <Label Content="{Binding LocationId}" />
+                <Label  Content="Location Name:" FontWeight="Bold" />
+                <Label Content="{Binding LocationName}" />
+                <ToggleButton Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="{Binding ShowNameEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -56,12 +66,6 @@
         <StackPanel Name="grpSettings" Orientation="Vertical" Background="Gray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
             <Label Content="Settings Panel" Height="29" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">
-                <Label Content="Location ID:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <TextBox Text="{Binding LocationId}" />
-
-                <Label Content="Location Name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <TextBox Text="{Binding LocationName}" />
-
                 <Label Content="Interval (seconds):" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:IntegerUpDown Value="{Binding IntegerSeconds}" />
             </StackPanel>

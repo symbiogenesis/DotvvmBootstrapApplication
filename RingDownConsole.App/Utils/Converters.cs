@@ -24,4 +24,23 @@ namespace RingDownConsole.App.Utils
     }
 
     public class BoolToVisibilityConverter : BoolToValueConverter<Visibility> { }
+
+    public class EnumToStringConverter<T> : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+                return null;
+
+            return ((Enum) value).ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return Enum.Parse(typeof(T), value.ToString());
+        }
+    }
+
+    public class PhoneStatusToStringConverter : EnumToStringConverter<PhoneStatus> { }
+
 }
