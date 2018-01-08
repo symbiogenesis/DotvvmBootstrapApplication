@@ -17,7 +17,7 @@ namespace RingDownConsole.App.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private const int SAMPLE_RATE = 970;
+        private const double SAMPLE_RATE = 915.55;
 
         private string _locationId = "FFATOW01";
         private string _locationName = "FAA Tower";
