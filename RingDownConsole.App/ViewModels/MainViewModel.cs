@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace RingDownConsole.App.ViewModels
 
         private string _locationId = "FFATOW01";
         private string _locationName = "FAA Tower";
+        private string _errorMessage = "Device not found";
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
@@ -44,6 +46,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (deviceFound)
                     await ToggleDataAcquisition();
+
             }).Invoke();
         }
 
@@ -82,6 +85,18 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public string LocationId
         {
@@ -205,25 +220,35 @@ namespace RingDownConsole.App.ViewModels
             if (anyDevice)
             {
                 ShowDeviceNotFound = false;
+
                 Log.Information("Found a DI-1100.");
 
                 //  Cast first device from generic device to specific DI-1100 type
                 _targetDevice = ((Device) (AllDevices[0]));
 
-                // Try to connect
-                await _targetDevice.ConnectAsync();
+                try
+                {
+                    // Try to connect
+                    await _targetDevice.ConnectAsync();
 
-                //  Ensure it's stopped
-                await _targetDevice.AcquisitionStopAsync();
+                    //  Ensure it's stopped
+                    await _targetDevice.AcquisitionStopAsync();
 
-                //  Query device for some info
-                await _targetDevice.QueryDeviceAsync();
-                //  Print queried info to GUI
+                    //  Query device for some info
+                    await _targetDevice.QueryDeviceAsync();
+                }
+                catch
+                {
+                    return true;
+                }
+
+                //  Send serial number as unique identifier to web service
             }
             else
             {
                 ShowDeviceNotFound = true;
-                Log.Information("No DI-1100 found.");
+                ErrorMessage = "No DI-1100 found.";
+                Log.Information(ErrorMessage);
             }
 
             return anyDevice;
@@ -430,6 +455,7 @@ namespace RingDownConsole.App.ViewModels
 
                 // otherwise, the selected sample rate is good, so use it
                 _targetDevice.SetSampleRateOnChannels(SAMPLE_RATE);
+
                 try
                 {
                     await _targetDevice.InitializeAsync();
@@ -437,8 +463,11 @@ namespace RingDownConsole.App.ViewModels
                 }
                 catch (Exception ex)
                 {
+                    ShowDeviceNotFound = true;
+                    ErrorMessage = "Please enable at least one analog channel or digital port.";
+
                     // Detect if no channels are enabled, and bail if so. 
-                    MessageBox.Show("Please enable at least one analog channel or digital port.", "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //MessageBox.Show(ErrorMessage, "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -458,7 +487,9 @@ namespace RingDownConsole.App.ViewModels
 
                 if (NoInputChannels)
                 {
-                    MessageBox.Show("Please configure at least one analog channel or digital port as an input", "No Inputs Enabled", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowDeviceNotFound = true;
+                    ErrorMessage = "Please configure at least one analog channel or digital port as an input";
+                    //MessageBox.Show(ErrorMessage, "No Inputs Enabled", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
