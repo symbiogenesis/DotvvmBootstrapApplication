@@ -2,26 +2,15 @@
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private double _minOnlineVoltage;
-        private double _maxOnlineVoltage;
-        private double _minConnectedVoltage = 4;
-        private double _maxConnectedVoltage = 4.9;
-        private double _minOnHookVoltage = 0;
-        private double _maxOnHookVoltage = 0.2;
-        private double _minOffHookVoltage = 8.8;
-        private double _maxOffHookVoltage = 9.3;
-        private double _minNoDialToneVoltage;
-        private double _maxNoDialToneVoltage;
-        private int _intervalSeconds = 5;
-
         public double MinOnlineVoltage
         {
-            get { return _minOnlineVoltage; }
+            get { return Settings.Default.MinOnlineVoltage; }
             set
             {
-                if (_minOnlineVoltage != value)
+                if (Settings.Default.MinOnlineVoltage != value)
                 {
-                    _minOnlineVoltage = value;
+                    Settings.Default.MinOnlineVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -29,12 +18,13 @@
 
         public double MaxOnlineVoltage
         {
-            get { return _maxOnlineVoltage; }
+            get { return Settings.Default.MaxOnlineVoltage; }
             set
             {
-                if (_maxOnlineVoltage != value)
+                if (Settings.Default.MaxOnlineVoltage != value)
                 {
-                    _maxOnlineVoltage = value;
+                    Settings.Default.MaxOnlineVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -42,12 +32,13 @@
 
         public double MinConnectedVoltage
         {
-            get { return _minConnectedVoltage; }
+            get { return Settings.Default.MinConnectedVoltage; }
             set
             {
-                if (_minConnectedVoltage != value)
+                if (Settings.Default.MinConnectedVoltage != value)
                 {
-                    _minConnectedVoltage = value;
+                    Settings.Default.MinConnectedVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -55,12 +46,13 @@
 
         public double MaxConnectedVoltage
         {
-            get { return _maxConnectedVoltage; }
+            get { return Settings.Default.MaxConnectedVoltage; }
             set
             {
-                if (_maxConnectedVoltage != value)
+                if (Settings.Default.MaxConnectedVoltage != value)
                 {
-                    _maxConnectedVoltage = value;
+                    Settings.Default.MaxConnectedVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -68,12 +60,13 @@
 
         public double MinOnHookVoltage
         {
-            get { return _minOnHookVoltage; }
+            get { return Settings.Default.MinOnHookVoltage; }
             set
             {
-                if (_minOnHookVoltage != value)
+                if (Settings.Default.MinOnHookVoltage != value)
                 {
-                    _minOnHookVoltage = value;
+                    Settings.Default.MinOnHookVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -81,12 +74,13 @@
 
         public double MaxOnHookVoltage
         {
-            get { return _maxOnHookVoltage; }
+            get { return Settings.Default.MaxOnHookVoltage; }
             set
             {
-                if (_maxOnHookVoltage != value)
+                if (Settings.Default.MaxOnHookVoltage != value)
                 {
-                    _maxOnHookVoltage = value;
+                    Settings.Default.MaxOnHookVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -94,12 +88,13 @@
 
         public double MinOffHookVoltage
         {
-            get { return _minOffHookVoltage; }
+            get { return Settings.Default.MinOffHookVoltage; }
             set
             {
-                if (_minOffHookVoltage != value)
+                if (Settings.Default.MinOffHookVoltage != value)
                 {
-                    _minOffHookVoltage = value;
+                    Settings.Default.MinOffHookVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -107,12 +102,13 @@
 
         public double MaxOffHookVoltage
         {
-            get { return _maxOffHookVoltage; }
+            get { return Settings.Default.MaxOffHookVoltage; }
             set
             {
-                if (_maxOffHookVoltage != value)
+                if (Settings.Default.MaxOffHookVoltage != value)
                 {
-                    _maxOffHookVoltage = value;
+                    Settings.Default.MaxOffHookVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -120,12 +116,13 @@
 
         public double MinNoDialToneVoltage
         {
-            get { return _minNoDialToneVoltage; }
+            get { return Settings.Default.MinNoDialToneVoltage; }
             set
             {
-                if (_minNoDialToneVoltage != value)
+                if (Settings.Default.MinNoDialToneVoltage != value)
                 {
-                    _minNoDialToneVoltage = value;
+                    Settings.Default.MinNoDialToneVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -133,12 +130,13 @@
 
         public double MaxNoDialToneVoltage
         {
-            get { return _maxNoDialToneVoltage; }
+            get { return Settings.Default.MaxNoDialToneVoltage; }
             set
             {
-                if (_maxNoDialToneVoltage != value)
+                if (Settings.Default.MaxNoDialToneVoltage != value)
                 {
-                    _maxNoDialToneVoltage = value;
+                    Settings.Default.MaxNoDialToneVoltage = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }
@@ -146,12 +144,13 @@
 
         public int IntervalSeconds
         {
-            get { return _intervalSeconds; }
+            get { return Settings.Default.IntervalSeconds; }
             set
             {
-                if (_intervalSeconds != value)
+                if (Settings.Default.IntervalSeconds != value)
                 {
-                    _intervalSeconds = value;
+                    Settings.Default.IntervalSeconds = value;
+                    Settings.Default.Save();
                     RaisePropertyChanged();
                 }
             }

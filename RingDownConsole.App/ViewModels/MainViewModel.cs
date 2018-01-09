@@ -35,10 +35,12 @@ namespace RingDownConsole.App.ViewModels
         private PhoneStatus? _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
+        private HttpClient _httpClient;
 
         public MainViewModel()
         {
             _settings = new SettingsViewModel();
+            _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
 
             PopulateColors();
 
