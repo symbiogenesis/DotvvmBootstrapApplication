@@ -229,21 +229,17 @@ namespace RingDownConsole.App.ViewModels
                 //  Cast first device from generic device to specific DI-1100 type
                 _targetDevice = ((Device) (AllDevices[0]));
 
-                try
-                {
-                    // Try to connect
-                    await _targetDevice.ConnectAsync();
+                // Disconnect any open connections
+                await _targetDevice.DisconnectAsync();
 
-                    //  Ensure it's stopped
-                    await _targetDevice.AcquisitionStopAsync();
+                // Try to connect
+                await _targetDevice.ConnectAsync();
 
-                    //  Query device for some info
-                    await _targetDevice.QueryDeviceAsync();
-                }
-                catch
-                {
-                    return true;
-                }
+                //  Ensure it's stopped
+                await _targetDevice.AcquisitionStopAsync();
+
+                //  Query device for some info
+                await _targetDevice.QueryDeviceAsync();
 
                 //  Send serial number as unique identifier to web service
             }
@@ -354,7 +350,7 @@ namespace RingDownConsole.App.ViewModels
 
             if (voltage < 0)
             {
-                return PhoneStatus.NoDialTone;
+                return PhoneStatus.OnHook;
             }
 
             return null;
