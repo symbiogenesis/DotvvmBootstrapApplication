@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
 using Dataq.Protocols.Enums;
+using Microsoft.Win32;
 using Serilog;
 
 namespace RingDownConsole.App.ViewModels
@@ -40,13 +42,11 @@ namespace RingDownConsole.App.ViewModels
 
             PopulateColors();
 
+            SystemEvents.PowerModeChanged += OnPowerChange;
+
             new Action(async () =>
             {
-                var deviceFound = await FindDevice();
-
-                if (deviceFound)
-                    await ToggleDataAcquisition();
-
+                await Initialize();
             }).Invoke();
         }
 
@@ -222,47 +222,76 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        private async Task Initialize()
+        {
+            var deviceFound = await FindDevice();
+
+            if (deviceFound)
+                await ToggleDataAcquisition();
+        }
+
+        private async void OnPowerChange(object s, PowerModeChangedEventArgs e)
+        {
+            switch (e.Mode)
+            {
+                case PowerModes.Resume:
+                    //ResetUsb();
+                    await Initialize();
+                    break;
+                case PowerModes.Suspend:
+                    break;
+            }
+        }
+
+        private void ResetUsb()
+        {
+            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 4, RegistryValueKind.DWord);
+            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 3, RegistryValueKind.DWord);
+        }
+
         private async Task<bool> FindDevice()
         {
-            //Microsoft.Win32.Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 4, Microsoft.Win32.RegistryValueKind.DWord);
-            //Microsoft.Win32.Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 3, Microsoft.Win32.RegistryValueKind.DWord);
-
-            //  Get a list of devices with model DI-1100
-            IReadOnlyList<IDevice> AllDevices = await Discovery.ByModelAsync(typeof(Device));
-
-            var anyDevice = AllDevices.Count > 0;
-
-            if (anyDevice)
+            if (_targetDevice == null)
             {
-                ShowDeviceNotFound = false;
+                //  Get a list of devices with model DI-1100
+                IReadOnlyList<IDevice> AllDevices = await Discovery.ByModelAsync(typeof(Device));
 
-                Log.Information("Found a DI-1100.");
+                var anyDevice = AllDevices.Count > 0;
 
-                //  Cast first device from generic device to specific DI-1100 type
-                _targetDevice = ((Device) (AllDevices[0]));
+                if (anyDevice)
+                {
+                    ShowDeviceNotFound = false;
 
-                // Disconnect any open connections
-                await _targetDevice.DisconnectAsync();
+                    Log.Information("Found a DI-1100.");
 
-                // Try to connect
-                await _targetDevice.ConnectAsync();
+                    //  Cast first device from generic device to specific DI-1100 type
+                    _targetDevice = ((Device) (AllDevices[0]));
 
-                //  Ensure it's stopped
-                await _targetDevice.AcquisitionStopAsync();
+                    //  Send serial number as unique identifier to web service
+                }
+                else
+                {
+                    ShowDeviceNotFound = true;
+                    ErrorMessage = "No DI-1100 found.";
+                    Log.Information(ErrorMessage);
 
-                //  Query device for some info
-                await _targetDevice.QueryDeviceAsync();
-
-                //  Send serial number as unique identifier to web service
-            }
-            else
-            {
-                ShowDeviceNotFound = true;
-                ErrorMessage = "No DI-1100 found.";
-                Log.Information(ErrorMessage);
+                    return false;
+                }
             }
 
-            return anyDevice;
+            // Disconnect any open connections
+            await _targetDevice.DisconnectAsync();
+
+            // Try to connect
+            await _targetDevice.ConnectAsync();
+
+            //  Ensure it's stopped
+            await _targetDevice.AcquisitionStopAsync();
+
+            //  Query device for some info
+            await _targetDevice.QueryDeviceAsync();
+
+            return true;
         }
 
         private async Task GetChannelData()
