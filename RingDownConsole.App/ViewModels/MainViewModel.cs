@@ -170,10 +170,22 @@ namespace RingDownConsole.App.ViewModels
             {
                 if (_showNameEntry != value)
                 {
+                    if (value)
+                        ShowWindow();
+
                     _showNameEntry = value;
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        private void ShowWindow()
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.Activate();
+            }));
         }
 
         public ICommand FindDeviceCommand
