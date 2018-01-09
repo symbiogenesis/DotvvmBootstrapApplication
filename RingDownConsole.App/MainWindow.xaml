@@ -42,7 +42,7 @@
         
         <StackPanel VerticalAlignment="Top">
             <StackPanel Name="grpDeviceNotFound" Height="50" Background="OrangeRed" Visibility="{Binding ShowDeviceNotFound, Converter={StaticResource BoolToVisibility}}">
-                <Label Content="{Binding ErrorMesssage}" HorizontalAlignment="Center"/>
+                <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center"/>
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch">
