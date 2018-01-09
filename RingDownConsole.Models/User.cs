@@ -8,7 +8,7 @@ using TrackableEntities.Common.Core;
 
 namespace RingDownConsole.Models
 {
-    public class User : IdentityUser<Guid>, IAdminLookup, ITrackable, IMergeable
+    public class User : IdentityUser<int>, IAdminLookup, ITrackable, IMergeable
     {
         public User() : base()
         {
@@ -22,7 +22,7 @@ namespace RingDownConsole.Models
         public bool IsAdmin { get; set; }
 
         [NotMapped]
-        Guid IIdentifiable.Id { get => base.Id; set => value = base.Id; }
+        int IIdentifiable.Id { get => base.Id; set => value = base.Id; }
 
         [NotMapped]
         public string Name { get => base.UserName; set => value = base.UserName; }

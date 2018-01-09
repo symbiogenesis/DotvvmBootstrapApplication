@@ -29,7 +29,7 @@ namespace RingDownConsole.Utils
 
             for (var i = 0; i < _numItems; i++)
             {
-                var item = new T() { Id = Guid.NewGuid() };
+                var item = new T() { Id = i };
 
                 foreach (var property in properties)
                 {

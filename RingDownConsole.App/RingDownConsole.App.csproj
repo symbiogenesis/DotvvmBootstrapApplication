@@ -87,7 +87,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="PhoneStatus.cs" />
     <Page Include="Images\communication error_t.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,6 +165,12 @@
     <Resource Include="Images\onhook_t.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RingDownConsole.Models\RingDownConsole.Models.csproj">
+      <Project>{7a5a7c17-e55e-4e2c-b439-d6d97c164c05}</Project>
+      <Name>RingDownConsole.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,7 +22,7 @@ namespace RingDownConsole.Services
             await _context.SaveChangesAsync();
         }
 
-        internal ExampleRecord Get(Guid id)
+        internal ExampleRecord Get(int id)
         {
             return _context.ExampleTable.First(t => t.Id == id);
         }

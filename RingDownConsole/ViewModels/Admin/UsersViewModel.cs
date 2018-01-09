@@ -60,7 +60,7 @@ namespace RingDownConsole.ViewModels.Admin
         {
             User existingUser = null;
 
-            if (item.Id != Guid.Empty)
+            if (item.Id != 0)
                 existingUser = await _userManager.FindByIdAsync(item.Id.ToString());
 
             if (existingUser == null)
@@ -163,7 +163,7 @@ namespace RingDownConsole.ViewModels.Admin
 
             var newRecord = new User
             {
-                Id = Guid.NewGuid(),
+                Id = Data.Items.Max(u => u.Id) + 1,
                 IsSaved = false
             };
             Data.Items.Add(newRecord);

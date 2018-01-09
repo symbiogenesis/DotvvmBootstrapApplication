@@ -14,20 +14,20 @@ namespace RingDownConsole.Models.Utils
             return context.GetTable<T>();
         }
 
-        public static Task<T> GetItem(Guid id, DbContext context)
+        public static Task<T> GetItem(int id, DbContext context)
         {
             var table = context.GetTable<T>();
 
             return table.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public static async Task PutItem(T record, Guid id, DbContext context)
+        public static async Task PutItem(T record, int id, DbContext context)
         {
             var table = context.GetTable<T>();
 
             T recordToUpdate = null;
 
-            if (id != Guid.Empty)
+            if (id != 0)
                 recordToUpdate = table.SingleOrDefault(t => t.Id == id);
 
             if (recordToUpdate == null)
@@ -54,7 +54,7 @@ namespace RingDownConsole.Models.Utils
             await context.SaveChangesAsync();
         }
 
-        public async static Task DeleteItem(Guid id, DbContext context)
+        public async static Task DeleteItem(int id, DbContext context)
         {
             var records = context.GetTable<T>();
 

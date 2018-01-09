@@ -7,7 +7,7 @@ using TrackableEntities.Common.Core;
 
 namespace RingDownConsole.Models
 {
-    public class Role : IdentityRole<Guid>, IIdentifiable, ITrackable, IMergeable
+    public class Role : IdentityRole<int>, IIdentifiable, ITrackable, IMergeable
     {
         public Role() : base()
         {
@@ -18,7 +18,7 @@ namespace RingDownConsole.Models
         }
 
         [NotMapped]
-        Guid IIdentifiable.Id { get => base.Id; set => value = base.Id; }
+        int IIdentifiable.Id { get => base.Id; set => value = base.Id; }
 
         [NotMapped]
         public bool IsSaved { get; set; } = true;

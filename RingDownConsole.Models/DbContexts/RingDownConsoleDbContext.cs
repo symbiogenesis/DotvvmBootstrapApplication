@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace RingDownConsole.Models
 {
-    public class RingDownConsoleDbContext : IdentityDbContext<User, Role, Guid>
+    public class RingDownConsoleDbContext : IdentityDbContext<User, Role, int>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -86,7 +86,7 @@ namespace RingDownConsole.Models
                     var audit = new Audit
                     {
                         Id = Guid.NewGuid(),
-                        AuditUserId = user?.Id == null ? Guid.Empty : user.Id,
+                        AuditUserId = user?.Id == null ? 0 : user.Id,
                         IpAddress = GetRequestIP(httpContext),
                         ChangeType = changeType,
                         ObjectType = entityType.ToString(),

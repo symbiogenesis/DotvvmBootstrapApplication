@@ -15,7 +15,7 @@ namespace RingDownConsole.Models
         public string ToJson { get; set; }
         public DateTime DateCreated { get; set; }
         [ForeignKey(nameof(AuditUser))]
-        public Guid AuditUserId { get; set; }
+        public int AuditUserId { get; set; }
         public string IpAddress { get; set; }
         public string TableName { get; set; }
         public string IdentityJson { get; set; }
