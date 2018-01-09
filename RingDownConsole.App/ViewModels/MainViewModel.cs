@@ -352,6 +352,11 @@ namespace RingDownConsole.App.ViewModels
                 return PhoneStatus.NoDialTone;
             }
 
+            if (voltage < 0)
+            {
+                return PhoneStatus.NoDialTone;
+            }
+
             return null;
         }
 
