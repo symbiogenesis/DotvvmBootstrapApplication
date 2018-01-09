@@ -12,6 +12,7 @@
         private double _maxOffHookVoltage = 9.3;
         private double _minNoDialToneVoltage;
         private double _maxNoDialToneVoltage;
+        private int _intervalSeconds = 5;
 
         public double MinOnlineVoltage
         {
@@ -138,6 +139,19 @@
                 if (_maxNoDialToneVoltage != value)
                 {
                     _maxNoDialToneVoltage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int IntervalSeconds
+        {
+            get { return _intervalSeconds; }
+            set
+            {
+                if (_intervalSeconds != value)
+                {
+                    _intervalSeconds = value;
                     RaisePropertyChanged();
                 }
             }
