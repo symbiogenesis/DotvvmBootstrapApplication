@@ -17,7 +17,7 @@ namespace RingDownConsole
 
         private void ConfigureRoutes(DotvvmConfiguration config)
         {
-            config.RouteTable.Add(nameof(Routes.ExampleView), "", "Views/example.dothtml");
+            config.RouteTable.Add(nameof(Routes.ExampleView), "", "Views/dashboard.dothtml");
             config.RouteTable.Add(nameof(Routes.AdminSettings), "admin/settings", "Views/Admin/settings.dothtml");
             config.RouteTable.Add(nameof(Routes.AdminUsers), "admin/users", "Views/Admin/users.dothtml");
             config.RouteTable.Add(nameof(Routes.Login), "login", "Views/login.dothtml");

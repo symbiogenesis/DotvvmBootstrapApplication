@@ -18,12 +18,12 @@
                 </dot:GridViewTemplateColumn>
                 <dot:GridViewTextColumn ValueBinding="{value: CurrentPhoneUser}" HeaderText="Location Name" AllowSorting="true" SortExpression="Name" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
                     <FilterTemplate>
-                        <dot:TextBox class="mt-1" Text="{value: Filter.Name}" Type="Search" placeholder="Filter" />
+                        <dot:TextBox class="mt-1" Text="{value: Filter.CurrentPhoneUser}" Type="Search" placeholder="Filter" />
                     </FilterTemplate>
                 </dot:GridViewTextColumn>
-                <dot:GridViewTextColumn ValueBinding="{value: RecordNum}" HeaderText="Record Number" AllowSorting="true" SortExpression="RecordNum" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
+                <dot:GridViewTextColumn ValueBinding="{value: LocationCode }" HeaderText="Record Number" AllowSorting="true" SortExpression="RecordNum" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
                     <FilterTemplate>
-                        <dot:TextBox class="mt-1" Text="{value: Filter.RecordNum}" Type="Search" placeholder="Filter" />
+                        <dot:TextBox class="mt-1" Text="{value: Filter.LocationCode}" Type="Search" placeholder="Filter" />
                     </FilterTemplate>
                 </dot:GridViewTextColumn>
             </Columns>
