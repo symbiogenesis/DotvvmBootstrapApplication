@@ -15,7 +15,7 @@ namespace RingDownConsole.Models
         [ForeignKey(nameof(LocationId))]
         public virtual Location Location { get; set; }
 
-        public string StatusId { get; set; }
+        public int StatusId { get; set; }
 
         [ForeignKey(nameof(StatusId))]
         public virtual Status Status { get; set; }
