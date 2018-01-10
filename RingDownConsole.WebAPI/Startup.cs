@@ -49,7 +49,7 @@ namespace RingDownConsole.WebAPI
 
             services.AddDbContext<RingDownConsoleDbContext>(opt =>
             {
-                var connectionString = Configuration.GetValue<string>("ProcurementDb");
+                var connectionString = Configuration.GetValue<string>("RingDownConsoleDb");
                 opt.UseSqlServer(connectionString);
             });
 

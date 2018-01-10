@@ -70,17 +70,18 @@ namespace RingDownConsole
 
             services.Configure<AppSettings>(Configuration);
 
-            services.AddDbContext<RingDownConsoleDbContext>(opt =>
-            {
-                opt.UseInMemoryDatabase("RingDownConsoleDb");
-                opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
-            });
-
-            //services.AddDbContext<RingDownConsoleDbContext>(opt => {
-            //    var ringDownConsoleDb = Configuration.GetValue<string>(nameof(AppSettings.RingDownConsoleDb));
-            //    opt.UseSqlServer(ringDownConsoleDb, o => o.UseRowNumberForPaging());
+            //services.AddDbContext<RingDownConsoleDbContext>(opt =>
+            //{
+            //    opt.UseInMemoryDatabase("RingDownConsoleDb");
             //    opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             //});
+
+            services.AddDbContext<RingDownConsoleDbContext>(opt =>
+            {
+                var ringDownConsoleDb = Configuration.GetValue<string>(nameof(AppSettings.RingDownConsoleDb));
+                opt.UseSqlServer(ringDownConsoleDb, o => o.UseRowNumberForPaging());
+                opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+            });
 
             services.AddIdentity<User, Role>(config =>
                 {
