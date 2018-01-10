@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace RingDownConsole.Models
 {
-    public class RingDownConsoleDbContext : IdentityDbContext<User, Role, int>
+    public class RingDownConsoleDbContext : IdentityDbContext
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -66,11 +66,11 @@ namespace RingDownConsole.Models
                 var httpContext = (IHttpContextAccessor)_serviceProvider.GetService(typeof(IHttpContextAccessor));
                 var currentPrincipal = httpContext?.HttpContext?.User;
 
-                User user = null;
+                IdentityUser user = null;
 
                 if (currentPrincipal != null)
                 {
-                    var userManager = (UserManager<User>)_serviceProvider.GetService(typeof(UserManager<User>));
+                    var userManager = (UserManager<IdentityUser>)_serviceProvider.GetService(typeof(UserManager<IdentityUser>));
                     user = await userManager?.GetUserAsync(currentPrincipal);
                 }
 
@@ -86,7 +86,7 @@ namespace RingDownConsole.Models
                     var audit = new Audit
                     {
                         Id = Guid.NewGuid(),
-                        AuditUserId = user?.Id == null ? 0 : user.Id,
+                        AuditUserId = user?.Id == null ? null : user.Id,
                         IpAddress = GetRequestIP(httpContext),
                         ChangeType = changeType,
                         ObjectType = entityType.ToString(),

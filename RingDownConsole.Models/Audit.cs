@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace RingDownConsole.Models
 {
@@ -15,12 +16,12 @@ namespace RingDownConsole.Models
         public string ToJson { get; set; }
         public DateTime DateCreated { get; set; }
         [ForeignKey(nameof(AuditUser))]
-        public int AuditUserId { get; set; }
+        public string AuditUserId { get; set; }
         public string IpAddress { get; set; }
         public string TableName { get; set; }
         public string IdentityJson { get; set; }
 
-        public User AuditUser { get; set; }
+        public IdentityUser AuditUser { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged
         {
