@@ -11,15 +11,15 @@ namespace RingDownConsole.Models.Utils
     public class DbInitializer : IDbInitializer
     {
         private readonly RingDownConsoleDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public DbInitializer(
             RingDownConsoleDbContext context,
             IOptionsSnapshot<AppSettings> appSettings,
-            UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -88,7 +88,7 @@ namespace RingDownConsole.Models.Utils
             {
                 if (!await _roleManager.RoleExistsAsync(name))
                 {
-                    await _roleManager.CreateAsync(new IdentityRole(name));
+                    await _roleManager.CreateAsync(new Role(name));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace RingDownConsole.Models.Utils
             if (await _userManager.FindByNameAsync(userName) != null)
                 return;
 
-            var userToCreate = new IdentityUser { UserName = userName, EmailConfirmed = true };
+            var userToCreate = new User { UserName = userName, EmailConfirmed = true };
             await _userManager.CreateAsync(userToCreate, password);
 
             var user = await _userManager.FindByNameAsync(userName);
