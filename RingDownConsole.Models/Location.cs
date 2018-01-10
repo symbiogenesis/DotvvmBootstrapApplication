@@ -10,6 +10,8 @@ namespace RingDownConsole.Models
     {
         public int Id { get; set; }
 
+        public string SerialNumber { get; set; }
+
         public string Code { get; set; }
 
         public string Name { get; set; }
