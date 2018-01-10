@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RingDownConsole.Interfaces;
 using RingDownConsole.Models.Enums;
@@ -45,7 +46,7 @@ namespace RingDownConsole.Models.Utils
 
             await CreateUsersAndRoles();
 
-            await GenerateData();
+            //await GenerateData();
 
             Initialized = true;
         }
