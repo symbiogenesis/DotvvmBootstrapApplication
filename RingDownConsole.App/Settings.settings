@@ -32,12 +32,6 @@
     <Setting Name="MaxNoDialToneVoltage" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="LocationId" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LocationName" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="IntervalSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>

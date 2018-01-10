@@ -145,30 +145,6 @@ namespace RingDownConsole.App {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double LocationId {
-            get {
-                return ((double)(this["LocationId"]));
-            }
-            set {
-                this["LocationId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double LocationName {
-            get {
-                return ((double)(this["LocationName"]));
-            }
-            set {
-                this["LocationName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int IntervalSeconds {
             get {
