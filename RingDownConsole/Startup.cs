@@ -113,7 +113,7 @@ namespace RingDownConsole
             services
                 .ConfigureApplicationCookie(options => options.LoginPath = new PathString("/login"));
 
-            services.AddScoped<ExampleRecordService>();
+            services.AddScoped<LocationStatusService>();
             services.AddScoped<SettingsService>();
             services.AddScoped<IDbInitializer, DbInitializer>();
 

@@ -6,11 +6,11 @@ using RingDownConsole.Utils.Extensions;
 
 namespace RingDownConsole.Services
 {
-    public class ExampleRecordService
+    public class LocationStatusService
     {
         private readonly RingDownConsoleDbContext _context;
 
-        public ExampleRecordService(RingDownConsoleDbContext context)
+        public LocationStatusService(RingDownConsoleDbContext context)
         {
             _context = context;
         }

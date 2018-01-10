@@ -17,7 +17,7 @@ namespace RingDownConsole.ViewModels
     [Authorize(Policy = nameof(Roles.User))]
     public class ExampleViewModel : MasterViewModel
     {
-        private readonly ExampleRecordService _exampleRecordService;
+        private readonly LocationStatusService _exampleRecordService;
         private static readonly IEnumerable<PropertyInfo> _filterStringProperties = typeof(DashboardDTO).GetProperties().Where(p => p.PropertyType == typeof(string));
         private static readonly IEnumerable<PropertyInfo> _filterListProperties = typeof(Filter).GetProperties().Where(p => p.PropertyType == typeof(IEnumerable<string>));
 
@@ -40,7 +40,7 @@ namespace RingDownConsole.ViewModels
 
         public ExampleViewModel(
             IOptionsSnapshot<AppSettings> appSettings,
-            ExampleRecordService exampleRecordService) : base(appSettings)
+            LocationStatusService exampleRecordService) : base(appSettings)
         {
             PageTitle = "Example";
 
