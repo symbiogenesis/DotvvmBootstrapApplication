@@ -12,7 +12,7 @@ namespace RingDownConsole.Models
 
         public string Name { get; set; }
 
-        public object Image { get; set; }
+        public string Image { get; set; }
 
         public string ImageName { get; set; }
 
