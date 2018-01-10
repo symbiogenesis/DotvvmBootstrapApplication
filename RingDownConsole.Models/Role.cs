@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RingDownConsole.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using TrackableEntities.Common.Core;
 
 namespace RingDownConsole.Models
 {
-    public class ExampleRecord : IIdentifiable, ITrackable, IMergeable
+    public class Role : IdentityRole<int>, IIdentifiable, ITrackable, IMergeable
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public Role() : base()
+        {
+        }
 
-        [Required]
-        public string Name { get; set; }
+        public Role(string userName) : base(userName)
+        {
+        }
 
-        public string RecordNum { get; set; }
+        [NotMapped]
+        int IIdentifiable.Id { get => base.Id; set => value = base.Id; }
 
-        public string Comments { get; set; }
-
-        public DateTime LoggedDateTime { get; set; }
+        [NotMapped]
+        public bool IsSaved { get; set; } = true;
 
         [NotMapped]
         public TrackingState TrackingState { get; set; }

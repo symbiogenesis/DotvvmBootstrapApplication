@@ -76,14 +76,14 @@ namespace RingDownConsole.ViewModels
         {
             if (sortingOptions.SortExpression == null)
             {
-                sortingOptions.SortExpression = nameof(Filter.DateTimeValue);
+                sortingOptions.SortExpression = nameof(Filter.RecordedDate);
                 sortingOptions.SortDescending = true;
             }
         }
 
         private void ForceDefaultSorting()
         {
-            const string logDateTimeValue = nameof(Filter.DateTimeValue);
+            const string logDateTimeValue = nameof(Filter.RecordedDate);
 
             if (Data.SortingOptions.SortExpression == logDateTimeValue && Data.SortingOptions.SortDescending)
                 return;

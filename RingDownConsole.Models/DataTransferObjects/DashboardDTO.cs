@@ -6,9 +6,9 @@ namespace RingDownConsole.Models
     {
         public string RecordId { get; set; }
 
-        public string Name { get; set; }
+        public string CurrentPhoneUser { get; set; }
 
-        public DateTime DateTimeValue { get; set; }
-        public string RecordNum { get; set; }
+        public DateTime RecordedDate { get; set; }
+        public string LocationCode { get; set; }
     }
 }

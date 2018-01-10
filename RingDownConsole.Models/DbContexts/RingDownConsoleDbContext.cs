@@ -15,12 +15,14 @@ using System.Threading.Tasks;
 
 namespace RingDownConsole.Models
 {
-    public class RingDownConsoleDbContext : IdentityDbContext
+    public class RingDownConsoleDbContext : IdentityDbContext<User, Role, int>
     {
         private readonly IServiceProvider _serviceProvider;
 
         public DbSet<Audit> Audits { get; set; }
-        public DbSet<ExampleRecord> ExampleTable { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationStatus> LocationStatuses { get; set; }
 
         public RingDownConsoleDbContext(DbContextOptions<RingDownConsoleDbContext> options, IServiceProvider serviceProvider) : base(options)
         {
@@ -66,11 +68,11 @@ namespace RingDownConsole.Models
                 var httpContext = (IHttpContextAccessor)_serviceProvider.GetService(typeof(IHttpContextAccessor));
                 var currentPrincipal = httpContext?.HttpContext?.User;
 
-                IdentityUser user = null;
+                User user = null;
 
                 if (currentPrincipal != null)
                 {
-                    var userManager = (UserManager<IdentityUser>)_serviceProvider.GetService(typeof(UserManager<IdentityUser>));
+                    var userManager = (UserManager<User>)_serviceProvider.GetService(typeof(UserManager<User>));
                     user = await userManager?.GetUserAsync(currentPrincipal);
                 }
 
@@ -86,7 +88,7 @@ namespace RingDownConsole.Models
                     var audit = new Audit
                     {
                         Id = Guid.NewGuid(),
-                        AuditUserId = user?.Id == null ? null : user.Id,
+                        AuditUserId = user?.Id == null ? 0 : user.Id,
                         IpAddress = GetRequestIP(httpContext),
                         ChangeType = changeType,
                         ObjectType = entityType.ToString(),

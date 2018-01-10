@@ -13,18 +13,18 @@ namespace RingDownConsole.Tests
 
         public DbContextExtensionTests()
         {
-            var data = new List<ExampleRecord>
+            var data = new List<LocationStatus>
                         {
-                            new ExampleRecord{ Name = "AAA" },
-                            new ExampleRecord{ Name = "BBB" },
-                            new ExampleRecord{ Name = "CCC" }
+                            new LocationStatus{ CurrentPhoneUser = "AAA" },
+                            new LocationStatus{ CurrentPhoneUser = "BBB" },
+                            new LocationStatus{ CurrentPhoneUser = "CCC" }
                         };
 
             // Create a mock set and context
-            var set = new Mock<DbSet<ExampleRecord>>();
+            var set = new Mock<DbSet<LocationStatus>>();
 
             var context = new Mock<RingDownConsoleDbContext>();
-            context.Setup(c => c.ExampleTable).Returns(set.Object);
+            context.Setup(c => c.LocationStatuses).Returns(set.Object);
 
             _context = context.Object;
         }
@@ -32,7 +32,7 @@ namespace RingDownConsole.Tests
         [Fact]
         public void GetTable_ExampleTableNotNull()
         {
-            var table = _context.GetTable<ExampleRecord>();
+            var table = _context.GetTable<LocationStatus>();
 
             Assert.NotNull(table);
         }
@@ -40,7 +40,7 @@ namespace RingDownConsole.Tests
         [Fact]
         public void GetTable_ExampleTableNotEmpty()
         {
-            var table = _context.GetTable<ExampleRecord>();
+            var table = _context.GetTable<LocationStatus>();
 
             Assert.NotEmpty(table);
         }
@@ -48,9 +48,9 @@ namespace RingDownConsole.Tests
         [Fact]
         public void GetTable_ExampleTableFound()
         {
-            var table = _context.GetTable<ExampleRecord>();
+            var table = _context.GetTable<LocationStatus>();
 
-            Assert.Equal(_context.ExampleTable, table);
+            Assert.Equal(_context.LocationStatuses, table);
         }
     }
 }

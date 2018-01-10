@@ -13,14 +13,18 @@ namespace RingDownConsole.Utils
         private static int _numItems;
         private static Random _rnd;
 
-        public static IList<ExampleRecord> ExampleRecords { get; private set; }
+        public static IList<Status> Statuses { get; private set; }
+        public static IList<Location> Locations { get; private set; }
+        public static IList<LocationStatus> LocationStatuses { get; private set; }
 
         public static void Generate(int count = 10)
         {
             _numItems = count;
             _rnd = new Random((int) DateTime.Now.Ticks);
 
-            ExampleRecords = Generate<ExampleRecord>().ToList();
+            Statuses = Generate<Status>().ToList();
+            Locations = Generate<Location>().ToList();
+            LocationStatuses = Generate<LocationStatus>().ToList();
         }
 
         private static IEnumerable<T> Generate<T>() where T : class, IIdentifiable, new()

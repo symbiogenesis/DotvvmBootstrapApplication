@@ -101,13 +101,14 @@ namespace RingDownConsole.ViewModels
             Log.Logger.Information(message);
         }
 
-        protected IQueryable<DashboardDTO> ConvertToDTO(IQueryable<ExampleRecord> queryable)
+        protected IQueryable<DashboardDTO> ConvertToDTO(IQueryable<LocationStatus> queryable)
         {
             return queryable.Select(record => new DashboardDTO
             {
                 RecordId = record.Id.ToString(),
-                Name = record.Name,
-                RecordNum = record.RecordNum
+                CurrentPhoneUser = record.CurrentPhoneUser,
+                LocationCode = record.Location.Code,
+                RecordedDate = record.RecordedDate
             });
         }
     }

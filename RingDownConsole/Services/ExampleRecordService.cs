@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using RingDownConsole.Models;
 using RingDownConsole.Utils.Extensions;
 
@@ -15,22 +15,27 @@ namespace RingDownConsole.Services
             _context = context;
         }
 
-        internal async Task Submit(ExampleRecord record)
+        internal async Task Submit(LocationStatus record)
         {
             await _context.AddAsync(record);
 
             await _context.SaveChangesAsync();
         }
 
-        internal ExampleRecord Get(int id)
+        internal LocationStatus Get(int id)
         {
-            return _context.ExampleTable.First(t => t.Id == id);
+            return _context.LocationStatuses
+                            .Include(ls => ls.Location)
+                            .Include(ls => ls.Status)
+                            .First(t => t.Id == id);
         }
 
-        internal IQueryable<ExampleRecord> GetRecordRange(int maxAge)
+        internal IQueryable<LocationStatus> GetRecordRange(int maxAge)
         {
-            return _context.ExampleTable
-                .Where(t => t.LoggedDateTime.IsBetween(maxAge));
+            return _context.LocationStatuses
+                            .Include(ls => ls.Location)
+                            .Include(ls => ls.Status)
+                            .Where(t => t.RecordedDate.IsBetween(maxAge));
         }
     }
 }

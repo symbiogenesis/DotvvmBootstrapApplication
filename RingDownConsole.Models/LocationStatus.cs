@@ -12,7 +12,13 @@ namespace RingDownConsole.Models
 
         public int LocationId { get; set; }
 
+        [ForeignKey(nameof(LocationId))]
+        public virtual Location Location { get; set; }
+
         public string StatusId { get; set; }
+
+        [ForeignKey(nameof(StatusId))]
+        public virtual Status Status { get; set; }
 
         public string CurrentPhoneUser { get; set; }
 
