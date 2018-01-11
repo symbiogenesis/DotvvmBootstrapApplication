@@ -6,12 +6,11 @@ using RingDownConsole.Interfaces;
 using RingDownConsole.Models;
 using RingDownConsole.Models.Enums;
 using RingDownConsole.Utils.Extensions;
-using TrackableEntities.Common.Core;
 
 namespace RingDownConsole.ViewModels.Admin
 {
     [Authorize(Policy = nameof(Roles.Administrator))]
-    public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup, ITrackable, IMergeable
+    public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup
     {
         public GridViewDataSet<T> Data { get; set; }
 
