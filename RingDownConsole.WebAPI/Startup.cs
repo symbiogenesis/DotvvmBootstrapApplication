@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RingDownConsole.Interfaces;
@@ -46,18 +48,32 @@ namespace RingDownConsole.WebAPI
             services.Configure<AppSettings>(Configuration);
 
             services.AddMvc();
-
+            
             services.AddDbContext<RingDownConsoleDbContext>(opt =>
             {
-                var connectionString = Configuration.GetValue<string>("RingDownConsoleDb");
-                opt.UseSqlServer(connectionString);
+                var connectionString = Configuration.GetValue<string>(nameof(AppSettings.RingDownConsoleDb));
+                opt.UseSqlServer(connectionString, o => o.UseRowNumberForPaging());
+                opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
 
             //services.AddDbContext<ProcurementDbContext>(opt => opt.UseInMemoryDatabase("ProcurementDb"));
 
-            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddIdentity<User, Role>(config =>
+            {
+                config.Password.RequireDigit = false;
+                config.Password.RequiredLength = 0;
+                config.Password.RequiredUniqueChars = 0;
+                config.Password.RequireLowercase = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
+            })
+            .AddEntityFrameworkStores<RingDownConsoleDbContext>()
+            .AddDefaultTokenProviders();
+
 
             services.AddAuthentication();
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             _clientUri = Configuration.GetValue<string>("ClientUri");
 
