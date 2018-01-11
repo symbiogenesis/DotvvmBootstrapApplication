@@ -1,14 +1,11 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using RingDownConsole.Interfaces;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-using TrackableEntities.Common.Core;
+using RingDownConsole.Interfaces;
 
 namespace RingDownConsole.Models
 {
-    public class User : IdentityUser<int>, IAdminLookup, ITrackable, IMergeable
+    public class User : IdentityUser<int>, IAdminLookup
     {
         public User() : base()
         {
@@ -37,14 +34,5 @@ namespace RingDownConsole.Models
         [NotMapped]
         [JsonIgnore]
         public string Comments { get; set; }
-
-        [NotMapped]
-        public TrackingState TrackingState { get; set; }
-
-        [NotMapped]
-        public ICollection<string> ModifiedProperties { get; set; }
-
-        [NotMapped]
-        public Guid EntityIdentifier { get; set; }
     }
 }

@@ -47,7 +47,6 @@
         <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="5.5.0" />
-        <PackageReference Include="TrackableEntities.EF.Core" Version="1.0.0-beta" />
     </ItemGroup>
     <ItemGroup>
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.7" />
