@@ -21,6 +21,8 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
+        private readonly HttpClient _httpClient;
+
         private string _errorMessage = "Device not found";
         private string _serialNumber;
         private bool _showSettings;
@@ -35,7 +37,6 @@ namespace RingDownConsole.App.ViewModels
         private PhoneStatus? _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
-        private HttpClient _httpClient;
         private string _currentPhoneUser;
 
         public MainViewModel()
