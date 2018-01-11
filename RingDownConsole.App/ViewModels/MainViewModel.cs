@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
@@ -23,13 +21,12 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private string _locationId = "FFATOW01";
-        private string _locationName = "FAA Tower";
         private string _errorMessage = "Device not found";
         private string _serialNumber;
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
+        private Location _location;
         private Device _targetDevice;
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
@@ -119,28 +116,12 @@ namespace RingDownConsole.App.ViewModels
 
         public string LocationId
         {
-            get { return _locationId; }
-            set
-            {
-                if (_locationId != value)
-                {
-                    _locationId = value;
-                    RaisePropertyChanged();
-                }
-            }
+            get { return _location.Code; }
         }
 
         public string LocationName
         {
-            get { return _locationName; }
-            set
-            {
-                if (_locationName != value)
-                {
-                    _locationName = value;
-                    RaisePropertyChanged();
-                }
-            }
+            get { return _location.Name; }
         }
 
         public int IntervalSeconds
@@ -288,6 +269,8 @@ namespace RingDownConsole.App.ViewModels
 
                     _serialNumber = _targetDevice.Serial;
 
+                    _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
+
                     //  Send serial number as unique identifier to web service
                 }
                 else
@@ -373,7 +356,7 @@ namespace RingDownConsole.App.ViewModels
                         }
                     }
 
-                    SaveVoltageData(voltage);
+                    await SaveVoltageData(voltage);
                 }
 
                 // get the next row
@@ -418,7 +401,7 @@ namespace RingDownConsole.App.ViewModels
             return null;
         }
 
-        private void SaveVoltageData(double voltage)
+        private async Task SaveVoltageData(double voltage)
         {
             if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
             {
@@ -444,7 +427,7 @@ namespace RingDownConsole.App.ViewModels
                 }
 
                 CheckAndUpdateLastStatus();
-                SendStatusData();
+                await SendStatusData();
             }
         }
 
@@ -462,18 +445,19 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        private void SendStatusData()
+        private async Task SendStatusData()
         {
-            // send _currentPhoneStatus
-            var locationStatus = new LocationStatus();
+            var locationStatus = new LocationStatus
+            {
+                LocationId = _location.Id,
+                StatusId = (int) _currentPhoneStatus,
+                CurrentPhoneUser = _currentPhoneUser,
+                RecordedDate = DateTime.UtcNow
+            };
 
-            locationStatus.SerialNumber = _serialNumber;
-            locationStatus.StatusId = (int) _currentPhoneStatus;
-            locationStatus.CurrentPhoneUser = _currentPhoneUser;
+            var success = await _httpClient.PostDataAsync(locationStatus);
 
-            _httpClient.PostDataAsync<LocationStatus>(locationStatus);
-
-            _lastSentDate = DateTime.UtcNow;
+            _lastSentDate = locationStatus.RecordedDate;
         }
 
         private void ConfigureAnalogChannels()

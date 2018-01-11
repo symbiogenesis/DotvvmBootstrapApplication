@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using RingDownConsole.Interfaces;
 using TrackableEntities.Common.Core;
 
 namespace RingDownConsole.Models
 {
-    public class Location : ITrackable, IMergeable
+    public class Location : IIdentifiable, ITrackable, IMergeable
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+
+        public string SerialNumber { get; set; }
 
         public string Code { get; set; }
 

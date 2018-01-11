@@ -32,6 +32,12 @@ namespace RingDownConsole.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Status>().Property(s => s.IsActive).HasDefaultValue(true);
+
+            builder.Entity<Location>().Property(l => l.IsActive).HasDefaultValue(true);
+            builder.Entity<Location>().HasAlternateKey(l => l.SerialNumber);
+            builder.Entity<Location>().HasAlternateKey(l => l.Code);
         }
 
         public override int SaveChanges()

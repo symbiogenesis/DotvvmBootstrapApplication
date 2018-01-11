@@ -9,7 +9,12 @@ namespace RingDownConsole.Utils.Extensions
 {
     public static class HttpClientExtensions
     {
-        public static async Task<T> GetDataAsync<T>(this HttpClient client, int recordId) where T : class
+        public static Task<T> GetDataAsync<T>(this HttpClient client, int recordId) where T : class
+        {
+            return client.GetDataAsync<T>(recordId.ToString());
+        }
+
+        public static async Task<T> GetDataAsync<T>(this HttpClient client, string recordId) where T : class
         {
             var requestUri = $"/api/{typeof(T).Name}/{recordId}";
 
@@ -60,6 +65,23 @@ namespace RingDownConsole.Utils.Extensions
             var requestUrl = $"{typeof(T).Name}/{record.Id}";
 
             return client.DeleteAsync(requestUrl);
+        }
+    }
+
+    public static class LocationExtensions
+    {
+        public static async Task<T> GetLocationBySerialNumberAsync<T>(this HttpClient client, string serialNumber) where T : class
+        {
+            var requestUri = $"/api/{typeof(T).Name}/getlocation/{serialNumber}";
+
+            T data = null;
+            var response = await client.GetAsync(requestUri);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                data = JsonConvert.DeserializeObject<T>(responseString);
+            }
+            return data;
         }
     }
 }
