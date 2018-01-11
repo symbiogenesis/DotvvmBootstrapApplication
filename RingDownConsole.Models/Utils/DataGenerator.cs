@@ -27,13 +27,15 @@ namespace RingDownConsole.Utils
             LocationStatuses = Generate<LocationStatus>().ToList();
         }
 
-        private static IEnumerable<T> Generate<T>() where T : class, IIdentifiable, new()
+        private static IEnumerable<T> Generate<T>() where T : class, new()
         {
             var properties = typeof(T).GetProperties().Where(p => !p.CustomAttributes.Any(a => a.AttributeType != typeof(RequiredAttribute)));
 
+            var integers = new List<int>();
+
             for (var i = 0; i < _numItems; i++)
             {
-                var item = new T() { Id = i };
+                var item = new T();
 
                 foreach (var property in properties)
                 {
@@ -50,6 +52,17 @@ namespace RingDownConsole.Utils
                             break;
                         case "Boolean":
                             property.SetValue(item, _rnd.Next() % 2 == 0);
+                            break;
+                        case "Int32":
+                        case "Int64":
+                            var number = _rnd.Next();
+
+                            while (integers.Contains(number))
+                            {
+                                number = _rnd.Next();
+                            }
+
+                            property.SetValue(item, _rnd.Next());
                             break;
                     }
                 }
