@@ -63,6 +63,8 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+#region Properties
+
         public SettingsViewModel Settings
         {
             get { return _settings; }
@@ -213,6 +215,8 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+#endregion
+
         private void PopulateColors()
         {
             var colors = new List<string>();
@@ -270,7 +274,7 @@ namespace RingDownConsole.App.ViewModels
 
                     _serialNumber = _targetDevice.Serial;
 
-                    _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
+                    await GetLocation();
 
                     //  Send serial number as unique identifier to web service
                 }
@@ -297,6 +301,17 @@ namespace RingDownConsole.App.ViewModels
             await _targetDevice.QueryDeviceAsync();
 
             return true;
+        }
+
+        private async Task GetLocation()
+        {
+            try
+            {
+                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
+            }
+            catch
+            {
+            }
         }
 
         private async Task GetChannelData()
