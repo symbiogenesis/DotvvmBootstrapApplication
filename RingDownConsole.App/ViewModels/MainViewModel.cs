@@ -116,12 +116,12 @@ namespace RingDownConsole.App.ViewModels
 
         public string LocationId
         {
-            get { return _location.Code; }
+            get { return _location?.Code; }
         }
 
         public string LocationName
         {
-            get { return _location.Name; }
+            get { return _location?.Name; }
         }
 
         public int IntervalSeconds
@@ -356,7 +356,7 @@ namespace RingDownConsole.App.ViewModels
                         }
                     }
 
-                    await SaveVoltageData(voltage);
+                    SaveVoltageData(voltage);
                 }
 
                 // get the next row
@@ -401,7 +401,7 @@ namespace RingDownConsole.App.ViewModels
             return null;
         }
 
-        private async Task SaveVoltageData(double voltage)
+        private void SaveVoltageData(double voltage)
         {
             if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
             {
@@ -427,7 +427,7 @@ namespace RingDownConsole.App.ViewModels
                 }
 
                 CheckAndUpdateLastStatus();
-                await SendStatusData();
+                SendStatusData();
             }
         }
 
@@ -445,7 +445,7 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        private async Task SendStatusData()
+        private void SendStatusData()
         {
             var locationStatus = new LocationStatus
             {
@@ -455,9 +455,13 @@ namespace RingDownConsole.App.ViewModels
                 RecordedDate = DateTime.UtcNow
             };
 
-            var success = await _httpClient.PostDataAsync(locationStatus);
+            new Action(async () =>
+            {
+                var success = await _httpClient.PostDataAsync(locationStatus);
 
-            _lastSentDate = locationStatus.RecordedDate;
+                if (success.IsSuccessStatusCode)
+                    _lastSentDate = locationStatus.RecordedDate;
+            }).Invoke();
         }
 
         private void ConfigureAnalogChannels()
