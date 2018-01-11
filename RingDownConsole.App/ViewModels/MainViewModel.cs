@@ -13,6 +13,8 @@ using Dataq.Devices.DI1100;
 using Dataq.Misc;
 using Dataq.Protocols.Enums;
 using Microsoft.Win32;
+using RingDownConsole.Models;
+using RingDownConsole.Utils.Extensions;
 using Serilog;
 
 namespace RingDownConsole.App.ViewModels
@@ -24,6 +26,7 @@ namespace RingDownConsole.App.ViewModels
         private string _locationId = "FFATOW01";
         private string _locationName = "FAA Tower";
         private string _errorMessage = "Device not found";
+        private string _serialNumber;
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
@@ -36,6 +39,7 @@ namespace RingDownConsole.App.ViewModels
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
         private HttpClient _httpClient;
+        private string _currentPhoneUser;
 
         public MainViewModel()
         {
@@ -82,6 +86,19 @@ namespace RingDownConsole.App.ViewModels
                 if (_currentPhoneStatus != value)
                 {
                     _currentPhoneStatus = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string CurrentPhoneUser
+        {
+            get { return _currentPhoneUser; }
+            set
+            {
+                if (_currentPhoneUser != value)
+                {
+                    _currentPhoneUser = value;
                     RaisePropertyChanged();
                 }
             }
@@ -269,6 +286,8 @@ namespace RingDownConsole.App.ViewModels
                     //  Cast first device from generic device to specific DI-1100 type
                     _targetDevice = ((Device) (AllDevices[0]));
 
+                    _serialNumber = _targetDevice.Serial;
+
                     //  Send serial number as unique identifier to web service
                 }
                 else
@@ -446,6 +465,13 @@ namespace RingDownConsole.App.ViewModels
         private void SendStatusData()
         {
             // send _currentPhoneStatus
+            var locationStatus = new LocationStatus();
+
+            locationStatus.SerialNumber = _serialNumber;
+            locationStatus.StatusId = (int) _currentPhoneStatus;
+            locationStatus.CurrentPhoneUser = _currentPhoneUser;
+
+            _httpClient.PostDataAsync<LocationStatus>(locationStatus);
 
             _lastSentDate = DateTime.UtcNow;
         }

@@ -10,9 +10,9 @@ namespace RingDownConsole.Models
     {
         public int Id { get; set; }
 
-        public int LocationId { get; set; }
+        public string SerialNumber { get; set; }
 
-        [ForeignKey(nameof(LocationId))]
+        [ForeignKey(nameof(SerialNumber))]
         public virtual Location Location { get; set; }
 
         public int StatusId { get; set; }

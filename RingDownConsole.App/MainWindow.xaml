@@ -59,7 +59,7 @@
 
         <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="{Binding ShowNameEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Enter your name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-            <TextBox ToolTip="Enter your name" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            <TextBox ToolTip="Enter your name" Text="{Binding CurrentPhoneUser}" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
         </StackPanel>
 
 
