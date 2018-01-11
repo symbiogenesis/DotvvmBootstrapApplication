@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -22,6 +23,7 @@ namespace RingDownConsole.App.ViewModels
         private const double SAMPLE_RATE = 915.55;
 
         private readonly HttpClient _httpClient;
+        private readonly BackgroundWorker _worker;
 
         private string _errorMessage = "Device not found";
         private string _serialNumber;
@@ -34,7 +36,6 @@ namespace RingDownConsole.App.ViewModels
         private CancellationTokenSource _cancelRead;
         private int _intervalSeconds;
         private PhoneStatus? _currentPhoneStatus;
-        private PhoneStatus? _lastPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
         private string _currentPhoneUser;
@@ -43,15 +44,15 @@ namespace RingDownConsole.App.ViewModels
         {
             _settings = new SettingsViewModel();
             _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+            _worker = new BackgroundWorker();
 
             PopulateColors();
 
             SystemEvents.PowerModeChanged += OnPowerChange;
 
-            new Action(async () =>
-            {
-                await Initialize();
-            }).Invoke();
+            _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
+
+            _worker.RunWorkerAsync();
         }
 
         ~MainViewModel()
@@ -215,7 +216,18 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-#endregion
+        #endregion
+
+        private async Task GetLocation()
+        {
+            try
+            {
+                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
+            }
+            catch
+            {
+            }
+        }
 
         private void PopulateColors()
         {
@@ -235,13 +247,14 @@ namespace RingDownConsole.App.ViewModels
                 await ToggleDataAcquisition();
         }
 
-        private async void OnPowerChange(object s, PowerModeChangedEventArgs e)
+        private void OnPowerChange(object s, PowerModeChangedEventArgs e)
         {
             switch (e.Mode)
             {
                 case PowerModes.Resume:
                     //ResetUsb();
-                    await Initialize();
+                    _worker.CancelAsync();
+                    _worker.RunWorkerAsync();
                     break;
                 case PowerModes.Suspend:
                     break;
@@ -301,17 +314,6 @@ namespace RingDownConsole.App.ViewModels
             await _targetDevice.QueryDeviceAsync();
 
             return true;
-        }
-
-        private async Task GetLocation()
-        {
-            try
-            {
-                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
-            }
-            catch
-            {
-            }
         }
 
         private async Task GetChannelData()
@@ -417,7 +419,7 @@ namespace RingDownConsole.App.ViewModels
             return null;
         }
 
-        private void SaveVoltageData(double voltage)
+        private async Task SaveVoltageData(double voltage)
         {
             if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
             {
@@ -441,28 +443,19 @@ namespace RingDownConsole.App.ViewModels
                         ShowNameEntry = false;
                         break;
                 }
-
-                CheckAndUpdateLastStatus();
-                SendStatusData();
+                
+                await SendStatus();
             }
         }
 
-        private void CheckAndUpdateLastStatus()
+        private async Task SendStatus()
         {
-            if (_lastPhoneStatus == null)
+            if (_location == null)
             {
-                _lastPhoneStatus = _currentPhoneStatus;
+                await GetLocation();
                 return;
             }
 
-            if (_currentPhoneStatus != _lastPhoneStatus)
-            {
-                _lastPhoneStatus = _currentPhoneStatus.Value;
-            }
-        }
-
-        private void SendStatusData()
-        {
             var locationStatus = new LocationStatus
             {
                 LocationId = _location.Id,
@@ -471,13 +464,10 @@ namespace RingDownConsole.App.ViewModels
                 RecordedDate = DateTime.UtcNow
             };
 
-            new Action(async () =>
-            {
-                var success = await _httpClient.PostDataAsync(locationStatus);
+            var success = await _httpClient.PostDataAsync(locationStatus);
 
-                if (success.IsSuccessStatusCode)
-                    _lastSentDate = locationStatus.RecordedDate;
-            }).Invoke();
+            if (success.IsSuccessStatusCode)
+                _lastSentDate = locationStatus.RecordedDate;
         }
 
         private void ConfigureAnalogChannels()
