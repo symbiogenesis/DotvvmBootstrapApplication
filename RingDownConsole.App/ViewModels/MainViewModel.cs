@@ -159,7 +159,6 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => ShowErrorPanel,
                     CommandAction = async () => await FindDevice()
                 };
             }
@@ -171,7 +170,6 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => ShowSettings,
                     CommandAction = () => ShowSettings = false
                 };
             }
