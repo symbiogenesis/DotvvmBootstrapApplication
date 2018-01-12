@@ -14,7 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:3456/api/procurement"
+      "applicationUrl": "http://localhost:3456/api/location"
     },
     "EscortLog": {
       "commandName": "Project",
