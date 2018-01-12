@@ -53,7 +53,7 @@ namespace RingDownConsole.Utils.Extensions
 
         public static Task<HttpResponseMessage> PostDataAsync<T>(this HttpClient client, T newRecord)
         {
-            var requestUri = $"{typeof(T).Name}/";
+            var requestUri = $"/api/{typeof(T).Name}/";
 
             var data = JsonConvert.SerializeObject(newRecord);
             var httpContent = new StringContent(data, Encoding.UTF8, "application/json");
@@ -62,7 +62,7 @@ namespace RingDownConsole.Utils.Extensions
 
         public static Task<HttpResponseMessage> DeleteDataAsync<T>(this HttpClient client, T record) where T : IIdentifiable
         {
-            var requestUrl = $"{typeof(T).Name}/{record.Id}";
+            var requestUrl = $"/api/{typeof(T).Name}/{record.Id}";
 
             return client.DeleteAsync(requestUrl);
         }
