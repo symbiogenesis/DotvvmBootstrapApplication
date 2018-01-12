@@ -25,10 +25,8 @@ namespace RingDownConsole.App.ViewModels
         private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
         private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
 
-        private string _errorMessage = "Device not found";
         private bool _showSettings;
         private bool _showNameEntry;
-        private bool _showDeviceNotFound;
         private Location _location;
         private Device _targetDevice;
         private Task _taskRead;
@@ -91,19 +89,6 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        public string ErrorMessage
-        {
-            get { return _errorMessage; }
-            set
-            {
-                if (_errorMessage != value)
-                {
-                    _errorMessage = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public string LocationCode
         {
             get { return _locationCode; }
@@ -143,19 +128,6 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        public bool ShowDeviceNotFound
-        {
-            get { return _showDeviceNotFound; }
-            set
-            {
-                if (_showDeviceNotFound != value)
-                {
-                    _showDeviceNotFound = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public bool ShowNameEntry
         {
             get { return Settings.PromptForName && _showNameEntry; }
@@ -187,7 +159,7 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => ShowDeviceNotFound,
+                    CanExecuteFunc = () => ShowErrorPanel,
                     CommandAction = async () => await FindDevice()
                 };
             }
@@ -209,11 +181,19 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task GetLocation(string serialNumber)
         {
-            _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
-            if (_location != null)
+            try
             {
-                LocationCode = _location.Code;
-                LocationName = _location.Name;
+                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
+                if (_location != null)
+                {
+                    LocationCode = _location.Code;
+                    LocationName = _location.Name;
+                }
+            }
+            catch
+            {
+                ShowError("Couldn't connect to Web Service");
+                await _targetDevice.AcquisitionStopAsync();
             }
         }
 
@@ -266,7 +246,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (anyDevice)
                 {
-                    ShowDeviceNotFound = false;
+                    HideError();
 
                     Log.Information("Found a DI-1100.");
 
@@ -279,10 +259,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 else
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "No DI-1100 found.";
-                    Log.Information(ErrorMessage);
-
+                    ShowError("No DI-1100 found.");
                     return false;
                 }
             }
@@ -516,8 +493,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "Please enable at least one analog channel or digital port.";
+                    ShowError("Please enable at least one analog channel or digital port.");
 
                     // Detect if no channels are enabled, and bail if so. 
                     //MessageBox.Show(ErrorMessage, "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -540,9 +516,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (NoInputChannels)
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "Please configure at least one analog channel or digital port as an input";
-                    //MessageBox.Show(ErrorMessage, "No Inputs Enabled", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Please configure at least one analog channel or digital port as an input");
                     return;
                 }
 
