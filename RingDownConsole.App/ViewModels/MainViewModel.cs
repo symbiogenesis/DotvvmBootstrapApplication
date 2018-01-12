@@ -44,16 +44,16 @@ namespace RingDownConsole.App.ViewModels
         {
             _settings = new SettingsViewModel();
             _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
-            _worker = new BackgroundWorker();
+
+            _worker = new BackgroundWorker { WorkerReportsProgress = true };
+            _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
+            _worker.RunWorkerAsync();
 
             PopulateColors();
 
             SystemEvents.PowerModeChanged += OnPowerChange;
-
-            _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
-
-            _worker.RunWorkerAsync();
         }
+
 
         ~MainViewModel()
         {
@@ -374,7 +374,7 @@ namespace RingDownConsole.App.ViewModels
                         }
                     }
 
-                    SaveVoltageData(voltage);
+                    await SaveVoltageData(voltage);
                 }
 
                 // get the next row
@@ -443,7 +443,7 @@ namespace RingDownConsole.App.ViewModels
                         ShowNameEntry = false;
                         break;
                 }
-                
+
                 await SendStatus();
             }
         }
