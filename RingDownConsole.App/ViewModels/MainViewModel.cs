@@ -377,7 +377,7 @@ namespace RingDownConsole.App.ViewModels
                 return PhoneStatus.OnHook;
             }
 
-            return null;
+            return PhoneStatus.Unknown;
         }
 
         private async Task SaveVoltageData(double voltage)
@@ -398,7 +398,8 @@ namespace RingDownConsole.App.ViewModels
                         //}));
                         break;
                     case null:
-                        //LogError($"Voltage {voltage} does not correspond to a status");
+                        ShowNameEntry = false;
+                        LogError($"Voltage {voltage} does not correspond to a status");
                         return;
                     default:
                         ShowNameEntry = false;
