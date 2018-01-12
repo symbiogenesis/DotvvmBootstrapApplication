@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RingDownConsole.Models;
@@ -11,19 +12,21 @@ namespace RingDownConsole.WebAPI.Controllers
         {
         }
 
-        [HttpGet("getlocation/{id}")]
+        [HttpGet("getlocation/{serialNumber}")]
         public async Task<Location> GetBySerialNumber(string serialNumber)
         {
-            if (!_context.Locations.Any())
+            var any = _context.Locations.Any();
+
+            if (!any)
             {
-                return await AddLocation(serialNumber);
+                return await AddLocation(serialNumber, any);
             }
 
             var location = _context.Locations.FirstOrDefault(l => l.SerialNumber == serialNumber);
 
             if (location == default(Location))
             {
-                return await AddLocation(serialNumber);
+                return await AddLocation(serialNumber, any);
             }
             else
             {
@@ -31,9 +34,9 @@ namespace RingDownConsole.WebAPI.Controllers
             }
         }
 
-        private async Task<Location> AddLocation(string serialNumber)
+        private async Task<Location> AddLocation(string serialNumber, bool any)
         {
-            var maxId = _context.Locations.Max(l => l.Id);
+            var maxId = GetHighestLocationId(any);
 
             maxId++;
 
@@ -49,6 +52,14 @@ namespace RingDownConsole.WebAPI.Controllers
             await _context.SaveChangesAsync();
 
             return newLocation;
+        }
+
+        private int GetHighestLocationId(bool any)
+        {
+            if (any)
+                return _context.Locations.Max(l => l.Id);
+            else
+                return 1;
         }
     }
 }

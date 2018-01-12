@@ -26,7 +26,6 @@ namespace RingDownConsole.App.ViewModels
         private readonly BackgroundWorker _worker;
 
         private string _errorMessage = "Device not found";
-        private string _serialNumber;
         private bool _showSettings;
         private bool _showNameEntry;
         private bool _showDeviceNotFound;
@@ -218,11 +217,11 @@ namespace RingDownConsole.App.ViewModels
 
         #endregion
 
-        private async Task GetLocation()
+        private async Task GetLocation(string serialNumber)
         {
             try
             {
-                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(_serialNumber);
+                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
             }
             catch
             {
@@ -285,9 +284,7 @@ namespace RingDownConsole.App.ViewModels
                     //  Cast first device from generic device to specific DI-1100 type
                     _targetDevice = ((Device) (AllDevices[0]));
 
-                    _serialNumber = _targetDevice.Serial;
-
-                    await GetLocation();
+                    await GetLocation(_targetDevice.Serial);
 
                     //  Send serial number as unique identifier to web service
                 }
@@ -452,7 +449,7 @@ namespace RingDownConsole.App.ViewModels
         {
             if (_location == null)
             {
-                await GetLocation();
+                await GetLocation(_targetDevice.Serial);
                 return;
             }
 
