@@ -50,7 +50,7 @@
                 <!--<Image "{Binding CurrentPhoneStatus}" />-->
                 <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" />
                 <Label Content="Location ID:" FontWeight="Bold" />
-                <Label Content="{Binding LocationId}" />
+                <Label Content="{Binding LocationCode}" />
                 <Label  Content="Location Name:" FontWeight="Bold" />
                 <Label Content="{Binding LocationName}" />
                 <ToggleButton Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
@@ -67,9 +67,9 @@
             <Label Content="Settings Panel" Height="29" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">
                 <Label Content="Interval (seconds):" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:IntegerUpDown Value="{Binding Settings.IntervalSeconds}" />
+                <xctk:IntegerUpDown Value="{Binding Settings.IntervalSeconds}" VerticalAlignment="Center" />
                 <Label Content="Prompt for Name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <CheckBox IsChecked="{Binding Settings.PromptForName}" />
+                <CheckBox IsChecked="{Binding Settings.PromptForName}" VerticalAlignment="Center" />
             </StackPanel>
             <Label Content="Voltage Thresholds" Height="29" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">

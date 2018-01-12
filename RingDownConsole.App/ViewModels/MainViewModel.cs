@@ -37,6 +37,8 @@ namespace RingDownConsole.App.ViewModels
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
         private string _currentPhoneUser;
+        private string _locationCode;
+        private string _locationName;
 
         public MainViewModel()
         {
@@ -116,14 +118,30 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        public string LocationId
+        public string LocationCode
         {
-            get { return _location?.Code; }
+            get { return _locationCode; }
+            set
+            {
+                if (_locationCode != value)
+                {
+                    _locationCode = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public string LocationName
         {
-            get { return _location?.Name; }
+            get { return _locationName; }
+            set
+            {
+                if (_locationName != value)
+                {
+                    _locationName = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public bool ShowSettings
@@ -208,6 +226,11 @@ namespace RingDownConsole.App.ViewModels
             try
             {
                 _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
+                if (_location != null)
+                {
+                    LocationCode = _location.Code;
+                    LocationName = _location.Name;
+                }
             }
             catch
             {
