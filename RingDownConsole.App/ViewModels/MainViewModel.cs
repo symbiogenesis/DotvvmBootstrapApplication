@@ -22,8 +22,8 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private readonly HttpClient _httpClient;
-        private readonly BackgroundWorker _worker;
+        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+        private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
 
         private string _errorMessage = "Device not found";
         private bool _showSettings;
@@ -35,23 +35,20 @@ namespace RingDownConsole.App.ViewModels
         private CancellationTokenSource _cancelRead;
         private PhoneStatus? _currentPhoneStatus;
         private DateTime _lastSentDate;
-        private SettingsViewModel _settings;
         private string _currentPhoneUser;
         private string _locationCode;
         private string _locationName;
 
         public MainViewModel()
         {
-            _settings = new SettingsViewModel();
-            _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+            Settings = new SettingsViewModel();
 
-            _worker = new BackgroundWorker { WorkerReportsProgress = true };
             _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
             _worker.RunWorkerAsync();
 
-            PopulateColors();
-
             SystemEvents.PowerModeChanged += OnPowerChange;
+
+            PopulateColors();
         }
 
 
@@ -64,20 +61,9 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-#region Properties
+        #region Properties
 
-        public SettingsViewModel Settings
-        {
-            get { return _settings; }
-            set
-            {
-                if (_settings != value)
-                {
-                    _settings = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public SettingsViewModel Settings { get; }
 
         public PhoneStatus? CurrentPhoneStatus
         {
