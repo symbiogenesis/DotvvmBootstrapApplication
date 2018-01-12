@@ -209,17 +209,11 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task GetLocation(string serialNumber)
         {
-            try
+            _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
+            if (_location != null)
             {
-                _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
-                if (_location != null)
-                {
-                    LocationCode = _location.Code;
-                    LocationName = _location.Name;
-                }
-            }
-            catch
-            {
+                LocationCode = _location.Code;
+                LocationName = _location.Name;
             }
         }
 
