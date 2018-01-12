@@ -48,7 +48,7 @@ namespace RingDownConsole.WebAPI
             services.Configure<AppSettings>(Configuration);
 
             services.AddMvc();
-            
+
             services.AddDbContext<RingDownConsoleDbContext>(opt =>
             {
                 var connectionString = Configuration.GetValue<string>(nameof(AppSettings.RingDownConsoleDb));
@@ -69,7 +69,6 @@ namespace RingDownConsole.WebAPI
             })
             .AddEntityFrameworkStores<RingDownConsoleDbContext>()
             .AddDefaultTokenProviders();
-
 
             services.AddAuthentication();
 
