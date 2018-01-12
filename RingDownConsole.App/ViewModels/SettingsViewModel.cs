@@ -155,5 +155,19 @@
                 }
             }
         }
+
+        public bool PromptForName
+        {
+            get { return Settings.Default.PromptForName; }
+            set
+            {
+                if (Settings.Default.PromptForName != value)
+                {
+                    Settings.Default.PromptForName = value;
+                    Settings.Default.Save();
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

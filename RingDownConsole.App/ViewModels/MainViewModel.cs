@@ -33,7 +33,6 @@ namespace RingDownConsole.App.ViewModels
         private Device _targetDevice;
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
-        private int _intervalSeconds;
         private PhoneStatus? _currentPhoneStatus;
         private DateTime _lastSentDate;
         private SettingsViewModel _settings;
@@ -127,19 +126,6 @@ namespace RingDownConsole.App.ViewModels
             get { return _location?.Name; }
         }
 
-        public int IntervalSeconds
-        {
-            get { return _intervalSeconds; }
-            set
-            {
-                if (_intervalSeconds != value)
-                {
-                    _intervalSeconds = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public bool ShowSettings
         {
             get { return _showSettings; }
@@ -168,12 +154,12 @@ namespace RingDownConsole.App.ViewModels
 
         public bool ShowNameEntry
         {
-            get { return _showNameEntry; }
+            get { return Settings.PromptForName && _showNameEntry; }
             set
             {
                 if (_showNameEntry != value)
                 {
-                    if (value)
+                    if (Settings.PromptForName && value)
                         ShowWindow();
 
                     _showNameEntry = value;
@@ -418,7 +404,7 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task SaveVoltageData(double voltage)
         {
-            if (_lastSentDate <= DateTime.UtcNow.AddSeconds(IntervalSeconds * -1))
+            if (_lastSentDate <= DateTime.UtcNow.AddSeconds(Settings.IntervalSeconds * -1))
             {
                 CurrentPhoneStatus = GetStatus(voltage);
 

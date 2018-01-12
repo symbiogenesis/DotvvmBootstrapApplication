@@ -68,6 +68,8 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Interval (seconds):" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:IntegerUpDown Value="{Binding Settings.IntervalSeconds}" />
+                <Label Content="Prompt for Name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <CheckBox Checked="{Binding Settings.PromptForName}" />
             </StackPanel>
             <Label Content="Voltage Thresholds" Height="29" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">

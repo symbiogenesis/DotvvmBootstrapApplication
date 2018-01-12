@@ -154,5 +154,17 @@ namespace RingDownConsole.App {
                 this["IntervalSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PromptForName {
+            get {
+                return ((bool)(this["PromptForName"]));
+            }
+            set {
+                this["PromptForName"] = value;
+            }
+        }
     }
 }
