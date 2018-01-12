@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using RingDownConsole.Interfaces;
 using Newtonsoft.Json;
+using RingDownConsole.Interfaces;
 
 namespace RingDownConsole.Utils.Extensions
 {
@@ -55,8 +56,8 @@ namespace RingDownConsole.Utils.Extensions
         {
             var requestUri = $"/api/{typeof(T).Name}/";
 
-            var data = JsonConvert.SerializeObject(newRecord);
-            var httpContent = new StringContent(data, Encoding.UTF8, "application/json");
+            var serializedRecord = JsonConvert.SerializeObject(newRecord);
+            var httpContent = new StringContent(serializedRecord, Encoding.UTF8, "application/json");
             return client.PostAsync(requestUri, httpContent);
         }
 
@@ -65,23 +66,6 @@ namespace RingDownConsole.Utils.Extensions
             var requestUrl = $"/api/{typeof(T).Name}/{record.Id}";
 
             return client.DeleteAsync(requestUrl);
-        }
-    }
-
-    public static class LocationExtensions
-    {
-        public static async Task<T> GetLocationBySerialNumberAsync<T>(this HttpClient client, string serialNumber) where T : class
-        {
-            var requestUri = $"/api/{typeof(T).Name}/getlocation/{serialNumber}";
-
-            T data = null;
-            var response = await client.GetAsync(requestUri);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                data = JsonConvert.DeserializeObject<T>(responseString);
-            }
-            return data;
         }
     }
 }
