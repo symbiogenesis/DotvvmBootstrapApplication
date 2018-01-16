@@ -204,7 +204,7 @@
     <Content Include="Images\offhook_t.png" />
     <Content Include="Images\onhook_t.png" />
     <Content Include="Administration\Dashboard.aspx" />
-    <Content Include="Administration\AdminStations.aspx" />
+    <Content Include="Administration\Locations.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
     <Content Include="Administration\AdminStatuses.aspx" />
@@ -336,12 +336,12 @@
     <Compile Include="Administration\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\AdminStations.aspx.cs">
-      <DependentUpon>AdminStations.aspx</DependentUpon>
+    <Compile Include="Administration\Locations.aspx.cs">
+      <DependentUpon>Locations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administration\AdminStations.aspx.designer.cs">
-      <DependentUpon>AdminStations.aspx</DependentUpon>
+    <Compile Include="Administration\Locations.aspx.designer.cs">
+      <DependentUpon>Locations.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\rdccReports.aspx.cs">
       <DependentUpon>rdccReports.aspx</DependentUpon>
