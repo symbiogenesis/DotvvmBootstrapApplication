@@ -241,7 +241,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
     <Content Include="Administration\Statuses.aspx" />
-    <Content Include="RDCC\MainConsole.aspx" />
+    <Content Include="RDCC\Default.aspx" />
     <Content Include="Administration\Register.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Reports\rdccLNbySNReport.aspx" />
@@ -383,12 +383,12 @@
     <Compile Include="Administration\Statuses.aspx.designer.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RDCC\MainConsole.aspx.cs">
-      <DependentUpon>MainConsole.aspx</DependentUpon>
+    <Compile Include="RDCC\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RDCC\MainConsole.aspx.designer.cs">
-      <DependentUpon>MainConsole.aspx</DependentUpon>
+    <Compile Include="RDCC\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
