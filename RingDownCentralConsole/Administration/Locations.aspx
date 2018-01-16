@@ -22,7 +22,7 @@
 
     <div  class="center-div">
 
-      Stations
+      Locations
 
     </div>
 
@@ -43,45 +43,45 @@
 <asp:GridView ID="GridView1" runat="server"  Width = "550px" AutoGenerateColumns = "false" Font-Names = "Arial" Font-Size = "11pt" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "true" 
 OnPageIndexChanging = "OnPaging" onrowediting="EditLocation" onrowupdating="UpdateLocation"  onrowcancelingedit="CancelEdit"
-PageSize = "100" EmptyDataText="No Station Records Entered" >
+PageSize = "100" EmptyDataText="No Location Records Entered" >
     
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false"  >
     <ItemTemplate>
-        <asp:Label ID="lblLocationId" runat="server" Text='<%# Eval("Id")%>'></asp:Label>
+        <asp:Label ID="lblId" runat="server" Text='<%# Eval("Id")%>'></asp:Label>
     </ItemTemplate>    
 </asp:TemplateField>
 
      
 
-    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location ID">
+    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Code">
     <ItemTemplate>
-        <asp:Label ID="lblLocationCode" runat="server" Text='<%# Eval("Code")%>'></asp:Label>
+        <asp:Label ID="lblCode" runat="server" Text='<%# Eval("Code")%>'></asp:Label>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txtLocationCode" runat="server" Text='<%# Eval("Code")%>'></asp:TextBox>
-         <asp:RequiredFieldValidator ID="ReqLocationCode" runat="server" ControlToValidate="txtLocationCode" ErrorMessage="*" ForeColor="Red">
+        <asp:TextBox ID="txtCode" runat="server" Text='<%# Eval("Code")%>'></asp:TextBox>
+         <asp:RequiredFieldValidator ID="ReqCode" runat="server" ControlToValidate="txtCode" ErrorMessage="*" ForeColor="Red">
          </asp:RequiredFieldValidator>
     </EditItemTemplate> 
     <FooterTemplate>
-        <asp:TextBox ID="txtLocationCode" Width = "200px" MaxLength = "60" runat="server"></asp:TextBox>     
-         <asp:RequiredFieldValidator ID="ReqLocationCode" runat="server" ControlToValidate="txtLocationCode" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
+        <asp:TextBox ID="txtCode" Width = "200px" MaxLength = "60" runat="server"></asp:TextBox>     
+         <asp:RequiredFieldValidator ID="ReqCode" runat="server" ControlToValidate="txtCode" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
          </asp:RequiredFieldValidator>
     </FooterTemplate>
 </asp:TemplateField>
     
 <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Name"  >
      <ItemTemplate>
-         <asp:Label ID="lblLocationName" runat="server" Text='<%# Eval("Name")%>'></asp:Label>
+         <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name")%>'></asp:Label>
      </ItemTemplate>
     <EditItemTemplate>
-         <asp:TextBox ID="txtLocationName" runat="server" Text='<%# Eval("Name")%>'></asp:TextBox>
-           <asp:RequiredFieldValidator ID="ReqLocationName" runat="server" ControlToValidate="txtLocationName" ErrorMessage="*" ForeColor="Red">
+         <asp:TextBox ID="txtName" runat="server" Text='<%# Eval("Name")%>'></asp:TextBox>
+           <asp:RequiredFieldValidator ID="ReqName" runat="server" ControlToValidate="txtName" ErrorMessage="*" ForeColor="Red">
          </asp:RequiredFieldValidator>
     </EditItemTemplate> 
     <FooterTemplate>
-       <asp:TextBox ID="txtLocationName" Width = "200px" MaxLength = "60" runat="server"></asp:TextBox>  
-          <asp:RequiredFieldValidator ID="ReqLocationName" runat="server" ControlToValidate="txtLocationName" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
+       <asp:TextBox ID="txtName" Width = "200px" MaxLength = "60" runat="server"></asp:TextBox>  
+          <asp:RequiredFieldValidator ID="ReqName" runat="server" ControlToValidate="txtName" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
          </asp:RequiredFieldValidator>
     </FooterTemplate>
 </asp:TemplateField>
@@ -89,7 +89,7 @@ PageSize = "100" EmptyDataText="No Station Records Entered" >
 <asp:TemplateField>
     <ItemTemplate>
         <asp:LinkButton ID="lnkRemove" runat="server" CommandArgument = '<%# Eval("Id")%>' 
-         OnClientClick = "return confirm('Would you like to inactivate this record?')" 
+         OnClientClick = "return confirm('Would you like to make this record inactive?')" 
         Text = "Inactive" OnClick = "InactivateLocation" CausesValidation="false"></asp:LinkButton>
     </ItemTemplate>
 

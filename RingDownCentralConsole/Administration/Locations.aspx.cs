@@ -29,8 +29,7 @@ namespace RingDownCentralConsole
         private void BindData()
         {
             string strQuery = "SELECT * from Locations Where IsActive=1";
-            //  SqlCommand cmd = new SqlCommand(strQuery);
-            var cmd = new SqlCommand(strQuery);
+           SqlCommand cmd = new SqlCommand(strQuery);          
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();           
         }
@@ -105,20 +104,20 @@ namespace RingDownCentralConsole
         {
             using (SqlConnection con = new SqlConnection(constr))
             {
-                string Id = ((Label)GridView1.Rows[e.RowIndex].FindControl("lblLocationId")).Text;
-                string LoationName = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtLocationName")).Text;
-                string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Code")).Text;
+                string Id = ((Label)GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
+                string Name = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtName")).Text;
+                string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text;
 
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Update Locations set Code=@Code, " +
-                     "LocationName=@LocationName where Id=@Id;Select * From Locations WHERE IsActive=1";
+                     "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
 
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
-                    cmd.Parameters.Add("@LocationName", SqlDbType.VarChar).Value = LocationName;
-                    cmd.Parameters.Add("@Code", SqlDbType.VarChar).Value = Code;
+                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
 
                     GridView1.EditIndex = -1;
                     GridView1.DataSource = GetData(cmd);
@@ -140,19 +139,19 @@ namespace RingDownCentralConsole
 
             using (SqlConnection con = new SqlConnection(constr))
             {
-                string Code = ((TextBox)GridView1.FooterRow.FindControl("txtLocationCode")).Text;
-                string LocationName = ((TextBox)GridView1.FooterRow.FindControl("txtLocationName")).Text;
+                string Code = ((TextBox)GridView1.FooterRow.FindControl("txtCode")).Text;
+                string Name = ((TextBox)GridView1.FooterRow.FindControl("txtName")).Text;
 
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     //wow made the mistake of leaving out the station id field in select statement (drove me crazzzzy!)
-                    cmd.CommandText = "Insert into tblStations (Code, LocationName, IsActive) " +
-                    "values (@Code, @LocationName, @IsActive);" +
+                    cmd.CommandText = "Insert into Locations (Code, Name, IsActive) " +
+                    "values (@Code, @Name, @IsActive);" +
                     "Select * From Locations WHERE IsActive=1";
                     cmd.Parameters.Add("@Code", SqlDbType.VarChar).Value = Code;
-                    cmd.Parameters.Add("@LocationName", SqlDbType.VarChar).Value = LocationName;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = Name;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
 
                     GridView1.DataSource = GetData(cmd);

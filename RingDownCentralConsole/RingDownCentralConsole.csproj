@@ -216,7 +216,7 @@
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
-    <Content Include="Administration\AdminStatuses.aspx" />
+    <Content Include="Administration\Statuses.aspx" />
     <Content Include="RDCC\MainConsole.aspx" />
     <Content Include="Administration\Register.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
@@ -352,12 +352,12 @@
     <Compile Include="Reports\rdccReports.aspx.designer.cs">
       <DependentUpon>rdccReports.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\AdminStatuses.aspx.cs">
-      <DependentUpon>AdminStatuses.aspx</DependentUpon>
+    <Compile Include="Administration\Statuses.aspx.cs">
+      <DependentUpon>Statuses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administration\AdminStatuses.aspx.designer.cs">
-      <DependentUpon>AdminStatuses.aspx</DependentUpon>
+    <Compile Include="Administration\Statuses.aspx.designer.cs">
+      <DependentUpon>Statuses.aspx</DependentUpon>
     </Compile>
     <Compile Include="RDCC\MainConsole.aspx.cs">
       <DependentUpon>MainConsole.aspx</DependentUpon>
