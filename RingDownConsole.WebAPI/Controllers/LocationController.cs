@@ -45,7 +45,8 @@ namespace RingDownConsole.WebAPI.Controllers
                 Id = maxId,
                 SerialNumber = serialNumber,
                 Code = serialNumber,
-                Name = serialNumber
+                Name = serialNumber,
+                IsActive = false
             };
 
             await _context.Locations.AddAsync(newLocation);
