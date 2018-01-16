@@ -11,6 +11,7 @@ using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
 using Dataq.Protocols.Enums;
+using IPrompt;
 using Microsoft.Win32;
 using RingDownConsole.Models;
 using RingDownConsole.Utils.Extensions;
@@ -184,8 +185,17 @@ namespace RingDownConsole.App.ViewModels
                 _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
                 if (_location != null)
                 {
-                    LocationCode = _location.Code;
-                    LocationName = _location.Name;
+                    if (_location.IsActive)
+                    {
+                        LocationCode = _location.Code;
+                        LocationName = _location.Name;
+                    }
+                    else
+                    {
+                        //_location.Name = IInputBox.Show("What is the Location Name?", "Location Name");
+                        //await _httpClient.PutDataAsync<Location>(_location);
+                    }
+
                 }
             }
             catch
