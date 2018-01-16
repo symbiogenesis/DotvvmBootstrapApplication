@@ -94,7 +94,7 @@ namespace RingDownConsole.Models
                     var audit = new Audit
                     {
                         Id = Guid.NewGuid(),
-                        AuditUserId = user?.Id == null ? 0 : user.Id,
+                        AuditUserId = user?.Id == null ? 1 : user.Id,
                         IpAddress = GetRequestIP(httpContext),
                         ChangeType = changeType,
                         ObjectType = entityType.ToString(),

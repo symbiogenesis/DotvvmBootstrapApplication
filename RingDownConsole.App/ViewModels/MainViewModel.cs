@@ -22,36 +22,31 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private readonly HttpClient _httpClient;
-        private readonly BackgroundWorker _worker;
+        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+        private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
 
-        private string _errorMessage = "Device not found";
         private bool _showSettings;
         private bool _showNameEntry;
-        private bool _showDeviceNotFound;
         private Location _location;
         private Device _targetDevice;
         private Task _taskRead;
         private CancellationTokenSource _cancelRead;
         private PhoneStatus? _currentPhoneStatus;
         private DateTime _lastSentDate;
-        private SettingsViewModel _settings;
         private string _currentPhoneUser;
         private string _locationCode;
         private string _locationName;
 
         public MainViewModel()
         {
-            _settings = new SettingsViewModel();
-            _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+            Settings = new SettingsViewModel();
 
-            _worker = new BackgroundWorker { WorkerReportsProgress = true };
             _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
             _worker.RunWorkerAsync();
 
-            PopulateColors();
-
             SystemEvents.PowerModeChanged += OnPowerChange;
+
+            PopulateColors();
         }
 
 
@@ -64,20 +59,9 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-#region Properties
+        #region Properties
 
-        public SettingsViewModel Settings
-        {
-            get { return _settings; }
-            set
-            {
-                if (_settings != value)
-                {
-                    _settings = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public SettingsViewModel Settings { get; }
 
         public PhoneStatus? CurrentPhoneStatus
         {
@@ -100,19 +84,6 @@ namespace RingDownConsole.App.ViewModels
                 if (_currentPhoneUser != value)
                 {
                     _currentPhoneUser = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public string ErrorMessage
-        {
-            get { return _errorMessage; }
-            set
-            {
-                if (_errorMessage != value)
-                {
-                    _errorMessage = value;
                     RaisePropertyChanged();
                 }
             }
@@ -157,19 +128,6 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        public bool ShowDeviceNotFound
-        {
-            get { return _showDeviceNotFound; }
-            set
-            {
-                if (_showDeviceNotFound != value)
-                {
-                    _showDeviceNotFound = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public bool ShowNameEntry
         {
             get { return Settings.PromptForName && _showNameEntry; }
@@ -201,7 +159,6 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => ShowDeviceNotFound,
                     CommandAction = async () => await FindDevice()
                 };
             }
@@ -213,7 +170,6 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => ShowSettings,
                     CommandAction = () => ShowSettings = false
                 };
             }
@@ -234,6 +190,8 @@ namespace RingDownConsole.App.ViewModels
             }
             catch
             {
+                ShowError("Couldn't connect to Web Service");
+                await _targetDevice.AcquisitionStopAsync();
             }
         }
 
@@ -286,7 +244,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (anyDevice)
                 {
-                    ShowDeviceNotFound = false;
+                    HideError();
 
                     Log.Information("Found a DI-1100.");
 
@@ -299,10 +257,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 else
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "No DI-1100 found.";
-                    Log.Information(ErrorMessage);
-
+                    ShowError("No DI-1100 found.");
                     return false;
                 }
             }
@@ -422,7 +377,7 @@ namespace RingDownConsole.App.ViewModels
                 return PhoneStatus.OnHook;
             }
 
-            return null;
+            return PhoneStatus.Unknown;
         }
 
         private async Task SaveVoltageData(double voltage)
@@ -443,7 +398,8 @@ namespace RingDownConsole.App.ViewModels
                         //}));
                         break;
                     case null:
-                        //LogError($"Voltage {voltage} does not correspond to a status");
+                        ShowNameEntry = false;
+                        LogError($"Voltage {voltage} does not correspond to a status");
                         return;
                     default:
                         ShowNameEntry = false;
@@ -536,8 +492,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "Please enable at least one analog channel or digital port.";
+                    ShowError("Please enable at least one analog channel or digital port.");
 
                     // Detect if no channels are enabled, and bail if so. 
                     //MessageBox.Show(ErrorMessage, "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -560,9 +515,7 @@ namespace RingDownConsole.App.ViewModels
 
                 if (NoInputChannels)
                 {
-                    ShowDeviceNotFound = true;
-                    ErrorMessage = "Please configure at least one analog channel or digital port as an input";
-                    //MessageBox.Show(ErrorMessage, "No Inputs Enabled", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Please configure at least one analog channel or digital port as an input");
                     return;
                 }
 
