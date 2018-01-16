@@ -21,15 +21,15 @@
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
                 <Columns>
-                    <asp:BoundField DataField="LocID" HeaderText="Location ID" HeaderStyle-Width="20%" HeaderStyle-Font-Size="Larger"  ItemStyle-Wrap="true"  SortExpression="LocID" />                    
-                    <asp:BoundField DataField="LocName"  HeaderText="Location Name"  HeaderStyle-Width="30%"  ItemStyle-Wrap="true" SortExpression="LocName"/>
-                    <asp:BoundField DataField="StatusName"  HeaderText="Status"  HeaderStyle-Width="20%"  ItemStyle-Wrap="true" SortExpression="StatusName"/>
+                    <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="20%"   ItemStyle-Wrap="true"  SortExpression="Code" />                    
+                    <asp:BoundField DataField="LocationName"  HeaderText="Location Name"  HeaderStyle-Width="30%"  ItemStyle-Wrap="true" SortExpression="LocationName"/>
+                    <asp:BoundField DataField="Status"  HeaderText="Status"  HeaderStyle-Width="20%"  ItemStyle-Wrap="true" SortExpression="Status"/>
                  <asp:TemplateField HeaderText="" HeaderStyle-Width="200px">  
          <ItemTemplate>  
              <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Image") %>' Height="65px" Width="85px" />  
           </ItemTemplate>             
  </asp:TemplateField>               
-                    <asp:BoundField DataField="PersonOnline"   HeaderText="Person On-line"  HeaderStyle-Width="20%"  ItemStyle-Wrap="true" SortExpression="PersonOnline"/>  
+                    
                     </Columns>
             </asp:Gridview>
         </div>

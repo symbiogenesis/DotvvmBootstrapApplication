@@ -13,22 +13,22 @@ namespace RingDownCentralConsole {
     public partial class Statuses {
         
         /// <summary>
-        /// txtStatusName control.
+        /// txtName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStatusName;
+        protected global::System.Web.UI.WebControls.TextBox txtName;
         
         /// <summary>
-        /// ReqStatusName control.
+        /// ReqName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator ReqStatusName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ReqName;
         
         /// <summary>
         /// FileUpload1 control.

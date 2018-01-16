@@ -17,25 +17,25 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
 
             if (!IsPostBack)
             {
                 //BindData();
                 BindData();
-               
+
             }
         }
-        
+
         private void BindData()
         {
-            string strQuery = "SELECT * from tblStatuses Where IsActive=1";
+            string strQuery = "SELECT * from Statuses Where IsActive=1";
             SqlCommand cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();
 
         }
-               
+
         private DataTable GetData(SqlCommand cmd)
         {
             DataTable dt = new DataTable();
@@ -53,7 +53,7 @@ namespace RingDownCentralConsole
         {
             try
             {
-                
+
                 // Before attempting to save the file, verify
                 // that the FileUpload control contains a file.
                 if (FileUpload1.HasFile)
@@ -61,7 +61,7 @@ namespace RingDownCentralConsole
                     //Since there is a file, does the file have the appropriate extension?
                     string extension = System.IO.Path.GetExtension(FileUpload1.FileName);
 
-                    if (extension == ".jpg" || extension == ".png"  || extension == ".bmp")
+                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
                     {
                         // Call a helper method routine to save the file.
                         SaveFile(FileUpload1.PostedFile);
@@ -71,12 +71,12 @@ namespace RingDownCentralConsole
                     {
                         lblResult.Text = "Only files with .jpg, .png or .bmp extensions are allowed.";
                     }
-                                       
+
                 }
 
-                
+
                 else
-                { 
+                {
                     // Notify the user that a file was not uploaded.
                     lblResult.Text = "You did not specify a file to upload.";
 
@@ -89,7 +89,7 @@ namespace RingDownCentralConsole
 
 
         }
-
+        
         void SaveFile(HttpPostedFile file)
         {
             // Specify the path to save the uploaded file to.
@@ -113,18 +113,17 @@ namespace RingDownCentralConsole
             }
             else
             {
-              
+
                 // Append the name of the file to upload to the path.
-               savePath += fileName;
+                savePath += fileName;
 
                 // Call the SaveAs method to save the uploaded
                 // file to the specified directory.
-               FileUpload1.SaveAs(savePath);
+                FileUpload1.SaveAs(savePath);
 
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    int StatusCode = int.Parse(txtStatusCode.Text.Trim());
-                    string StatusName = txtStatusName.Text.Trim();
+                    string Name = txtName.Text.Trim();
 
                     try
                     {
@@ -132,21 +131,21 @@ namespace RingDownCentralConsole
                         SqlCommand cmd = new SqlCommand();
                         cmd.CommandType = CommandType.Text;
 
-                        cmd.CommandText = "Insert into tblStatuses (StatusCode, StatusName, ImageName, Image, IsActive) " +
-                        "values (@StatusCode, @StatusName, @ImageName, @Image, @IsActive);" +
+                        cmd.CommandText = "Insert into Statuses (Name, ImageName, Image, IsActive) " +
+                        "values (@Name, @ImageName, @Image, @IsActive);" +
                         "Select * from tblStatuses Where IsActive=1";
-                        cmd.Parameters.Add("@StatusCode", SqlDbType.Int).Value = StatusCode;
-                        cmd.Parameters.Add("@StatusName", SqlDbType.NVarChar).Value = StatusName;
+                        // cmd.Parameters.Add("@StatusCode", SqlDbType.Int).Value = StatusCode;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                         cmd.Parameters.Add("@ImageName", SqlDbType.VarChar).Value = fileName;
                         cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "Images/" + fileName;
                         cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
                         GridView1.DataSource = GetData(cmd);
                         GridView1.DataBind();
                         // Notify the user that the file was saved successfully.
-                        lblResult.Text = "Your record has been inserted.";
+                        lblResult.Text = "The record has been inserted.";
 
-                        txtStatusCode.Text = string.Empty;
-                        txtStatusName.Text = string.Empty;
+                        // txtStatusCode.Text = string.Empty;
+                        txtName.Text = string.Empty;
 
                     }
                     catch (Exception ex)
@@ -156,24 +155,24 @@ namespace RingDownCentralConsole
                     }
 
                 }
-            }                   
+            }
         }
-        
+
         protected void InactivateRecord(object sender, EventArgs e)
         {
 
             using (SqlConnection con = new SqlConnection(constr))
             {
-                LinkButton lnkRemove = (LinkButton)sender;
+                LinkButton lnkRemove = (LinkButton) sender;
 
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.CommandText = "Update tblStatuses set IsActive=@IsActive Where StatusID=@StatusID;" +
-                     "Select * from tblStatuses Where IsActive=1";
-                    cmd.Parameters.Add("@StatusID", SqlDbType.Int).Value = lnkRemove.CommandArgument;
+                    cmd.CommandText = "Update Statuses set IsActive=@IsActive Where Id=@Id;" +
+                     "Select * from Statuses Where IsActive=1";
+                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = lnkRemove.CommandArgument;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
 
                     GridView1.DataSource = GetData(cmd);
@@ -191,12 +190,80 @@ namespace RingDownCentralConsole
 
         }
 
+
+
+
+
+        protected void UpdateStatus(object sender, GridViewUpdateEventArgs e)
+        {
+
+
+
+
+
+
+
+
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
+                string Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text;
+                string Code = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text;
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "Update Locations set Code=@Code, " +
+                     "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
+
+                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+
+                    GridView1.EditIndex = -1;
+                    GridView1.DataSource = GetData(cmd);
+                    GridView1.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    /*Handle error*/
+                    Msg.Text = "Connection Error in UpdateStation module" + ex;
+                }
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
             BindData();
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
         }
-                
+
+        protected void EditStatus(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindData();
+        }
+
+        protected void CancelEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindData();
+        }
+
+
     }
 }
