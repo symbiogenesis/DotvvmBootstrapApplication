@@ -50,7 +50,8 @@
      
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "false" 
-OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Entered"    onrowediting="EditStatus" onrowupdating="UpdateStatus"  onrowcancelingedit="CancelEdit" >
+OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Entered"    onrowediting="EditStatus" 
+    onrowupdating="UpdateStatus"  onrowcancelingedit="CancelEdit"  AllowSorting="true"  OnSorting="GridView1_Sorting">
  <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
@@ -69,7 +70,7 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
     </ItemTemplate>    
 </asp:TemplateField>     
        
-<asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Status Name">
+<asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Status Name" SortExpression="Name">
      <ItemTemplate>
          <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name")%>'></asp:Label>
      </ItemTemplate>  
@@ -81,7 +82,7 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
     </EditItemTemplate> 
     </asp:TemplateField>
 
-<asp:TemplateField HeaderText="Image" HeaderStyle-Width="200px">  
+<asp:TemplateField HeaderText="Image" HeaderStyle-Width="200px" >  
          <ItemTemplate>  
              <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("Image") %>' Height="70px" Width="90px" />  
           </ItemTemplate>  
@@ -94,7 +95,7 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
          </asp:RequiredFieldValidator>     
       </EditItemTemplate>
 </asp:TemplateField>
-    <asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Image Name">
+    <asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Image Name" SortExpression="ImageName">
      <ItemTemplate>
          <asp:Label ID="lblImageName" runat="server" Text='<%# Eval("ImageName")%>'></asp:Label></ItemTemplate></asp:TemplateField><asp:TemplateField>
     <ItemTemplate>
