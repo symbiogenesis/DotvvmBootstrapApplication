@@ -86,6 +86,23 @@ PageSize = "100" EmptyDataText="No Location Records Entered" >
     </FooterTemplate>
 </asp:TemplateField>
 
+    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Serial #"  >
+     <ItemTemplate>
+         <asp:Label ID="lblSerialNumber" runat="server" Text='<%# Eval("SerialNumber")%>'></asp:Label>
+     </ItemTemplate>
+    <EditItemTemplate>
+         <asp:TextBox ID="txtSerialNumber" runat="server" Text='<%# Eval("SerialNumber")%>'></asp:TextBox>
+           <asp:RequiredFieldValidator ID="ReqSerialNumber" runat="server" ControlToValidate="txtSerialNumber" ErrorMessage="*" ForeColor="Red">
+         </asp:RequiredFieldValidator>
+    </EditItemTemplate> 
+    <FooterTemplate>
+       <asp:TextBox ID="txtSerialNumber" Width = "200px" MaxLength = "80" runat="server"></asp:TextBox>  
+          <asp:RequiredFieldValidator ID="ReqSerialNumber" runat="server" ControlToValidate="txtSerialNumber" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
+         </asp:RequiredFieldValidator>
+    </FooterTemplate>
+</asp:TemplateField>
+
+
 <asp:TemplateField>
     <ItemTemplate>
         <asp:LinkButton ID="lnkRemove" runat="server" CommandArgument = '<%# Eval("Id")%>' 

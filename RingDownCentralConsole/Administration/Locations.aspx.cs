@@ -105,19 +105,21 @@ namespace RingDownCentralConsole
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string Id = ((Label)GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
-                string Name = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtName")).Text;
-                string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text;
+                string Name = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
+                string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
+                string SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();
 
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "Update Locations set Code=@Code, " +
+                    cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
                      "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
 
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
                     cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                     cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                    cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
 
                     GridView1.EditIndex = -1;
                     GridView1.DataSource = GetData(cmd);
@@ -126,7 +128,7 @@ namespace RingDownCentralConsole
                 catch (Exception ex)
                 {
                     /*Handle error*/
-                    Msg.Text = "Connection Error in UpdateStation module" + ex;
+                    Msg.Text = "Connection Error in UpdateLocation module" + ex;
                 }
 
             }
@@ -141,17 +143,19 @@ namespace RingDownCentralConsole
             {
                 string Code = ((TextBox)GridView1.FooterRow.FindControl("txtCode")).Text;
                 string Name = ((TextBox)GridView1.FooterRow.FindControl("txtName")).Text;
+                string SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text;        
 
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     //wow made the mistake of leaving out the station id field in select statement (drove me crazzzzy!)
-                    cmd.CommandText = "Insert into Locations (Code, Name, IsActive) " +
-                    "values (@Code, @Name, @IsActive);" +
+                    cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
+                    "values (@Code, @Name, @SerialNumber, @IsActive);" +
                     "Select * From Locations WHERE IsActive=1";
-                    cmd.Parameters.Add("@Code", SqlDbType.VarChar).Value = Code;
-                    cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = Name;
+                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                    cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
 
                     GridView1.DataSource = GetData(cmd);

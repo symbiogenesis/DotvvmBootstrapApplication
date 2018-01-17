@@ -7,6 +7,10 @@
 
     </div>
         <div>
+
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+            <asp:Timer ID="Timer1" runat="server" Interval="5000" ontick="Timer1_Tick"></asp:Timer>
             <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None"  Font-Size="Medium" Font-Bold="true" AutoGenerateColumns="false" width="800px" 
                 AllowSorting="True"  OnSorting="GridView1_Sorting" >
                 <AlternatingRowStyle BackColor="White" />
@@ -32,6 +36,10 @@
                     
                     </Columns>
             </asp:Gridview>
+                </ContentTemplate>
+
+
+</asp:UpdatePanel>
         </div>
 
 
