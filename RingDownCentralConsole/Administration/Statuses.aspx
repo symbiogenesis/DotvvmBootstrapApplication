@@ -97,11 +97,14 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
 </asp:TemplateField>
     <asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Image Name" SortExpression="ImageName">
      <ItemTemplate>
-         <asp:Label ID="lblImageName" runat="server" Text='<%# Eval("ImageName")%>'></asp:Label></ItemTemplate></asp:TemplateField><asp:TemplateField>
+         <asp:Label ID="lblImageName" runat="server" Text='<%# Eval("ImageName")%>'></asp:Label></ItemTemplate></asp:TemplateField>
+    <asp:TemplateField>
     <ItemTemplate>
         <asp:LinkButton ID="lnkRemove" runat="server" CausesValidation="false" CommandArgument = '<%# Eval("Id")%>' 
          OnClientClick = "return confirm('Would you like to make this record inactive?')" 
-        Text = "Inactive" OnClick = "InactivateRecord"></asp:LinkButton></ItemTemplate></asp:TemplateField>
+        Text = "Inactive" OnClick = "InactivateRecord"></asp:LinkButton>
+    </ItemTemplate>
+    </asp:TemplateField>
     <asp:CommandField  ShowEditButton="True"  ValidationGroup="GridViewFields"/>
 
 </Columns>
