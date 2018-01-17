@@ -48,10 +48,20 @@
     <asp:Label id="Msg" runat="server" ForeColor="maroon" /><br />
  
      
-<asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" Font-Names = "Arial" Font-Size = "11pt" 
+<asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "false" 
 OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Entered"    onrowediting="EditStatus" onrowupdating="UpdateStatus"  onrowcancelingedit="CancelEdit" >
-    
+ <AlternatingRowStyle BackColor="White" />
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />    
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false" >
     <ItemTemplate>

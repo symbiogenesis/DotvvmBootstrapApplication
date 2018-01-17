@@ -26,6 +26,51 @@ namespace RingDownCentralConsole
         }
 
 
+        protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            string sortExpression = e.SortExpression;
+            string direction = string.Empty;
+            string strQuery = "SELECT * from Locations Where IsActive=1";
+            SqlCommand cmd = new SqlCommand(strQuery);
+
+            if (SortDirection == SortDirection.Ascending)
+            {
+                SortDirection = SortDirection.Descending;
+                direction = " DESC";
+            }
+            else
+            {
+                SortDirection = SortDirection.Ascending;
+                direction = " ASC";
+            }
+
+            DataTable table = this.GetData(cmd);
+            table.DefaultView.Sort = sortExpression + direction;
+            GridView1.DataSource = table;
+            GridView1.DataBind();
+        }
+
+        public SortDirection SortDirection
+
+        {
+            get
+            {
+                if (ViewState["SortDirection"] == null)
+                {
+                    ViewState["SortDirection"] = SortDirection.Ascending;
+                }
+                return (SortDirection) ViewState["SortDirection"];
+            }
+            set
+            {
+                ViewState["SortDirection"] = value;
+            }
+        }
+
+
+
+
+
         private void BindData()
         {
             string strQuery = "SELECT * from Locations Where IsActive=1";
@@ -47,6 +92,8 @@ namespace RingDownCentralConsole
             sda.Fill(dt);
             return dt;
         }
+
+
 
                
         protected void InactivateLocation(object sender, EventArgs e)
@@ -79,6 +126,8 @@ namespace RingDownCentralConsole
             
            
         }
+
+
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
