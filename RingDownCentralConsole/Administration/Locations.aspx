@@ -45,7 +45,7 @@
     onrowcancelingedit="CancelEdit"
 PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridView1_Sorting" AllowSorting="true">
      <AlternatingRowStyle BackColor="White" />
-                <EditRowStyle BackColor="#2461BF" />
+                <EditRowStyle BackColor="#FEFCFF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
                 <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
