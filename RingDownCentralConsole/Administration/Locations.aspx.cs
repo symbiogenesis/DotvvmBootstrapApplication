@@ -29,7 +29,7 @@ namespace RingDownCentralConsole
         private void BindData()
         {
             string strQuery = "SELECT * from Locations Where IsActive=1";
-           SqlCommand cmd = new SqlCommand(strQuery);          
+            SqlCommand cmd = new SqlCommand(strQuery);          
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();           
         }

@@ -49,7 +49,7 @@ namespace RingDownCentralConsole
             if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
             {
              
-                string fileName = FileUpload1.FileName;
+                string fileName = FileUpload1.FileName.ToLower().Trim();
                 string savePath = Server.MapPath(string.Format("~/Images/", fileName));
                 string pathToCheck = savePath + fileName;
                 string extension = System.IO.Path.GetExtension(FileUpload1.FileName).ToLower();
@@ -152,12 +152,12 @@ namespace RingDownCentralConsole
 
             if (FileUpload2.PostedFile != null && FileUpload2.PostedFile.ContentLength > 0)
             {              
-                string fileName = FileUpload2.FileName;
+                string fileName = FileUpload2.FileName.ToLower().Trim();
                 string savePath = Server.MapPath(string.Format("~/Images/", fileName));
                 string pathToCheck = savePath + fileName;
                 string extension = System.IO.Path.GetExtension(FileUpload2.FileName).ToLower();            
                 string Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
-                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;               
+                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;                                
 
                 try
                 {
@@ -167,7 +167,7 @@ namespace RingDownCentralConsole
                         if (System.IO.File.Exists(pathToCheck))
                         {
                             // Notify the user that the file name was changed.
-                            Msg.Text = "An image with this name already exists";
+                            Msg.Text = "An image with this name already exists.  Please select a different image or change the image's file name.";
                             return;
                         }
                         else
@@ -192,8 +192,8 @@ namespace RingDownCentralConsole
                         GridView1.DataSource = GetData(cmd);
                         GridView1.DataBind();
 
-                        // Notify the user that the file was saved successfully.
-                        lblResult.Text = "The record has been updated.";
+                            // Notify the user that the file was saved successfully.
+                           lblResult.Text = "The record has been updated.";                     
 
                             // txtName.Text = string.Empty;            
                         }

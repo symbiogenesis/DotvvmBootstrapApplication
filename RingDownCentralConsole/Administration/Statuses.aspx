@@ -40,8 +40,9 @@
 
    
 
-    <asp:Button ID="upload" runat="server" Font-Bold="true" Text="Insert Record" OnClick="upload_Click"  />
-    <asp:Label ID="lblResult" runat="server" />
+    <asp:Button ID="upload" runat="server" Font-Bold="true" Text="Insert Record" OnClick="upload_Click"  /> <br /><br />
+
+    <asp:Label ID="lblResult" runat="server"  Font-Bold="true"/>
 
    
     <asp:Label id="Msg" runat="server" ForeColor="maroon" /><br />
@@ -80,12 +81,8 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
                     <asp:RegularExpressionValidator ID="reqExFileUpload2" runat="server"
                              ControlToValidate ="FileUpload2" ValidationExpression=".*((\.jpg)|(\.bmp)|(\.gif) |(\.png))"
                               ErrorMessage="Images">Images Only</asp:RegularExpressionValidator>
-         </asp:RequiredFieldValidator>          
+         </asp:RequiredFieldValidator>     
       </EditItemTemplate>
-   
-
-
-
 </asp:TemplateField>
     <asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Image Name">
      <ItemTemplate>
