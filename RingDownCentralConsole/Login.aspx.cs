@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -19,7 +20,7 @@ namespace RingDownCentralConsole
                     LogoutButton.Visible = true;
                 }
                 else
-                {
+                {                    
                     LoginForm.Visible = true;
                 }
             }
@@ -38,7 +39,7 @@ namespace RingDownCentralConsole
 
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, userIdentity);
 
-                if (userManager.IsInRole(userIdentity.GetUserId(), "Administrator" ))
+                if (userManager.IsInRole(userIdentity.GetUserId(), "Administrator"))
                     Response.Redirect("~/Administration/Dashboard.aspx");
                 else
                     Response.Redirect("~/RDCC/MainConsole.aspx");
@@ -50,7 +51,7 @@ namespace RingDownCentralConsole
             }
         }
 
-        protected void SignOut(object sender, EventArgs e)
+        public void SignOut(object sender, EventArgs e)
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();

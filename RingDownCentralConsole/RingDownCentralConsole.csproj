@@ -238,10 +238,11 @@
     <Content Include="Images\onhook_t.png" />
     <Content Include="Administration\Dashboard.aspx" />
     <Content Include="Administration\Locations.aspx" />
+    <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
     <Content Include="Administration\Statuses.aspx" />
-    <Content Include="RDCC\MainConsole.aspx" />
+    <Content Include="RDCC\Default.aspx" />
     <Content Include="Administration\Register.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Reports\rdccLNbySNReport.aspx" />
@@ -282,6 +283,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Administration\StatusesArchive.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -347,6 +349,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Administration\LocationsArchive.aspx.cs">
+      <DependentUpon>LocationsArchive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\LocationsArchive.aspx.designer.cs">
+      <DependentUpon>LocationsArchive.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -383,12 +392,12 @@
     <Compile Include="Administration\Statuses.aspx.designer.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RDCC\MainConsole.aspx.cs">
-      <DependentUpon>MainConsole.aspx</DependentUpon>
+    <Compile Include="RDCC\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RDCC\MainConsole.aspx.designer.cs">
-      <DependentUpon>MainConsole.aspx</DependentUpon>
+    <Compile Include="RDCC\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -431,6 +440,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\StatusesArchive.aspx.cs">
+      <DependentUpon>StatusesArchive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\StatusesArchive.aspx.designer.cs">
+      <DependentUpon>StatusesArchive.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

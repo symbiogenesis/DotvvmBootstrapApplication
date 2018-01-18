@@ -40,13 +40,23 @@
 
 
   
-<asp:GridView ID="GridView1" runat="server"  Width = "550px" AutoGenerateColumns = "false" Font-Names = "Arial" Font-Size = "11pt" 
-AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "true" 
-OnPageIndexChanging = "OnPaging" onrowediting="EditLocation" onrowupdating="UpdateLocation"  onrowcancelingedit="CancelEdit"
-PageSize = "100" EmptyDataText="No Location Records Entered" >
-    
+<asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
+ AllowPaging ="true"  ShowFooter = "true" OnPageIndexChanging = "OnPaging" onrowediting="EditLocation" onrowupdating="UpdateLocation"  
+    onrowcancelingedit="CancelEdit"
+PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridView1_Sorting" AllowSorting="true">
+     <AlternatingRowStyle BackColor="White" />
+                <EditRowStyle BackColor="#FEFCFF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" HorizontalAlign="Left"/>
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
 <Columns>
-    <asp:TemplateField ItemStyle-Width = "50px" visible="false"  >
+    <asp:TemplateField ItemStyle-Width = "50px" visible="false"   >
     <ItemTemplate>
         <asp:Label ID="lblId" runat="server" Text='<%# Eval("Id")%>'></asp:Label>
     </ItemTemplate>    
@@ -54,7 +64,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered" >
 
      
 
-    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Code">
+    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Code" SortExpression="Code">
     <ItemTemplate>
         <asp:Label ID="lblCode" runat="server" Text='<%# Eval("Code")%>'></asp:Label>
     </ItemTemplate>
@@ -70,7 +80,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered" >
     </FooterTemplate>
 </asp:TemplateField>
     
-<asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Name"  >
+<asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Name" SortExpression="Name"  >
      <ItemTemplate>
          <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name")%>'></asp:Label>
      </ItemTemplate>
@@ -85,6 +95,23 @@ PageSize = "100" EmptyDataText="No Location Records Entered" >
          </asp:RequiredFieldValidator>
     </FooterTemplate>
 </asp:TemplateField>
+
+    <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Serial #" SortExpression="SerialNumber" >
+     <ItemTemplate>
+         <asp:Label ID="lblSerialNumber" runat="server" Text='<%# Eval("SerialNumber")%>'></asp:Label>
+     </ItemTemplate>
+    <EditItemTemplate>
+         <asp:TextBox ID="txtSerialNumber" runat="server" Text='<%# Eval("SerialNumber")%>'></asp:TextBox>
+           <asp:RequiredFieldValidator ID="ReqSerialNumber" runat="server" ControlToValidate="txtSerialNumber" ErrorMessage="*" ForeColor="Red">
+         </asp:RequiredFieldValidator>
+    </EditItemTemplate> 
+    <FooterTemplate>
+       <asp:TextBox ID="txtSerialNumber" Width = "200px" MaxLength = "80" runat="server"></asp:TextBox>  
+          <asp:RequiredFieldValidator ID="ReqSerialNumber" runat="server" ControlToValidate="txtSerialNumber" ErrorMessage="*" ForeColor="Red" ValidationGroup="GroupFooterInsert">
+         </asp:RequiredFieldValidator>
+    </FooterTemplate>
+</asp:TemplateField>
+
 
 <asp:TemplateField>
     <ItemTemplate>
