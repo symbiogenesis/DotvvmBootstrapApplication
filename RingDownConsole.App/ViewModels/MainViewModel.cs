@@ -11,7 +11,6 @@ using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
 using Dataq.Protocols.Enums;
-using IPrompt;
 using Microsoft.Win32;
 using RingDownConsole.Models;
 using RingDownConsole.Utils.Extensions;
