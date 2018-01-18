@@ -12,13 +12,23 @@ namespace RingDownCentralConsole
     {
 
         protected void Page_Load(object sender, EventArgs e)
-        {
-            
-            //if (Role == "User")
+        {           
+
+            //if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("User")))
             //{
-                Menu1.Items.Remove(Menu1.FindItem("Locations"));
-                Menu1.Items.Remove(Menu1.FindItem("Statuses"));
-                Menu1.Items.Remove(Menu1.FindItem("Reports"));
+            //    Menu1.Visible = true;
+
+                //if (Roles.IsUserInRole("User"))
+                //{
+                //Menu1.Items.Remove(Menu1.FindItem("Locations"));
+                //Menu1.Items.Remove(Menu1.FindItem("Statuses"));
+                //Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                //}
+
+            //}
+            //else
+            //{
+            //    Menu1.Visible = false;
             //}
         }
 

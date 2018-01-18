@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.IO;
+using System.Web.Security;
 
 namespace RingDownCentralConsole
 {
@@ -17,15 +18,18 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // if (Role != "Administrator)
+            ////If authenicated and role admin
+            //if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")))
             //{
-            //    Response.Redirect("Administration/Login.aspx");            
+                if (!IsPostBack)
+                {
+                    BindData();
+                }
             //}
-
-            if (!IsPostBack)
-            {
-               BindData();
-            }
+            //else
+            //{
+            //    // Response.Redirect("Login.aspx");
+            //}
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
