@@ -2,35 +2,12 @@
 
   
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .center-div
-        {
-          text-align: center;
-          font-size: large;
-          font-weight: bold;
-        }
-        .auto-style1 {
-            height: 24px;
-        }
-        th
-    {
-        text-align:center;
-    }
-    
-    </style>
-      
-
+    <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
     <div  class="center-div">
-
       Locations
-
     </div>
-
-
     <div>
-
         <p></p>
-
     </div>
        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>

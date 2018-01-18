@@ -1,19 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="RingDownCentralConsole.Register" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .center-div
-        {
-          text-align: center;
-          font-size: large;
-          font-weight: bold;
-        }
-        
-    th
-    {
-        text-align:center;
-    }
-    </style>
-    <div class="center-div">
+     <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <div  class="center-div">
 
      New User Registration
 
