@@ -185,17 +185,8 @@ namespace RingDownConsole.App.ViewModels
                 _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
                 if (_location != null)
                 {
-                    if (_location.IsActive)
-                    {
-                        LocationCode = _location.Code;
-                        LocationName = _location.Name;
-                    }
-                    else
-                    {
-                        //_location.Name = IInputBox.Show("What is the Location Name?", "Location Name");
-                        //await _httpClient.PutDataAsync<Location>(_location);
-                    }
-
+                    LocationCode = _location.Code;
+                    LocationName = _location.Name;
                 }
             }
             catch
