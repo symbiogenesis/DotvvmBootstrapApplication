@@ -18,9 +18,14 @@ namespace RingDownCentralConsole
         
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            // if (Role != "Administrator)
+            //{
+            //    Response.Redirect("Administration/Login.aspx");            
+            //}
+
             if (!IsPostBack)
-            {
-                //BindData();
+            {               
                 BindData();                
             }            
         }

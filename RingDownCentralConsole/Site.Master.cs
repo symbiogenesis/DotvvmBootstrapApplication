@@ -9,38 +9,19 @@ using System.Web.UI.WebControls;
 namespace RingDownCentralConsole
 {
     public partial class SiteMaster : MasterPage
-    {      
-    
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
+    {
 
-        //    if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("User")))
-        //    {
-        //        Menu1.Visible = true;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            
+            //if (Role == "User")
+            //{
+                Menu1.Items.Remove(Menu1.FindItem("Locations"));
+                Menu1.Items.Remove(Menu1.FindItem("Statuses"));
+                Menu1.Items.Remove(Menu1.FindItem("Reports"));
+            //}
+        }
 
-        //        if (Page.User.IsInRole("User"))
-        //        {
-        //            // Menu1.Items[1].Enabled = false;
-        //            //Menu1.Items.RemoveAt(1);
-        //            //Menu1.Items.RemoveAt(3);
 
-                    
-        //            //MenuItem dboard = Menu1.FindItem(@"AdminDasboard");
-        //            //dboard.Items
-        //            //// Remove the Movie submenu item.
-        //            //if (dboard != null)
-        //            //{
-                        
-        //            //}
-
-        //        }        
-        //    }
-        //    else
-        //    {
-        //        Menu1.Visible = false;
-        //    }     
-        //}
-
-       
     }
 }
