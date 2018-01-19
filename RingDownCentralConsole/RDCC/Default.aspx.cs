@@ -15,7 +15,7 @@ namespace RingDownCentralConsole
     public partial class Default : System.Web.UI.Page
     {
 
-        string constr = ConfigurationManager.ConnectionStrings["csConsole"].ToString();
+        string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
         protected void Page_Load(object sender, EventArgs e)
         {

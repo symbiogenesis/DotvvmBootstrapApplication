@@ -14,7 +14,7 @@ namespace RingDownCentralConsole
 {
     public partial class StatusesArchive : System.Web.UI.Page
     {
-        string constr = ConfigurationManager.ConnectionStrings["csConsole"].ToString();
+        private readonly string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
         protected void Page_Load(object sender, EventArgs e)
         {

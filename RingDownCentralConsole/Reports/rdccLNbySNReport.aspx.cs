@@ -51,7 +51,7 @@ namespace RingDownCentralConsole.Reports
 
             private Console2 GetData(string query)
             {
-                string conString = ConfigurationManager.ConnectionStrings["csConsole"].ConnectionString;
+                string conString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 SqlCommand cmd = new SqlCommand(query);
                 using (SqlConnection con = new SqlConnection(conString))
                 {

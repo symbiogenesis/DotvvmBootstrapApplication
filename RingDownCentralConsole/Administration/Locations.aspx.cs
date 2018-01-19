@@ -11,11 +11,10 @@ using System.Web.Security;
 
 namespace RingDownCentralConsole
 {
-    public partial class Locations : System.Web.UI.Page
+    public partial class Locations : Page
     {
-      
-        string constr = ConfigurationManager.ConnectionStrings["csConsole"].ToString();
-        
+        private readonly string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //If authenicated and role admin
@@ -27,10 +26,9 @@ namespace RingDownCentralConsole
                 }
             //}
             //else
-            //{               
-            //   // Response.Redirect("Login.aspx");
+            //{
+            //    Response.Redirect("Login.aspx");
             //}
-                           
         }
 
 
