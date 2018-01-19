@@ -1,27 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageUserRoles.aspx.cs" Inherits="RingDownCentralConsole.ManageUserRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-      <style>
-        .center-div
-        {
-          text-align: center;
-          font-size: large;
-          font-weight: bold;
-        }
-        
-    th
-    {
-        text-align:center;
-    }
-
-    td 
-    {
-        vertical-align: top;
-    }
-    table {padding: 5px;}
-
-
-    </style>
-    <div class="center-div">
+      <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <div  class="center-div">
 
      Manager User Roles
 

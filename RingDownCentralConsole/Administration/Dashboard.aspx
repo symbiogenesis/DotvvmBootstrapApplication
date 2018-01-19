@@ -1,22 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="RingDownCentralConsole.Dashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .center-div
-        {
-          text-align: center;
-          font-size: large;
-          font-weight: bold;
-        }
-        .auto-style1 {
-            height: 24px;
-        }
-        th
-    {
-        text-align:center;
-    }
-    
-    </style>
-    <div class="center-div">
+    <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <div  class="center-div">
 
      Admin Dashboard (Username / Password Administration)
 

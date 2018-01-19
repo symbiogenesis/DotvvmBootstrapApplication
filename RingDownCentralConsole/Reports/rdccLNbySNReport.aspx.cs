@@ -16,9 +16,15 @@ namespace RingDownCentralConsole.Reports
         {
             protected void Page_Load(object sender, EventArgs e)
             {
+
+
+            //If authenicated and role admin
+            //if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")))
+            //{
+            if (!IsPostBack)
+            {
                 if (!IsPostBack)
                 {
-
 
                     ReportViewer1.ProcessingMode = ProcessingMode.Local;
                     ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Reports/rdccLSCount.rdlc");
@@ -33,6 +39,14 @@ namespace RingDownCentralConsole.Reports
                     ReportViewer1.LocalReport.DataSources.Clear();
                     ReportViewer1.LocalReport.DataSources.Add(datasource);
                 }
+            }
+            //}
+            //else
+            //{               
+            //   // Response.Redirect("Login.aspx");
+            //}
+
+            
             }
 
             private Console2 GetData(string query)
