@@ -1,36 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Web;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing;
-using System.Data.SqlClient;
-using System.Configuration;
-
-
-
 
 namespace RingDownCentralConsole
 {
-    public partial class Dashboard : System.Web.UI.Page
+    public partial class Dashboard : Page
     {
-        string constr = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ToString();
-        MembershipUser u;
-  
+        private readonly string constr = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ToString();
+        private MembershipUser u;
 
         protected void Page_Load(object sender, EventArgs e)
-        {         
-
+        {
             if (!IsPostBack)
                 {
                     //BindData();
                     BindData();
-                }            
-    }
-
+                }
+        }
 
         private void BindData()
         {
@@ -43,15 +34,10 @@ namespace RingDownCentralConsole
                               "ON aspnet_UsersInRoles.UserId = User_Details.UserId) INNER JOIN aspnet_Roles " +
                               "ON aspnet_UsersInRoles.RoleId = aspnet_Roles.RoleId  Order by FirstName, LastName";
 
-
-
-
             SqlCommand cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();
         }
-
-       
 
         private DataTable GetData(SqlCommand cmd)
         {
@@ -67,13 +53,12 @@ namespace RingDownCentralConsole
         }
 
         protected void ResetPassword_OnClick(object sender, EventArgs args)
-        {            
+        {
             LinkButton lnkRstPasword = (LinkButton)sender;
-           string  username = lnkRstPasword.CommandArgument;
+            string  username = lnkRstPasword.CommandArgument;
             string newPassword;
 
-            u = Membership.GetUser(username, false);         
-
+            u = Membership.GetUser(username, false);
 
             Msg.Text = "Username " + Server.HtmlEncode(username) + " not found. Please check the value and re-enter.";
 
@@ -87,8 +72,8 @@ namespace RingDownCentralConsole
             {
                 Random random = new Random();
                 int newNum = random.Next(1, 100000000);
-                newPassword = "Welcome" + Convert.ToString(newNum) + "#";              
-                u.ChangePassword(u.ResetPassword(), newPassword);               
+                newPassword = "Welcome" + Convert.ToString(newNum) + "#";
+                u.ChangePassword(u.ResetPassword(), newPassword);
 
                 //newPassword = u.GetPassword();
             }
@@ -111,10 +96,7 @@ namespace RingDownCentralConsole
             {
                 Msg.Text = "Password reset failed. Please re-enter your values and try again.";
             }
-
-           
         }
-
 
         protected void EditUser(object sender, GridViewEditEventArgs e)
         {
@@ -128,27 +110,22 @@ namespace RingDownCentralConsole
             BindData();
         }
 
-
         protected void ActivateDeactivate_OnClick(object sender, EventArgs args)
         {
-            
-                LinkButton lnkActDeactivate = (LinkButton)sender;
-                string username = lnkActDeactivate.CommandArgument;
-                u = Membership.GetUser(username, false);
-                
-
+            LinkButton lnkActDeactivate = (LinkButton)sender;
+            string username = lnkActDeactivate.CommandArgument;
+            u = Membership.GetUser(username, false);
 
             string MsgHolder = "";
 
-                //If user is already activiated, then de-activate user.  Alternatively,
-                //if user is de-activated, then activate user
-             try
-            { 
+            //If user is already activiated, then de-activate user.  Alternatively,
+            //if user is de-activated, then activate user
+            try
+            {
                 if (u.IsApproved == true)
                 {
                     u.IsApproved = false;
                     MsgHolder = " is Inactive.";
-                    
                 }
                 else
                 {
@@ -180,7 +157,7 @@ namespace RingDownCentralConsole
                 TableCell cell = e.Row.Cells[3];
                 Label Act = e.Row.Cells[3].FindControl("lblIsApproved") as Label;
                 string ActiveStatus = Act.Text;
-                
+
                 if (ActiveStatus.Contains("Active"))
                 {
                     // Use this syntax to change format of single cell
@@ -196,11 +173,11 @@ namespace RingDownCentralConsole
      
         protected void Roles_OnClick(object sender, EventArgs args)
         {
-            LinkButton lnkRoles = (LinkButton)sender;          
+            LinkButton lnkRoles = (LinkButton)sender;
             string username = lnkRoles.CommandArgument;
             u = Membership.GetUser(username, false);
             string[] rolesuserbelongto = Roles.GetRolesForUser(username);
-            string MsgHolder = "";         
+            string MsgHolder = "";
 
             try
             {
@@ -233,9 +210,7 @@ namespace RingDownCentralConsole
             {
                 Msg.Text = " Error in Roles_OnClick Routine ";
             }
-
         }
-
 
         protected void UpdateUser(object sender, GridViewUpdateEventArgs e)
         {
@@ -244,62 +219,50 @@ namespace RingDownCentralConsole
             string Email = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtEmail")).Text;
             string FirstName = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtFirstName")).Text;
             string LastName = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtLastName")).Text;      
-          
+
             string constr = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 using (SqlCommand cmd = new SqlCommand("aspnet_UpdateMembershipTables"))
                 {
-                   
                     cmd.Parameters.Add("@UserId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserID);
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar).Value = LastName;
                     cmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = Email;
 
-
                     using (SqlDataAdapter sda = new SqlDataAdapter())
                     {
                         try
-                        { 
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        sda.SelectCommand = cmd;
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
                         }
                         catch (SqlException ex)
                         {
-
                             Msg.Text = "Command Type Error" + ex;
                         }
                         using (DataTable dt = new DataTable())
                         {
-
-                            try { 
-                            sda.Fill(dt);
-                            GridView1.EditIndex = -1;
-                            GridView1.DataSource = dt;
-                            GridView1.DataBind();
-                            BindData();
-                            Msg.Text = "Record updated successfully";
+                            try
+                            {
+                                sda.Fill(dt);
+                                GridView1.EditIndex = -1;
+                                GridView1.DataSource = dt;
+                                GridView1.DataBind();
+                                BindData();
+                                Msg.Text = "Record updated successfully";
                             }
                             catch (SqlException ex)
                             {
                                 Msg.Text = "GridView /Data Fill Error" + ex;
-
                             }
                         }
                     }
                 }
-
-
-                
-            }        
-            
+            }
 
             //role code here
-                
-           
         }
-
-
     }
 }
