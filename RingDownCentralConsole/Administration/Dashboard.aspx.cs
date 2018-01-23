@@ -11,7 +11,7 @@ namespace RingDownCentralConsole
 {
     public partial class Dashboard : Page
     {
-        private readonly string constr = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ToString();
+        private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
         private MembershipUser u;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace RingDownCentralConsole
         private DataTable GetData(SqlCommand cmd)
         {
             DataTable dt = new DataTable();
-            SqlConnection con = new SqlConnection(constr);
+            SqlConnection con = new SqlConnection(_constr);
             SqlDataAdapter sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
