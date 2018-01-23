@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
-using System.Configuration;
-using System.Web.Security;
 
 namespace RingDownCentralConsole
 {
     public partial class Locations : Page
     {
-        private readonly string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+        private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +26,6 @@ namespace RingDownCentralConsole
             //    Response.Redirect("Login.aspx");
             //}
         }
-
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
         {
@@ -73,23 +68,18 @@ namespace RingDownCentralConsole
             }
         }
 
-
-
-
-
         private void BindData()
         {
             string strQuery = "SELECT * from Locations Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);          
+            SqlCommand cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
-            GridView1.DataBind();           
+            GridView1.DataBind();
         }
-
 
         private DataTable GetData(SqlCommand cmd)
         {
             DataTable dt = new DataTable();
-            SqlConnection con = new SqlConnection(constr);
+            SqlConnection con = new SqlConnection(_constr);
             SqlDataAdapter sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
@@ -99,13 +89,9 @@ namespace RingDownCentralConsole
             return dt;
         }
 
-
-
-               
         protected void InactivateLocation(object sender, EventArgs e)
-        {         
-            
-            using (SqlConnection con = new SqlConnection(constr))
+        {
+            using (SqlConnection con = new SqlConnection(_constr))
             {
                 LinkButton lnkRemove = (LinkButton)sender;
                 try
@@ -127,13 +113,8 @@ namespace RingDownCentralConsole
                     /*Handle error*/
                     Msg.Text = "Connection Error in InactivateLocation module" + ex;
                 }
-
             }
-            
-           
         }
-
-
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
@@ -141,7 +122,6 @@ namespace RingDownCentralConsole
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
         }
-
 
         protected void EditLocation(object sender, GridViewEditEventArgs e)
         {
@@ -155,18 +135,14 @@ namespace RingDownCentralConsole
             BindData();
         }
 
-
-
-      
-            
         protected void UpdateLocation(object sender, GridViewUpdateEventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(_constr))
             {
                 string Id = ((Label)GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
                 string Name = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
                 string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
-                string SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();         
+                string SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();
 
                 try
                 {
@@ -189,51 +165,41 @@ namespace RingDownCentralConsole
                     /*Handle error*/
                     Msg.Text = "Connection Error in UpdateLocation module" + ex;
                 }
-
             }
-            
         }
-              
 
         protected void AddNewLocation(object sender, EventArgs e)
         {
            
 
-            using (SqlConnection con = new SqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(_constr))
             {
                 string Code = ((TextBox)GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
                 string Name = ((TextBox)GridView1.FooterRow.FindControl("txtName")).Text.Trim();
                 string SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text.Trim();               
 
                 try
-                {                   
-                         SqlCommand cmd = new SqlCommand();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
-                        "values (@Code, @Name, @SerialNumber, @IsActive);" +
-                        "Select * From Locations WHERE IsActive=1";
-                        cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
-                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
-                        cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
-                        cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
+                    "values (@Code, @Name, @SerialNumber, @IsActive);" +
+                    "Select * From Locations WHERE IsActive=1";
+                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                    cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
+                    cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
 
-                        GridView1.DataSource = GetData(cmd);
-                        GridView1.DataBind();
-                        BindData();                    
+                    GridView1.DataSource = GetData(cmd);
+                    GridView1.DataBind();
+                    BindData();
                 }
                 catch (Exception ex)
                 {
                     /*Handle error*/
                     Msg.Text = "Connection Error in AddNewLocation module" + ex;
                 }
-
             }
-
-
         }
-
-
-
-       
     }
 }
