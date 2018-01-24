@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
 using System.Configuration;
-using System.Drawing;
-using System.Web.Security;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 
 namespace RingDownCentralConsole
 {
     public partial class Default : System.Web.UI.Page
     {
-
-        string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+        private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,7 +64,6 @@ namespace RingDownCentralConsole
                 ViewState["SortDirection"] = value;
             }
         }
-        
 
         private void BindData()
         {
@@ -85,7 +77,7 @@ namespace RingDownCentralConsole
         {
             DataTable table = new DataTable();
             // get the connection
-            using (SqlConnection conn = new SqlConnection(constr))
+            using (SqlConnection conn = new SqlConnection(_constr))
             {
                 // write the sql statement to execute
                 string sql = "SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
@@ -106,7 +98,6 @@ namespace RingDownCentralConsole
                 }
             }
             return table;
-
         }
 
         //5 second timer 
@@ -115,8 +106,5 @@ namespace RingDownCentralConsole
             GridView1.DataBind();
             BindData();
         }
-
-
-
-    }       
+    }
 }

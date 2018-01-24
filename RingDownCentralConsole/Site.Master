@@ -72,14 +72,38 @@
                             <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="Statuses"></asp:MenuItem>   
                             <asp:MenuItem NavigateUrl="~/Administration/StatusesArchive.aspx" Target="_self" Text="Statuses Archive" ToolTip="Statuses Archive" Value="StatusesArchive"></asp:MenuItem>   
                         </asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/Administration/PasswordChange.aspx" Target="_self" Text="Change Your Password" ToolTip="Change Your Password" Value="Change Your Password"></asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/Administration/LogOut.aspx" Target="_self" Text="Log Out" ToolTip="Log Out" Value="Log Out"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Account/ResetPassword.aspx" Target="_self" Text="Change Your Password" ToolTip="Change Your Password" Value="Change Your Password"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Account/Register" Target="_self" Text="Register" ToolTip="Register" Value="Register"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Account/Login" Target="_self" Text="Log In" ToolTip="Log Out" Value="Log In"></asp:MenuItem>
+
                     </Items>
                     <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
                     <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
                     <StaticSelectedStyle BackColor="#507CD1" />
                   </asp:Menu>
+                    <%--                        <asp:MenuItem>
+                            <asp:LoginView runat="server" ViewStateMode="Disabled">
+                                <AnonymousTemplate>
+                                    <asp:MenuItem NavigateUrl="~/Account/Register" Target="_self" Text="Register" ToolTip="Log Out" Value="Register"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Account/Login" Target="_self" Text="Log In" ToolTip="Log Out" Value="Log In"></asp:MenuItem>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Manage" ToolTip="Manage" Value="Manage">
+                                        Hello, <%: Context.User.Identity.GetUserName()  %> !
+                                    </asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Log off" ToolTip="Log off" Value="Log off">
+                                    </asp:MenuItem>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </asp:MenuItem>--%>
+
+                <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <LoggedInTemplate>
+                        <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                    </LoggedInTemplate>
+                </asp:LoginView>
+
         </div>
              
                 </div>

@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using Microsoft.Reporting.WebForms;
-using System.Data;
+﻿using Microsoft.Reporting.WebForms;
+using System;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.UI;
 
 namespace RingDownCentralConsole.Reports
 {
-    
-        public partial class rdccMainReport : System.Web.UI.Page
+    public partial class rdccMainReport : Page
         {
             protected void Page_Load(object sender, EventArgs e)
             {
-
-
             ////If authenicated and role admin
             //if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")))
             //{
