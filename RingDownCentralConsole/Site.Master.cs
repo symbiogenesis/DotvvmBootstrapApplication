@@ -67,6 +67,23 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //User authenticated remove login link from menu
+            if (Page.User.Identity.IsAuthenticated)
+            {
+
+                String valuePath = "Login";
+
+                // Use the FindItem method to get the Login item using
+                // its value path.
+                MenuItem item = Menu1.FindItem(valuePath);
+
+                // Indicate whether the menu item was found.
+                if (item != null)
+                {
+                    Menu1.Items.Remove(Menu1.FindItem("Login"));
+                }
+                
+            }
 
         }
 
