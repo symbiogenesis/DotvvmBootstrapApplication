@@ -66,16 +66,16 @@
                     <DynamicSelectedStyle BackColor="#507CD1" />
                     <Items>
                         <asp:MenuItem NavigateUrl="~/RDCC/Default.aspx" Target="_self" Text="Ring Down Central Console" ToolTip="Ring Down Central Console" Value="Ring Down Central Console"></asp:MenuItem> 
-                        <asp:MenuItem Text="Locations" Value="Locations">
+                        <asp:MenuItem Text="Locations" Value="Locations" Selectable="false">
                             <asp:MenuItem NavigateUrl="~/Administration/Locations.aspx" Target="_self" Text="Locations" ToolTip="Locations" Value="Locations"></asp:MenuItem> 
                             <asp:MenuItem NavigateUrl="~/Administration/LocationsArchive.aspx" Target="_self" Text="Locations Archive" ToolTip="Locations Archive" Value="LocationsArchive"></asp:MenuItem>      
                         </asp:MenuItem>
-                        <asp:MenuItem Text="Statuses" Value="Statuses">                        
+                        <asp:MenuItem Text="Statuses" Value="Statuses"  Selectable="false">                        
                             <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="Statuses"></asp:MenuItem>   
                             <asp:MenuItem NavigateUrl="~/Administration/StatusesArchive.aspx" Target="_self" Text="Statuses Archive" ToolTip="Statuses Archive" Value="StatusesArchive"></asp:MenuItem>   
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
-                          <asp:MenuItem Text="Password Management" Value="PasswordManagement">    
+                          <asp:MenuItem Text="Password Management" Value="PasswordManagement" Selectable="false">    
                         <asp:MenuItem NavigateUrl="~/Account/ResetPassword.aspx" Target="_self" Text="Reset Password" ToolTip="Reset Password" Value="ResetPassword"></asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>
 
