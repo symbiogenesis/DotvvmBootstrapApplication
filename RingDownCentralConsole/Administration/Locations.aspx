@@ -20,7 +20,7 @@
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
  AllowPaging ="true"  ShowFooter = "true" OnPageIndexChanging = "OnPaging" onrowediting="EditLocation" onrowupdating="UpdateLocation"  
     onrowcancelingedit="CancelEdit"
-PageSize = "100" EmptyDataText="No Location Records Entered"  OnSorting="GridView1_Sorting" AllowSorting="true">
+PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridView1_Sorting" AllowSorting="true">
      <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#FEFCFF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
@@ -32,7 +32,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered"  OnSorting="GridVie
                 <SortedAscendingHeaderStyle BackColor="#6D95E1" />
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
+                     <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false"   >
     <ItemTemplate>
@@ -40,7 +40,6 @@ PageSize = "100" EmptyDataText="No Location Records Entered"  OnSorting="GridVie
     </ItemTemplate>    
 </asp:TemplateField>
 
-     
 
     <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Code" SortExpression="Code">
     <ItemTemplate>
