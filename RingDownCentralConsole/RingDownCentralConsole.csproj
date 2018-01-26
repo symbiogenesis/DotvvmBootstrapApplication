@@ -141,7 +141,6 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
-    <Content Include="Administration\Dashboard.aspx" />
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\Statuses.aspx" />
@@ -175,7 +174,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\cda_logo_r.png" />
-    <Content Include="Reports\rdccLSCount.rdlc" />
     <Content Include="Reports\Report.rdlc" />
     <Content Include="Console.xsc">
       <DependentUpon>Console.xsd</DependentUpon>
@@ -188,20 +186,8 @@
     <Content Include="Console.xss">
       <DependentUpon>Console.xsd</DependentUpon>
     </Content>
-    <Content Include="Console2.xsc">
-      <DependentUpon>Console2.xsd</DependentUpon>
-    </Content>
-    <None Include="Console2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Console21.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Console2.xss">
-      <DependentUpon>Console2.xsd</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="RDCC\Default.aspx" />
-    <Content Include="Reports\rdccLNbySNReport.aspx" />
     <Content Include="Reports\rdccMainReport.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -346,13 +332,6 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Dashboard.aspx.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Dashboard.aspx.designer.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Locations.aspx.cs">
       <DependentUpon>Locations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -400,11 +379,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Console.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Console21.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Console2.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -430,13 +404,6 @@
     </Compile>
     <Compile Include="RDCC\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\rdccLNbySNReport.aspx.cs">
-      <DependentUpon>rdccLNbySNReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\rdccLNbySNReport.aspx.designer.cs">
-      <DependentUpon>rdccLNbySNReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\rdccMainReport.aspx.cs">
       <DependentUpon>rdccMainReport.aspx</DependentUpon>

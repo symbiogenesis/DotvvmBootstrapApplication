@@ -29,12 +29,6 @@
                  <asp:HyperLink ID="Report1" runat="server" NavigateUrl="~/Reports/rdccMainReport.aspx" Target="_blank" ToolTip="Report 1">Report 1</asp:HyperLink>
             </td>
         </tr>
-        <tr>
-            <td>Location by Status Name</td>
-             <td>
-                 <asp:HyperLink ID="Report2" runat="server" NavigateUrl="~/Reports/rdccLNbySNReport.aspx" Target="_blank" ToolTip="Report 2">Report 2</asp:HyperLink>
-            </td>
-        </tr>
         </table>
     
 
