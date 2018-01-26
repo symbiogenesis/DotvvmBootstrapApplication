@@ -550,30 +550,26 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="LocID">
-          <DataField>LocID</DataField>
+        <Field Name="LocationID">
+          <DataField>LocationID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="LocName">
-          <DataField>LocName</DataField>
+        <Field Name="LocationName">
+          <DataField>LocationName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="StatusCode">
-          <DataField>StatusCode</DataField>
+        <Field Name="Code">
+          <DataField>Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="StatusName">
-          <DataField>StatusName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PersonOnline">
-          <DataField>PersonOnline</DataField>
+        <Field Name="Status">
+          <DataField>Status</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Console</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\199576\source\repos\RingDownCentralConsole\RingDownCentralConsole\Console.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\199576\source\repos\RingDownConsole\RingDownCentralConsole\Console.xsd</rd:SchemaPath>
         <rd:TableName>DataTable1</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
