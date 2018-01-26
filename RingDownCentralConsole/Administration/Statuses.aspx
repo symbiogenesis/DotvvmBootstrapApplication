@@ -36,7 +36,7 @@
      
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "false" 
-OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Entered"    onrowediting="EditStatus" 
+OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Status Records Entered"    onrowediting="EditStatus" 
     onrowupdating="UpdateStatus"  onrowcancelingedit="CancelEdit"  AllowSorting="true"  OnSorting="GridView1_Sorting">
  <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#FEFCFF" />
@@ -49,6 +49,7 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Records Ente
                 <SortedAscendingHeaderStyle BackColor="#6D95E1" />
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />    
+                 <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false" >
     <ItemTemplate>

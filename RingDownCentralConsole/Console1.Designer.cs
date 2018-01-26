@@ -279,15 +279,13 @@ namespace RingDownCentralConsole {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class DataTable1DataTable : global::System.Data.TypedTableBase<DataTable1Row> {
             
-            private global::System.Data.DataColumn columnLocID;
+            private global::System.Data.DataColumn columnLocationID;
             
-            private global::System.Data.DataColumn columnLocName;
+            private global::System.Data.DataColumn columnLocationName;
             
-            private global::System.Data.DataColumn columnStatusCode;
+            private global::System.Data.DataColumn columnCode;
             
-            private global::System.Data.DataColumn columnStatusName;
-            
-            private global::System.Data.DataColumn columnPersonOnline;
+            private global::System.Data.DataColumn columnStatus;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -324,41 +322,33 @@ namespace RingDownCentralConsole {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn LocIDColumn {
+            public global::System.Data.DataColumn LocationIDColumn {
                 get {
-                    return this.columnLocID;
+                    return this.columnLocationID;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn LocNameColumn {
+            public global::System.Data.DataColumn LocationNameColumn {
                 get {
-                    return this.columnLocName;
+                    return this.columnLocationName;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn StatusCodeColumn {
+            public global::System.Data.DataColumn CodeColumn {
                 get {
-                    return this.columnStatusCode;
+                    return this.columnCode;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn StatusNameColumn {
+            public global::System.Data.DataColumn StatusColumn {
                 get {
-                    return this.columnStatusName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn PersonOnlineColumn {
-                get {
-                    return this.columnPersonOnline;
+                    return this.columnStatus;
                 }
             }
             
@@ -399,14 +389,13 @@ namespace RingDownCentralConsole {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public DataTable1Row AddDataTable1Row(string LocID, string LocName, string StatusCode, string StatusName, string PersonOnline) {
+            public DataTable1Row AddDataTable1Row(string LocationID, string LocationName, string Code, string Status) {
                 DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        LocID,
-                        LocName,
-                        StatusCode,
-                        StatusName,
-                        PersonOnline};
+                        LocationID,
+                        LocationName,
+                        Code,
+                        Status};
                 rowDataTable1Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable1Row);
                 return rowDataTable1Row;
@@ -429,26 +418,23 @@ namespace RingDownCentralConsole {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
-                this.columnLocID = base.Columns["LocID"];
-                this.columnLocName = base.Columns["LocName"];
-                this.columnStatusCode = base.Columns["StatusCode"];
-                this.columnStatusName = base.Columns["StatusName"];
-                this.columnPersonOnline = base.Columns["PersonOnline"];
+                this.columnLocationID = base.Columns["LocationID"];
+                this.columnLocationName = base.Columns["LocationName"];
+                this.columnCode = base.Columns["Code"];
+                this.columnStatus = base.Columns["Status"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
-                this.columnLocID = new global::System.Data.DataColumn("LocID", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLocID);
-                this.columnLocName = new global::System.Data.DataColumn("LocName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLocName);
-                this.columnStatusCode = new global::System.Data.DataColumn("StatusCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStatusCode);
-                this.columnStatusName = new global::System.Data.DataColumn("StatusName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStatusName);
-                this.columnPersonOnline = new global::System.Data.DataColumn("PersonOnline", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPersonOnline);
+                this.columnLocationID = new global::System.Data.DataColumn("LocationID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLocationID);
+                this.columnLocationName = new global::System.Data.DataColumn("LocationName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLocationName);
+                this.columnCode = new global::System.Data.DataColumn("Code", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCode);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -591,142 +577,114 @@ namespace RingDownCentralConsole {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string LocID {
+            public string LocationID {
                 get {
                     try {
-                        return ((string)(this[this.tableDataTable1.LocIDColumn]));
+                        return ((string)(this[this.tableDataTable1.LocationIDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'LocID\' in table \'DataTable1\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'LocationID\' in table \'DataTable1\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.LocIDColumn] = value;
+                    this[this.tableDataTable1.LocationIDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string LocName {
+            public string LocationName {
                 get {
                     try {
-                        return ((string)(this[this.tableDataTable1.LocNameColumn]));
+                        return ((string)(this[this.tableDataTable1.LocationNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'LocName\' in table \'DataTable1\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'LocationName\' in table \'DataTable1\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.LocNameColumn] = value;
+                    this[this.tableDataTable1.LocationNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string StatusCode {
+            public string Code {
                 get {
                     try {
-                        return ((string)(this[this.tableDataTable1.StatusCodeColumn]));
+                        return ((string)(this[this.tableDataTable1.CodeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'StatusCode\' in table \'DataTable1\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Code\' in table \'DataTable1\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.StatusCodeColumn] = value;
+                    this[this.tableDataTable1.CodeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string StatusName {
+            public string Status {
                 get {
                     try {
-                        return ((string)(this[this.tableDataTable1.StatusNameColumn]));
+                        return ((string)(this[this.tableDataTable1.StatusColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'StatusName\' in table \'DataTable1\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Status\' in table \'DataTable1\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.StatusNameColumn] = value;
+                    this[this.tableDataTable1.StatusColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string PersonOnline {
-                get {
-                    try {
-                        return ((string)(this[this.tableDataTable1.PersonOnlineColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PersonOnline\' in table \'DataTable1\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableDataTable1.PersonOnlineColumn] = value;
-                }
+            public bool IsLocationIDNull() {
+                return this.IsNull(this.tableDataTable1.LocationIDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsLocIDNull() {
-                return this.IsNull(this.tableDataTable1.LocIDColumn);
+            public void SetLocationIDNull() {
+                this[this.tableDataTable1.LocationIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetLocIDNull() {
-                this[this.tableDataTable1.LocIDColumn] = global::System.Convert.DBNull;
+            public bool IsLocationNameNull() {
+                return this.IsNull(this.tableDataTable1.LocationNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsLocNameNull() {
-                return this.IsNull(this.tableDataTable1.LocNameColumn);
+            public void SetLocationNameNull() {
+                this[this.tableDataTable1.LocationNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetLocNameNull() {
-                this[this.tableDataTable1.LocNameColumn] = global::System.Convert.DBNull;
+            public bool IsCodeNull() {
+                return this.IsNull(this.tableDataTable1.CodeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsStatusCodeNull() {
-                return this.IsNull(this.tableDataTable1.StatusCodeColumn);
+            public void SetCodeNull() {
+                this[this.tableDataTable1.CodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetStatusCodeNull() {
-                this[this.tableDataTable1.StatusCodeColumn] = global::System.Convert.DBNull;
+            public bool IsStatusNull() {
+                return this.IsNull(this.tableDataTable1.StatusColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsStatusNameNull() {
-                return this.IsNull(this.tableDataTable1.StatusNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetStatusNameNull() {
-                this[this.tableDataTable1.StatusNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsPersonOnlineNull() {
-                return this.IsNull(this.tableDataTable1.PersonOnlineColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetPersonOnlineNull() {
-                this[this.tableDataTable1.PersonOnlineColumn] = global::System.Convert.DBNull;
+            public void SetStatusNull() {
+                this[this.tableDataTable1.StatusColumn] = global::System.Convert.DBNull;
             }
         }
         

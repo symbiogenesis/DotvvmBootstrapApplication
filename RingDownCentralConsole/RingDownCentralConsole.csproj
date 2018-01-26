@@ -392,6 +392,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Console.cs">
+      <DependentUpon>Console.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Console1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

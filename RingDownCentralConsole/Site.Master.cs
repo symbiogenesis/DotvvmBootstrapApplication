@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Linq;
 
 namespace RingDownCentralConsole
 {
@@ -73,5 +74,24 @@ namespace RingDownCentralConsole
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
+
+
+        //protected void Menu1_DataBound(object sender, EventArgs e)
+        //{
+        //    MenuItem loginMenuItem =
+        //        new MenuItem(
+        //            LoginStatus1.LogoutText,
+        //            "logout",
+        //            LoginStatus1.LogoutImageUrl,
+        //            ClientScript.GetPostBackClientHyperlink(LoginStatus1.Controls[0], null));
+
+        //    Menu1.Items.Add(loginMenuItem);
+        //}
+
+
+       
+
+
+
     }
 }

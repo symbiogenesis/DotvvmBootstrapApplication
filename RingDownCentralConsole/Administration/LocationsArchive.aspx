@@ -36,6 +36,7 @@
                 <SortedAscendingHeaderStyle BackColor="#6D95E1" />
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                 <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false"   >
     <ItemTemplate>

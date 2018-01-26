@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled" Visible="false">Register as a new user</asp:HyperLink>
                 </p>
                 <p>
                     <%-- Enable this once you have account confirmation enabled for password reset functionality
@@ -58,7 +58,7 @@
 
         <div class="col-md-4">
             <section id="socialLoginForm">
-                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" Visible="false" />
             </section>
         </div>
     </div>

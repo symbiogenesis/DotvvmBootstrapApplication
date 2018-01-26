@@ -11,3 +11,8 @@
 th {
     text-align: center;
 }
+.norecordsstyle {
+
+    border: solid;
+    border-color: red;
+}
