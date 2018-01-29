@@ -12,18 +12,18 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //If authenicated and role admin OR User
-            //if ((Page.User.Identity.IsAuthenticated) && (Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("User")))
-            //{
-                if (!IsPostBack)
-                {
-                    BindData();
-                }
-            //}
-            //else
-            //{
-            //    // Response.Redirect("Login.aspx");
-            //}
+
+            if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator"))  || (User.IsInRole("User")))
+            {
+                    if (!IsPostBack)
+                    {
+                        BindData();
+                    }
+            }
+            else
+            {
+                Response.Redirect("/Account/Login.aspx");
+            }
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)

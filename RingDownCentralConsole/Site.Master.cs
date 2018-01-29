@@ -5,6 +5,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Linq;
+using System.Web.Providers.Entities;
 
 namespace RingDownCentralConsole
 {
@@ -57,8 +58,8 @@ namespace RingDownCentralConsole
             else
             {
                 // Validate the Anti-XSRF token
-                if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
-                    || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
+                if ((string) ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
+                    || (string) ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
                 {
                     throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
                 }
@@ -102,24 +103,15 @@ namespace RingDownCentralConsole
                     if (reports != null)
                     {
                         Menu1.Items.Remove(Menu1.FindItem("Reports"));
-                    }
-
-                    //if (managePassword != null)
-                    //{
-                    //    Menu1.Items.Remove(Menu1.FindItem("ManagePassword"));
-                    //}
-
+                    }                   
 
                     if (register != null)
                     {
                         Menu1.Items.Remove(Menu1.FindItem("Register"));
                     }
                 }
+               
 
-                else
-                {
-                    Response.Redirect("~/Error/AuthenticationMenuError.aspx");
-                }
             }
 
         }

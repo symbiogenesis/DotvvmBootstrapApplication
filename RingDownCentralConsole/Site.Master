@@ -76,8 +76,11 @@
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
                           <asp:MenuItem Text="Password Management" Value="PasswordManagement" Selectable="false">    
-                        <asp:MenuItem NavigateUrl="~/Account/ResetPassword.aspx" Target="_self" Text="Reset Password" ToolTip="Reset Password" Value="ResetPassword"></asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>
+                         <asp:MenuItem NavigateUrl="~/Account/Forgot.aspx" Target="_self" Text="Forgot Password" ToolTip="Forgot Password" Value="ForgotPassword"></asp:MenuItem>
+
+                           <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>
+                              <asp:MenuItem NavigateUrl="~/Account/ResetPassword.aspx" Target="_self" Text="Reset Password" ToolTip="Reset Password" Value="ResetPassword"></asp:MenuItem>
+                    
 
                                 </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Account/Register.aspx" Target="_self" Text="Register" ToolTip="Register" Value="Register"></asp:MenuItem>

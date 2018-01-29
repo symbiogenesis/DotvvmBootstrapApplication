@@ -17,11 +17,11 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ////If NOT authenicated and NOT role admin
-            //if ((!Page.User.Identity.IsAuthenticated) && (!Roles.IsUserInRole("Administrator")))
-            //{
-            // Response.Redirect("Login.aspx");
-            //}
+            ////If authenicated and role admin
+            if ((!User.Identity.IsAuthenticated) && (!User.IsInRole("Administrator")))
+            {            
+                Response.Redirect("/Account/Login.aspx");
+            }
         }
 
 
