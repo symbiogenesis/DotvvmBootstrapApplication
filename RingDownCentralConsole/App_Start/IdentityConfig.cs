@@ -6,6 +6,9 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using RingDownCentralConsole.Models;
+using System.Collections.Concurrent;
+using System.Net.Mail;
+using System.Text;
 
 namespace RingDownCentralConsole
 {
@@ -72,8 +75,7 @@ namespace RingDownCentralConsole
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-
-            manager.EmailService = new EmailService();
+            manager.EmailService = new SmtpEmailService();
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
@@ -98,5 +100,46 @@ namespace RingDownCentralConsole
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
-    }    
+    }
+
+    public class SmtpEmailService : IIdentityMessageService
+    {
+        readonly ConcurrentQueue<SmtpClient> _clients = new ConcurrentQueue<SmtpClient>();
+
+        public async Task SendAsync(IdentityMessage message)
+        {
+            var client = GetOrCreateSmtpClient();
+            try
+            {
+                var mailMessage = new MailMessage();
+
+                mailMessage.To.Add(new MailAddress(message.Destination));
+                mailMessage.Subject = message.Subject;
+                mailMessage.Body = message.Body;
+
+                mailMessage.BodyEncoding = Encoding.UTF8;
+                mailMessage.SubjectEncoding = Encoding.UTF8;
+                mailMessage.IsBodyHtml = true;
+
+                // there can only ever be one-1 concurrent call to SendMailAsync
+                await client.SendMailAsync(mailMessage);
+            }
+            finally
+            {
+                _clients.Enqueue(client);
+            }
+        }
+
+        private SmtpClient GetOrCreateSmtpClient()
+        {
+            SmtpClient client = null;
+            if (_clients.TryDequeue(out client))
+            {
+                return client;
+            }
+
+            client = new SmtpClient();
+            return client;
+        }
+    }
 }
