@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace RingDownCentralConsole.Error
 {
-    public partial class AuthenicationMenuError : System.Web.UI.Page
+    public partial class AuthenticationMenuError : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

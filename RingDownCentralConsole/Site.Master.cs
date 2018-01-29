@@ -82,8 +82,6 @@ namespace RingDownCentralConsole
             }
             else
             {
-
-                
                 if (Page.User.IsInRole("User"))
                 {
                     if (login != null)
@@ -122,20 +120,7 @@ namespace RingDownCentralConsole
                 {
                     Response.Redirect("~/Error/AuthenticationMenuError.aspx");
                 }
-
-
-
-
             }
-
-
-
-
-
-
-
-
-          
 
         }
 

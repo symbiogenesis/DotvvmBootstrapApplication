@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuthenicationMenuError.aspx.cs" Inherits="RingDownCentralConsole.Error.AuthenicationMenuError" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuthenticationMenuError.aspx.cs" Inherits="RingDownCentralConsole.Error.AuthenticationMenuError" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 

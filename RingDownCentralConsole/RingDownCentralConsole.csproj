@@ -158,7 +158,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Default.aspx" />
-    <Content Include="Error\AuthenicationMenuError.aspx" />
+    <Content Include="Error\AuthenticationMenuError.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -394,12 +394,12 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Error\AuthenicationMenuError.aspx.cs">
-      <DependentUpon>AuthenicationMenuError.aspx</DependentUpon>
+    <Compile Include="Error\AuthenticationMenuError.aspx.cs">
+      <DependentUpon>AuthenticationMenuError.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Error\AuthenicationMenuError.aspx.designer.cs">
-      <DependentUpon>AuthenicationMenuError.aspx</DependentUpon>
+    <Compile Include="Error\AuthenticationMenuError.aspx.designer.cs">
+      <DependentUpon>AuthenticationMenuError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
