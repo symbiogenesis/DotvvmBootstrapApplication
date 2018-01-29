@@ -67,23 +67,75 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //User authenticated remove login link from menu
-            if (Page.User.Identity.IsAuthenticated)
+
+            MenuItem login = Menu1.FindItem("Login");
+            MenuItem locations = Menu1.FindItem("Locations");
+            MenuItem statuses = Menu1.FindItem("Statuses");
+            MenuItem reports = Menu1.FindItem("Reports");
+            //MenuItem managePassword = Menu1.FindItem("ManagePassword");
+            MenuItem register = Menu1.FindItem("Register");
+
+
+            if (!Page.User.Identity.IsAuthenticated)
+            {
+                Menu1.Visible = false;
+            }
+            else
             {
 
-                String valuePath = "Login";
-
-                // Use the FindItem method to get the Login item using
-                // its value path.
-                MenuItem item = Menu1.FindItem(valuePath);
-
-                // Indicate whether the menu item was found.
-                if (item != null)
-                {
-                    Menu1.Items.Remove(Menu1.FindItem("Login"));
-                }
                 
+                if (Page.User.IsInRole("User"))
+                {
+                    if (login != null)
+                    {
+                        Menu1.Items.Remove(Menu1.FindItem("Login"));
+                    }
+
+                    if (locations != null)
+                    {
+                        Menu1.Items.Remove(Menu1.FindItem("Locations"));
+                    }
+
+                    if (statuses != null)
+                    {
+                        Menu1.Items.Remove(Menu1.FindItem("Statuses"));
+                    }
+
+                    if (reports != null)
+                    {
+                        Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                    }
+
+                    //if (managePassword != null)
+                    //{
+                    //    Menu1.Items.Remove(Menu1.FindItem("ManagePassword"));
+                    //}
+
+
+                    if (register != null)
+                    {
+                        Menu1.Items.Remove(Menu1.FindItem("Register"));
+                    }
+                }
+
+                else
+                {
+                    Response.Redirect("~/Error/AuthenticationMenuError.aspx");
+                }
+
+
+
+
             }
+
+
+
+
+
+
+
+
+          
 
         }
 

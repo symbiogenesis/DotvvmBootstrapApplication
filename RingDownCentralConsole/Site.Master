@@ -57,21 +57,21 @@
                   
                     
 
-             <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DynamicHorizontalOffset="2" 
-                 Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" StaticSubMenuIndent="10px"  orientation="Horizontal"
+             <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DynamicHorizontalOffset="2"  
+                 Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" StaticSubMenuIndent="10px"   orientation="Horizontal"
                 >
                     <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
                     <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
                     <DynamicMenuStyle BackColor="#B5C7DE" />
                     <DynamicSelectedStyle BackColor="#507CD1" />
                     <Items>
-                        <asp:MenuItem NavigateUrl="~/RDCC/Default.aspx" Target="_self" Text="Ring Down Central Console" ToolTip="Ring Down Central Console" Value="Ring Down Central Console"></asp:MenuItem> 
+                        <asp:MenuItem NavigateUrl="~/RDCC/Default.aspx" Target="_self" Text="Ring Down Central Console" ToolTip="Ring Down Central Console" Value="RDCC"></asp:MenuItem> 
                         <asp:MenuItem Text="Locations" Value="Locations" Selectable="false">
-                            <asp:MenuItem NavigateUrl="~/Administration/Locations.aspx" Target="_self" Text="Locations" ToolTip="Locations" Value="Locations"></asp:MenuItem> 
+                            <asp:MenuItem NavigateUrl="~/Administration/Locations.aspx" Target="_self" Text="Locations" ToolTip="Locations" Value="LocationsSub"></asp:MenuItem> 
                             <asp:MenuItem NavigateUrl="~/Administration/LocationsArchive.aspx" Target="_self" Text="Locations Archive" ToolTip="Locations Archive" Value="LocationsArchive"></asp:MenuItem>      
                         </asp:MenuItem>
                         <asp:MenuItem Text="Statuses" Value="Statuses"  Selectable="false">                        
-                            <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="Statuses"></asp:MenuItem>   
+                            <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="StatusesSub"></asp:MenuItem>   
                             <asp:MenuItem NavigateUrl="~/Administration/StatusesArchive.aspx" Target="_self" Text="Statuses Archive" ToolTip="Statuses Archive" Value="StatusesArchive"></asp:MenuItem>   
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
