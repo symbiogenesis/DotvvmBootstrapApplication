@@ -1,7 +1,9 @@
-﻿using Microsoft.Reporting.WebForms;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Web;
 using System.Web.UI;
 
 namespace RingDownCentralConsole.Reports
@@ -24,29 +26,31 @@ namespace RingDownCentralConsole.Reports
                                  "ON Statuses.Id = LocationStatuses.StatusId WHERE(((Locations.IsActive) = 1) AND((Statuses.IsActive) = 1)) " +
                                  "ORDER BY RecordedDate DESC, Locations.Name DESC");
 
-                    ReportDataSource datasource = new ReportDataSource("Console", dsConsole.Tables[0]);
+                    var datasource = new ReportDataSource("Console", dsConsole.Tables[0]);
                     ReportViewer1.LocalReport.DataSources.Clear();
                     ReportViewer1.LocalReport.DataSources.Add(datasource);
                 }
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
             }
 
             private Console GetData(string query)
             {
-                string conString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                SqlCommand cmd = new SqlCommand(query);
-                using (SqlConnection con = new SqlConnection(conString))
+                var conString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                var cmd = new SqlCommand(query);
+                using (var con = new SqlConnection(conString))
                 {
-                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    using (var sda = new SqlDataAdapter())
                     {
                         cmd.Connection = con;
 
                         sda.SelectCommand = cmd;
-                        using (Console dsConsole = new Console())
+                        using (var dsConsole = new Console())
                         {
                             sda.Fill(dsConsole, "DataTable1");
                             return dsConsole;

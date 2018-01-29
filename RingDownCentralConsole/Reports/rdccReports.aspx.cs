@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -19,7 +20,9 @@ namespace RingDownCentralConsole
         {
             ////If authenicated and role admin
             if ((!User.Identity.IsAuthenticated) && (!User.IsInRole("Administrator")))
-            {            
+            {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
         }

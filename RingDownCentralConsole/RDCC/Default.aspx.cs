@@ -2,7 +2,9 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -22,14 +24,16 @@ namespace RingDownCentralConsole
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
         {
-            string sortExpression = e.SortExpression;
-            string direction = string.Empty;
+            var sortExpression = e.SortExpression;
+            var direction = string.Empty;
 
             if (SortDirection == SortDirection.Ascending)
             {
@@ -75,22 +79,22 @@ namespace RingDownCentralConsole
 
         private DataTable GetData()
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
             // get the connection
-            using (SqlConnection conn = new SqlConnection(_constr))
+            using (var conn = new SqlConnection(_constr))
             {
                 // write the sql statement to execute
-                string sql = "SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
+                var sql = "SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
                              "Statuses.Name AS Status, Image, Locations.IsActive, Statuses.IsActive, RecordedDate " +
                              "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
                              "ON Statuses.Id = LocationStatuses.StatusId WHERE(((Locations.IsActive) = 1) AND((Statuses.IsActive) = 1)) " +
                              "ORDER BY RecordedDate DESC, Locations.Name DESC";
 
                 // instantiate the command object to fire
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (var cmd = new SqlCommand(sql, conn))
                 {
                     // get the adapter object and attach the command object to it
-                    using (SqlDataAdapter ad = new SqlDataAdapter(cmd))
+                    using (var ad = new SqlDataAdapter(cmd))
                     {
                         // fire Fill method to fetch the data and fill into DataTable
                         ad.Fill(table);
