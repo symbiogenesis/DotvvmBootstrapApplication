@@ -3,7 +3,7 @@
 
 
     <p class="text-center" style="color: #FF0000">
-        <em>Login Authentication / Menu Error, please contact your system administrator</em></p>
+        <em>Login Authentication/Invalid Role Error, please contact your system administrator</em></p>
 
 
 </asp:Content>
