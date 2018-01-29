@@ -14,17 +14,17 @@ namespace RingDownCentralConsole
         protected void Page_Load(object sender, EventArgs e)
         {
             ////If authenicated and role admin
-            //if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
-            //{
-            if (!IsPostBack)
+            if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
             {
-                BindData();
+                if (!IsPostBack)
+                {
+                    BindData();
+                }
             }
-            //}
-            //else
-            //{
-            //    Response.Redirect("/Account/Login.aspx");
-            //}
+            else
+            {
+                Response.Redirect("/Account/Login.aspx");
+            }
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
@@ -87,13 +87,14 @@ namespace RingDownCentralConsole
             sda.SelectCommand = cmd;
             sda.Fill(dt);
             return dt;
+
         }
 
         protected void InactivateLocation(object sender, EventArgs e)
         {
             using (SqlConnection con = new SqlConnection(_constr))
             {
-                LinkButton lnkRemove = (LinkButton)sender;
+                LinkButton lnkRemove = (LinkButton) sender;
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
@@ -139,9 +140,9 @@ namespace RingDownCentralConsole
         {
             using (SqlConnection con = new SqlConnection(_constr))
             {
-                string Id = ((Label)GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
-                string Name = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
-                string Code = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
+                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
+                string Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
+                string Code = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
                 string SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();
 
                 try
@@ -170,13 +171,13 @@ namespace RingDownCentralConsole
 
         protected void AddNewLocation(object sender, EventArgs e)
         {
-           
+
 
             using (SqlConnection con = new SqlConnection(_constr))
             {
-                string Code = ((TextBox)GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
-                string Name = ((TextBox)GridView1.FooterRow.FindControl("txtName")).Text.Trim();
-                string SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text.Trim();               
+                string Code = ((TextBox) GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
+                string Name = ((TextBox) GridView1.FooterRow.FindControl("txtName")).Text.Trim();
+                string SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text.Trim();
 
                 try
                 {
