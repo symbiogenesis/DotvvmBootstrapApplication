@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -27,16 +28,18 @@ namespace RingDownCentralConsole
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
         {
-            string sortExpression = e.SortExpression;
-            string direction = string.Empty;
-            string strQuery = "SELECT * from Locations Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);
+            var sortExpression = e.SortExpression;
+            var direction = string.Empty;
+            var strQuery = "SELECT * from Locations Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
 
             if (SortDirection == SortDirection.Ascending)
             {
@@ -78,8 +81,8 @@ namespace RingDownCentralConsole
 
         private void BindData()
         {
-            string strQuery = "SELECT * from Locations Where IsActive=0";
-            SqlCommand cmd = new SqlCommand(strQuery);          
+            var strQuery = "SELECT * from Locations Where IsActive=0";
+            var cmd = new SqlCommand(strQuery);          
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();           
         }
@@ -87,9 +90,9 @@ namespace RingDownCentralConsole
 
         private DataTable GetData(SqlCommand cmd)
         {
-            DataTable dt = new DataTable();
-            SqlConnection con = new SqlConnection(constr);
-            SqlDataAdapter sda = new SqlDataAdapter();
+            var dt = new DataTable();
+            var con = new SqlConnection(constr);
+            var sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
             con.Open();
@@ -104,12 +107,12 @@ namespace RingDownCentralConsole
         protected void ActivateLocation(object sender, EventArgs e)
         {         
             
-            using (SqlConnection con = new SqlConnection(constr))
+            using (var con = new SqlConnection(constr))
             {
-                LinkButton lnkRemove = (LinkButton)sender;
+                var lnkRemove = (LinkButton)sender;
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
+                    var cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Update Locations set IsActive=@IsActive Where Id=@Id;" +
                      "Select * from Locations Where IsActive=0";

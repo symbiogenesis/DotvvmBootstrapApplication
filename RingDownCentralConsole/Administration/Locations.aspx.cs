@@ -2,8 +2,10 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -23,7 +25,10 @@ namespace RingDownCentralConsole
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
+               
             }
         }
 
@@ -103,11 +108,13 @@ namespace RingDownCentralConsole
                      "Select * from Locations Where IsActive=1";
                     cmd.Parameters.Add("@Id", SqlDbType.VarChar).Value = lnkRemove.CommandArgument;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
+                    Msg.Text = "";
 
                     GridView1.EditIndex = -1;
                     GridView1.DataSource = GetData(cmd);
                     GridView1.DataBind();
                     BindData();
+                    con.Close();
                 }
                 catch (Exception ex)
                 {
@@ -147,19 +154,34 @@ namespace RingDownCentralConsole
 
                 try
                 {
-                    var cmd = new SqlCommand();
+                   
+                    con.Open();
+                    var cmd = new SqlCommand("Select SerialNumber from Locations where SerialNumber=@SerialNumber", con);
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
-                     "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
-
-                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
-                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
-                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
                     cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    Msg.Text = "";
 
-                    GridView1.EditIndex = -1;
-                    GridView1.DataSource = GetData(cmd);
-                    GridView1.DataBind();
+                    if (reader.HasRows)
+                    {
+                        //Serial Exists
+                        Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";                       
+                    }
+                    else
+                    {                      
+                        cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
+                        "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                        cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                        // Serial Number defined above
+                        GridView1.EditIndex = -1;
+                        GridView1.DataSource = GetData(cmd);
+                        GridView1.DataBind();
+                        con.Close();                     
+                    }                 
+                  
                 }
                 catch (Exception ex)
                 {
@@ -181,19 +203,32 @@ namespace RingDownCentralConsole
 
                 try
                 {
-                    var cmd = new SqlCommand();                 
+                    con.Open();
+                    var cmd = new SqlCommand("Select SerialNumber from Locations where SerialNumber=@SerialNumber", con);
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
-                    "values (@Code, @Name, @SerialNumber, @IsActive);" +
-                    "Select * From Locations WHERE IsActive=1";
-                    cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
-                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                     cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
-                    cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    Msg.Text = "";
 
-                    GridView1.DataSource = GetData(cmd);
-                    GridView1.DataBind();
-                    BindData();
+                    if (reader.HasRows)
+                    {
+                        //Serial Exists
+                        Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";
+                    }
+                    else
+                    {
+                        //Serial does not exist (no duplicate Serial Number)   
+                        cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
+                      "values (@Code, @Name, @SerialNumber, @IsActive);" +
+                       "Select * From Locations WHERE IsActive=1";                      
+                        cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                        // SerialNumber declared above
+                        cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
+                        GridView1.DataSource = GetData(cmd);
+                        GridView1.DataBind();
+                        con.Close();                       
+                    }            
                 }
                 catch (Exception ex)
                 {
