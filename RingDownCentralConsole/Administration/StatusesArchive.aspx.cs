@@ -9,6 +9,7 @@ using System.Data;
 using System.Configuration;
 using System.IO;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -28,6 +29,8 @@ namespace RingDownCentralConsole
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
         }

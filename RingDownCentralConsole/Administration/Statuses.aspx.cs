@@ -9,6 +9,7 @@ using System.Data;
 using System.Configuration;
 using System.IO;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -28,16 +29,18 @@ namespace RingDownCentralConsole
             }
             else
             {
+                //Log user out (if logged in), redirect back to login.aspx
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
         {
-            string sortExpression = e.SortExpression;
-            string direction = string.Empty;
-            string strQuery = "SELECT * from Statuses Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);
+            var sortExpression = e.SortExpression;
+            var direction = string.Empty;
+            var strQuery = "SELECT * from Statuses Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
 
             if (SortDirection == SortDirection.Ascending)
             {
@@ -76,17 +79,17 @@ namespace RingDownCentralConsole
 
         private void BindData()
         {
-            string strQuery = "SELECT * from Statuses Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);
+            var strQuery = "SELECT * from Statuses Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();
         }
 
         private DataTable GetData(SqlCommand cmd)
         {
-            DataTable dt = new DataTable();
-            SqlConnection con = new SqlConnection(constr);
-            SqlDataAdapter sda = new SqlDataAdapter();
+            var dt = new DataTable();
+            var con = new SqlConnection(constr);
+            var sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
             con.Open();
@@ -100,11 +103,11 @@ namespace RingDownCentralConsole
             if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
             {
              
-                string fileName = FileUpload1.FileName.ToLower().Trim();
-                string savePath = Server.MapPath(string.Format("~/Images/", fileName));
-                string pathToCheck = savePath + fileName;
-                string extension = Path.GetExtension(FileUpload1.FileName).ToLower();
-                string Name = txtName.Text.Trim();
+                var fileName = FileUpload1.FileName.ToLower().Trim();
+                var savePath = Server.MapPath(string.Format("~/Images/", fileName));
+                var pathToCheck = savePath + fileName;
+                var extension = Path.GetExtension(FileUpload1.FileName).ToLower();
+                var Name = txtName.Text.Trim();
        
                 try
                 {
@@ -127,7 +130,7 @@ namespace RingDownCentralConsole
                         // file to the specified directory.
                         FileUpload1.SaveAs(savePath);
                             
-                        SqlCommand cmd = new SqlCommand();
+                        var cmd = new SqlCommand();
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = "Insert into Statuses (Name, ImageName, Image, IsActive) " +
                         "values (@Name, @ImageName, @Image, @IsActive);" +
@@ -167,15 +170,15 @@ namespace RingDownCentralConsole
         protected void InactivateRecord(object sender, EventArgs e)
         {
 
-            using (SqlConnection con = new SqlConnection(constr))
+            using (var con = new SqlConnection(constr))
             {
-                LinkButton lnkRemove = (LinkButton) sender;
+                var lnkRemove = (LinkButton) sender;
 
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
+                    var cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
-
+                    Msg.Text = "";
                     cmd.CommandText = "Update Statuses set IsActive=@IsActive Where Id=@Id;" +
                      "Select * from Statuses Where IsActive=1";
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = lnkRemove.CommandArgument;
@@ -199,16 +202,16 @@ namespace RingDownCentralConsole
         protected void UpdateStatus(object sender, GridViewUpdateEventArgs e)
         {
              //System.Web.UI.ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Your Message');", true);
-            FileUpload FileUpload2 = GridView1.Rows[e.RowIndex].FindControl("FileUpload2") as FileUpload;
+            var FileUpload2 = GridView1.Rows[e.RowIndex].FindControl("FileUpload2") as FileUpload;
 
             if (FileUpload2.PostedFile != null && FileUpload2.PostedFile.ContentLength > 0)
             {              
-                string fileName = FileUpload2.FileName.ToLower().Trim();
-                string savePath = Server.MapPath(string.Format("~/Images/", fileName));
-                string pathToCheck = savePath + fileName;
-                string extension = System.IO.Path.GetExtension(FileUpload2.FileName).ToLower();            
-                string Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
-                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;                                
+                var fileName = FileUpload2.FileName.ToLower().Trim();
+                var savePath = Server.MapPath(string.Format("~/Images/", fileName));
+                var pathToCheck = savePath + fileName;
+                var extension = System.IO.Path.GetExtension(FileUpload2.FileName).ToLower();            
+                var Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
+                var Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;                                
 
                 try
                 {
@@ -230,7 +233,7 @@ namespace RingDownCentralConsole
                         // file to the specified directory.
                         FileUpload2.SaveAs(savePath);
 
-                        SqlCommand cmd = new SqlCommand();
+                        var cmd = new SqlCommand();
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = "Update Statuses set Image=@Image, " +
                      "ImageName=@ImageName, Name=@Name where Id=@Id;Select * From Statuses WHERE IsActive=1";
