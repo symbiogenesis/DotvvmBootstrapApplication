@@ -78,41 +78,59 @@ namespace RingDownCentralConsole
 
 
             if (!Page.User.Identity.IsAuthenticated)
-            {
-                Menu1.Visible = false;
-            }
-            else
-            {
-                if (Page.User.IsInRole("User"))
                 {
-                    if (login != null)
-                    {
-                        Menu1.Items.Remove(Menu1.FindItem("Login"));
-                    }
-
-                    if (locations != null)
-                    {
-                        Menu1.Items.Remove(Menu1.FindItem("Locations"));
-                    }
-
-                    if (statuses != null)
-                    {
-                        Menu1.Items.Remove(Menu1.FindItem("Statuses"));
-                    }
-
-                    if (reports != null)
-                    {
-                        Menu1.Items.Remove(Menu1.FindItem("Reports"));
-                    }                   
-
-                    if (register != null)
-                    {
-                        Menu1.Items.Remove(Menu1.FindItem("Register"));
-                    }
+                    Menu1.Visible = false;
                 }
-               
+                else
+                {
+                    Menu1.Visible = true;
 
+                      if (Page.User.IsInRole("Administrator"))
+                        {
+                            if (login != null)
+                            {
+                                Menu1.Items.Remove(Menu1.FindItem("Login"));
+                            }
+                        }
+                          else
+                                if (Page.User.IsInRole("User"))
+                                    {
+                                        if (login != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("Login"));
+                                        }
+                                       
+                                        if (locations != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("Locations"));
+                                        }
+
+                                        if (statuses != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("Statuses"));
+                                        }
+
+                                        if (reports != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                                        }
+
+                                        if (register != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("Register"));
+                                        }
+
+                                    }
+
+                                     else
+                                        if (Page.User.IsInRole(""))
+                                            {
+                                                 Response.Redirect("/Error/AuthenticationMenuError.aspx");
+
+                                            }
+                      
             }
+                      
 
         }
 

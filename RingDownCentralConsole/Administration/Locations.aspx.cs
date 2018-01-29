@@ -29,10 +29,10 @@ namespace RingDownCentralConsole
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
         {
-            string sortExpression = e.SortExpression;
-            string direction = string.Empty;
-            string strQuery = "SELECT * from Locations Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);
+            var sortExpression = e.SortExpression;
+            var direction = string.Empty;
+            var strQuery = "SELECT * from Locations Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
 
             if (SortDirection == SortDirection.Ascending)
             {
@@ -70,17 +70,17 @@ namespace RingDownCentralConsole
 
         private void BindData()
         {
-            string strQuery = "SELECT * from Locations Where IsActive=1";
-            SqlCommand cmd = new SqlCommand(strQuery);
+            var strQuery = "SELECT * from Locations Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();
         }
 
         private DataTable GetData(SqlCommand cmd)
         {
-            DataTable dt = new DataTable();
-            SqlConnection con = new SqlConnection(_constr);
-            SqlDataAdapter sda = new SqlDataAdapter();
+            var dt = new DataTable();
+            var con = new SqlConnection(_constr);
+            var sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
             con.Open();
@@ -92,12 +92,12 @@ namespace RingDownCentralConsole
 
         protected void InactivateLocation(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(_constr))
+            using (var con = new SqlConnection(_constr))
             {
-                LinkButton lnkRemove = (LinkButton) sender;
+                var lnkRemove = (LinkButton) sender;
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
+                    var cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Update Locations set IsActive=@IsActive Where Id=@Id;" +
                      "Select * from Locations Where IsActive=1";
@@ -138,16 +138,16 @@ namespace RingDownCentralConsole
 
         protected void UpdateLocation(object sender, GridViewUpdateEventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(_constr))
+            using (var con = new SqlConnection(_constr))
             {
-                string Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
-                string Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
-                string Code = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
-                string SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();
+                var Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
+                var Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
+                var Code = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtCode")).Text.Trim();
+                var SerialNumber = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtSerialNumber")).Text.Trim();
 
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
+                    var cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
                      "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
@@ -173,15 +173,15 @@ namespace RingDownCentralConsole
         {
 
 
-            using (SqlConnection con = new SqlConnection(_constr))
+            using (var con = new SqlConnection(_constr))
             {
-                string Code = ((TextBox) GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
-                string Name = ((TextBox) GridView1.FooterRow.FindControl("txtName")).Text.Trim();
-                string SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text.Trim();
+                var Code = ((TextBox) GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
+                var Name = ((TextBox) GridView1.FooterRow.FindControl("txtName")).Text.Trim();
+                var SerialNumber = ((TextBox) GridView1.FooterRow.FindControl("txtSerialNumber")).Text.Trim();
 
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
+                    var cmd = new SqlCommand();                 
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
                     "values (@Code, @Name, @SerialNumber, @IsActive);" +
