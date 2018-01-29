@@ -32,6 +32,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridV
                 <SortedAscendingHeaderStyle BackColor="#6D95E1" />
                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                     <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
 <Columns>
     <asp:TemplateField ItemStyle-Width = "50px" visible="false"   >
     <ItemTemplate>
@@ -39,7 +40,6 @@ PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridV
     </ItemTemplate>    
 </asp:TemplateField>
 
-     
 
     <asp:TemplateField ItemStyle-Width = "400px"  HeaderText = "Location Code" SortExpression="Code">
     <ItemTemplate>

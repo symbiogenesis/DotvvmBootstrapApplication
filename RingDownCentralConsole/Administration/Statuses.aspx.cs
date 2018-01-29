@@ -103,7 +103,7 @@ namespace RingDownCentralConsole
                 string fileName = FileUpload1.FileName.ToLower().Trim();
                 string savePath = Server.MapPath(string.Format("~/Images/", fileName));
                 string pathToCheck = savePath + fileName;
-                string extension = System.IO.Path.GetExtension(FileUpload1.FileName).ToLower();
+                string extension = Path.GetExtension(FileUpload1.FileName).ToLower();
                 string Name = txtName.Text.Trim();
        
                 try
@@ -135,7 +135,7 @@ namespace RingDownCentralConsole
 
                         cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                         cmd.Parameters.Add("@ImageName", SqlDbType.NVarChar).Value = fileName;
-                        cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "Images/" + fileName;
+                        cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "~/Images/" + fileName;
                         cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
                         GridView1.DataSource = GetData(cmd);
                         GridView1.DataBind();
@@ -238,7 +238,7 @@ namespace RingDownCentralConsole
                         cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
                         cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                         cmd.Parameters.Add("@ImageName", SqlDbType.NVarChar).Value = fileName;
-                        cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "Images/" + fileName;
+                        cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "~/Images/" + fileName;
                         GridView1.EditIndex = -1;
                         GridView1.DataSource = GetData(cmd);
                         GridView1.DataBind();
