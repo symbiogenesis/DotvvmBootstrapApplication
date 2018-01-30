@@ -1,23 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateUserRoles.aspx.cs" Inherits="RingDownCentralConsole.CreateUserRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .center-div
-        {
-          text-align: center;
-          font-size: large;
-          font-weight: bold;
-        }
-        
-    th
-    {
-        text-align:center;
-    }
-    </style>
-    <div class="center-div">
-
-      Create A Role
-
+ 
+    <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <div  class="center-div">
+      Create User Roles
     </div>
+    <div>
+        <p></p>
+    </div>
+
+
 
   <asp:Label id="Msg" ForeColor="maroon" runat="server" /><br />
 
