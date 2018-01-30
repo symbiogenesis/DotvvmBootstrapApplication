@@ -9,6 +9,7 @@ using RingDownCentralConsole.Models;
 using System.Collections.Concurrent;
 using System.Net.Mail;
 using System.Text;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace RingDownCentralConsole
 {
@@ -83,6 +84,18 @@ namespace RingDownCentralConsole
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser, int>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+    }
+
+    public class ApplicationRoleManager : RoleManager<ApplicationRole, int>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, int> store) : base(store)
+        {
+        }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole, int, ApplicationUserRole>(context.Get<ApplicationDbContext>()));
         }
     }
 

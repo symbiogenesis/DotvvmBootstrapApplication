@@ -1,20 +1,23 @@
 ﻿using System;
-using System.Web.Security;
+using System.Web;
 using System.Web.UI;
+using Microsoft.AspNet.Identity.Owin;
+using RingDownCentralConsole.Models;
 
 namespace RingDownCentralConsole
 {
     public partial class CreateUserRoles : Page
     {
-        private string[] _rolesArray;
+        private ApplicationRoleManager _roleManager;
 
         public void Page_Load(object sender, EventArgs args)
         {
             if (!IsPostBack)
             {
+                PopulateRoleManager();
+
                 // Bind roles to GridView.
-                _rolesArray = Roles.GetAllRoles();
-                RolesGrid.DataSource = _rolesArray;
+                RolesGrid.DataSource = GetAllRoles();
                 RolesGrid.DataBind();
             }
         }
@@ -25,20 +28,19 @@ namespace RingDownCentralConsole
 
             try
             {
-                if (Roles.RoleExists(roleName))
+                if (RoleExists(roleName))
                 {
                     Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' already exists. Please specify a different role name.";
                     return;
                 }
 
-                Roles.CreateRole(roleName);
+                CreateRole(roleName);
 
                 Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' created.";
 
                 // Re-bind roles to GridView.
 
-                _rolesArray = Roles.GetAllRoles();
-                RolesGrid.DataSource = _rolesArray;
+                RolesGrid.DataSource = GetAllRoles();
                 RolesGrid.DataBind();
             }
             catch (Exception e)
@@ -46,6 +48,29 @@ namespace RingDownCentralConsole
                 Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' <u>not</u> created.";
                 Response.Write(e.ToString());
             }
+        }
+
+        private object GetAllRoles()
+        {
+            return _roleManager.Roles;
+        }
+
+        private bool RoleExists(string roleName)
+        {
+            return _roleManager.RoleExistsAsync(roleName).Result;
+        }
+
+        private void CreateRole(string roleName)
+        {
+            var role = new ApplicationRole();
+            role.Name = roleName;
+            var result = _roleManager.CreateAsync(role).Result;
+        }
+
+        private void PopulateRoleManager()
+        {
+            if (_roleManager == null)
+                _roleManager = Request.GetOwinContext().Get<ApplicationRoleManager>();
         }
     }
 }
