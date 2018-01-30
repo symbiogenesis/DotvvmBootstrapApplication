@@ -104,6 +104,8 @@ namespace RingDownCentralConsole
 
         public void UsersInRoleGrid_RemoveFromRole(object sender, GridViewCommandEventArgs args)
         {
+            PopulateUserManager();
+
             // Get the selected user name to remove.
 
             var index = Convert.ToInt32(args.CommandArgument);
