@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
@@ -110,13 +109,15 @@ namespace RingDownCentralConsole
 
             var index = Convert.ToInt32(args.CommandArgument);
 
-            var username = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text;
+            var userName = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text;
+
+            var user = _userManager.FindByName(userName);
 
             // Remove the user from the selected role.
 
             try
             {
-                Roles.RemoveUserFromRole(username, RolesListBox.SelectedItem.Value);
+                RemoveUserFromRole(user, RolesListBox.SelectedItem.Value);
             }
             catch (Exception e)
             {
@@ -134,6 +135,11 @@ namespace RingDownCentralConsole
 
             UsersInRoleGrid.DataSource = usersInRole;
             UsersInRoleGrid.DataBind();
+        }
+
+        private void RemoveUserFromRole(ApplicationUser user, string role)
+        {
+            _userManager.RemoveFromRole(user.Id, role);
         }
 
         private bool IsInRole(ApplicationUser u, string role)
