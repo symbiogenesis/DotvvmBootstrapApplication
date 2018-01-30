@@ -122,7 +122,7 @@ namespace RingDownCentralConsole
                     GridView1.EditIndex = -1;
                     GridView1.DataSource = GetData(cmd);
                     GridView1.DataBind();
-                    BindData();
+                    BindData();                   
                 }
                 catch (Exception ex)
                 {

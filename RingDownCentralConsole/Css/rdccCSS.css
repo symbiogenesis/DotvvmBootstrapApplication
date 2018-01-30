@@ -16,3 +16,7 @@ th {
     border: solid;
     border-color: red;
 }
+.Important {
+    font-size: large;
+    color: Red;
+}

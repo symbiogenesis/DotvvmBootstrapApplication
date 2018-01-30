@@ -141,8 +141,10 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Administration\CreateUserRoles.aspx" />
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Administration\LocationsArchive.aspx" />
+    <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Administration\Statuses.aspx" />
     <Content Include="Administration\StatusesArchive.aspx" />
     <Content Include="Contact.aspx" />
@@ -333,6 +335,13 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\CreateUserRoles.aspx.cs">
+      <DependentUpon>CreateUserRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\CreateUserRoles.aspx.designer.cs">
+      <DependentUpon>CreateUserRoles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Locations.aspx.cs">
       <DependentUpon>Locations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -346,6 +355,13 @@
     </Compile>
     <Compile Include="Administration\LocationsArchive.aspx.designer.cs">
       <DependentUpon>LocationsArchive.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\ManageUserRoles.aspx.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\ManageUserRoles.aspx.designer.cs">
+      <DependentUpon>ManageUserRoles.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Statuses.aspx.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>

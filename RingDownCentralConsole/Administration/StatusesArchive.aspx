@@ -20,11 +20,11 @@
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "false" 
 OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Archived Status Records"    
-     AllowSorting="true"  OnSorting="GridView1_Sorting">
+     AllowSorting="true"  OnSorting="GridView1_Sorting" >
  <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#FEFCFF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
-                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" HorizontalAlign="Center"  />
                 <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
                 <RowStyle BackColor="#EFF3FB" HorizontalAlign="Center"/>
                 <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
