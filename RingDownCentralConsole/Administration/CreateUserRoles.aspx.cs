@@ -1,56 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace RingDownCentralConsole
 {
-    public partial class CreateUserRoles : System.Web.UI.Page
+    public partial class CreateUserRoles : Page
     {
-        string[] rolesArray;
+        private string[] _rolesArray;
 
         public void Page_Load(object sender, EventArgs args)
         {
             if (!IsPostBack)
             {
                 // Bind roles to GridView.
-                rolesArray = Roles.GetAllRoles();
-                RolesGrid.DataSource = rolesArray;
+                _rolesArray = Roles.GetAllRoles();
+                RolesGrid.DataSource = _rolesArray;
                 RolesGrid.DataBind();
             }
         }
 
         public void CreateRole_OnClick(object sender, EventArgs args)
         {
-            string createRole = RoleTextBox.Text;
+            var roleName = RoleTextBox.Text;
 
             try
             {
-                if (Roles.RoleExists(createRole))
+                if (Roles.RoleExists(roleName))
                 {
-                    Msg.Text = "Role '" + Server.HtmlEncode(createRole) + "' already exists. Please specify a different role name.";
+                    Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' already exists. Please specify a different role name.";
                     return;
                 }
 
-                Roles.CreateRole(createRole);
+                Roles.CreateRole(roleName);
 
-                Msg.Text = "Role '" + Server.HtmlEncode(createRole) + "' created.";
+                Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' created.";
 
                 // Re-bind roles to GridView.
 
-                rolesArray = Roles.GetAllRoles();
-                RolesGrid.DataSource = rolesArray;
+                _rolesArray = Roles.GetAllRoles();
+                RolesGrid.DataSource = _rolesArray;
                 RolesGrid.DataBind();
             }
             catch (Exception e)
             {
-                Msg.Text = "Role '" + Server.HtmlEncode(createRole) + "' <u>not</u> created.";
+                Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' <u>not</u> created.";
                 Response.Write(e.ToString());
             }
-
         }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Security;
 
 namespace RingDownCentralConsole
 {
-    public partial class ManageUserRoles : System.Web.UI.Page
+    public partial class ManageUserRoles : Page
     {
-        string[] rolesArray;
-        MembershipUserCollection users;
-        string[] usersInRole;
+        private string[] _rolesArray;
+        private MembershipUserCollection _users;
+        private string[] _usersInRole;
 
         public void Page_Load()
         {
@@ -22,14 +19,14 @@ namespace RingDownCentralConsole
             {
                 // Bind roles to ListBox.
 
-                rolesArray = Roles.GetAllRoles();
-                RolesListBox.DataSource = rolesArray;
+                _rolesArray = Roles.GetAllRoles();
+                RolesListBox.DataSource = _rolesArray;
                 RolesListBox.DataBind();
 
                 // Bind users to ListBox.
 
-                users = Membership.GetAllUsers();
-                UsersListBox.DataSource = users;
+                _users = Membership.GetAllUsers();
+                UsersListBox.DataSource = _users;
                 UsersListBox.DataBind();
             }
 
@@ -37,12 +34,11 @@ namespace RingDownCentralConsole
             {
                 // Show users in role. Bind user list to GridView.
 
-                usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
-                UsersInRoleGrid.DataSource = usersInRole;
+                _usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
+                UsersInRoleGrid.DataSource = _usersInRole;
                 UsersInRoleGrid.DataBind();
             }
         }
-
 
         public void AddUsers_OnClick(object sender, EventArgs args)
         {
@@ -54,7 +50,6 @@ namespace RingDownCentralConsole
                 return;
             }
 
-
             // Verify that at least one user is selected.
 
             if (UsersListBox.SelectedItem == null)
@@ -63,16 +58,14 @@ namespace RingDownCentralConsole
                 return;
             }
 
-
             // Create list of users to be added to the selected role.
 
-            string[] newusers = new string[UsersListBox.GetSelectedIndices().Length];
+            var newusers = new string[UsersListBox.GetSelectedIndices().Length];
 
             for (int i = 0; i < newusers.Length; i++)
             {
                 newusers[i] = UsersListBox.Items[UsersListBox.GetSelectedIndices()[i]].Value;
             }
-
 
             // Add the users to the selected role.
 
@@ -82,8 +75,8 @@ namespace RingDownCentralConsole
 
                 // Re-bind users in role to GridView.
 
-                usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
-                UsersInRoleGrid.DataSource = usersInRole;
+                _usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
+                UsersInRoleGrid.DataSource = _usersInRole;
                 UsersInRoleGrid.DataBind();
             }
             catch (Exception e)
@@ -92,15 +85,13 @@ namespace RingDownCentralConsole
             }
         }
 
-
         public void UsersInRoleGrid_RemoveFromRole(object sender, GridViewCommandEventArgs args)
         {
             // Get the selected user name to remove.
 
-            int index = Convert.ToInt32(args.CommandArgument);
+            var index = Convert.ToInt32(args.CommandArgument);
 
-            string username = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text;
-
+            var username = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text;
 
             // Remove the user from the selected role.
 
@@ -110,18 +101,15 @@ namespace RingDownCentralConsole
             }
             catch (Exception e)
             {
-                Msg.Text = "An exception of type " + e.GetType().ToString() +
+                Msg.Text = "An exception of type " + e.GetType() +
                            " was encountered removing the user from the role.";
             }
 
-
             // Re-bind users in role to GridView.
 
-            usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
-            UsersInRoleGrid.DataSource = usersInRole;
+            _usersInRole = Roles.GetUsersInRole(RolesListBox.SelectedItem.Value);
+            UsersInRoleGrid.DataSource = _usersInRole;
             UsersInRoleGrid.DataBind();
         }
-
-
     }
 }
