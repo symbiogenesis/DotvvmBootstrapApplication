@@ -57,7 +57,7 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Status Recor
     </ItemTemplate>    
 </asp:TemplateField>     
        
-<asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Status Name" SortExpression="Name">
+<asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Status" SortExpression="Name">
      <ItemTemplate>
          <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name")%>'></asp:Label>
      </ItemTemplate>  
