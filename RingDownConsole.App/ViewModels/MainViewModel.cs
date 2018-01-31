@@ -182,6 +182,8 @@ namespace RingDownConsole.App.ViewModels
         {
             try
             {
+                HideError();
+
                 _location = await _httpClient.GetLocationBySerialNumberAsync<Location>(serialNumber);
                 if (_location != null)
                 {
@@ -207,10 +209,7 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task Initialize()
         {
-            if (_statuses == null)
-            {
-                _statuses = await GetStatuses();
-            }
+            await PopulateStatuses();
 
             var deviceFound = await FindDevice();
 
@@ -218,9 +217,14 @@ namespace RingDownConsole.App.ViewModels
                 await ToggleDataAcquisition();
         }
 
-        private async Task<IEnumerable<Status>> GetStatuses()
+        private async Task PopulateStatuses()
         {
-            return await _httpClient.GetDataAsync<Status>();
+            try
+            {
+                if (_statuses == null)
+                    _statuses = await _httpClient.GetDataAsync<Status>();
+            }
+            catch {}
         }
 
         private void OnPowerChange(object s, PowerModeChangedEventArgs e)
@@ -436,7 +440,7 @@ namespace RingDownConsole.App.ViewModels
                 return;
             }
 
-            var status = GetStatusEntity(_currentPhoneStatus);
+            var status = await GetStatusEntity(_currentPhoneStatus);
 
             var locationStatus = new LocationStatus
             {
@@ -452,8 +456,10 @@ namespace RingDownConsole.App.ViewModels
                 _lastSentDate = locationStatus.RecordedDate;
         }
 
-        private Status GetStatusEntity(PhoneStatus? currentPhoneStatus)
+        private async Task<Status> GetStatusEntity(PhoneStatus? currentPhoneStatus)
         {
+            await PopulateStatuses();
+
             if (currentPhoneStatus == null)
             {
                 return _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
