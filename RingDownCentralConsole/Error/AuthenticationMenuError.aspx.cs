@@ -13,5 +13,10 @@ namespace RingDownCentralConsole.Error
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Account/Login.aspx");
+        }
     }
 }
