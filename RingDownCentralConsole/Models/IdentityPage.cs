@@ -11,6 +11,8 @@ namespace RingDownCentralConsole.Models
     {
         protected ApplicationRoleManager _roleManager;
         protected ApplicationUserManager _userManager;
+        private List<ApplicationUser> _allUsers;
+        private List<ApplicationRole> _allRoles;
 
         protected void AddUsersToRole(IEnumerable<ApplicationUser> newusers, string role)
         {
@@ -29,26 +31,38 @@ namespace RingDownCentralConsole.Models
 
         protected List<ApplicationRole> GetAllRoles()
         {
-            return _roleManager.Roles.ToList();
+            if (_allRoles == null)
+                _allRoles = _roleManager.Roles.ToList();
+
+            return _allRoles;
         }
 
         protected List<ApplicationUser> GetAllUsers()
         {
-            return _userManager.Users.ToList();
+            if (_allUsers == null)
+                _allUsers = _userManager.Users.ToList();
+
+            return _allUsers;
         }
 
-        protected IEnumerable<ApplicationUser> GetUsersInRole(string role)
+        protected List<ApplicationUser> GetUsersInRole(string roleName)
         {
-            return _userManager.Users.Where(u => IsInRole(u, role));
-        }
+            if (string.IsNullOrWhiteSpace(roleName))
+                return null;
+            
+            var role = GetAllRoles().FirstOrDefault(r => r.Name == roleName);
 
-        protected bool IsInRole(ApplicationUser u, string role)
-        {
-            return _userManager.IsInRole(u.Id, role);
+            if (role == null)
+                return null;
+
+            return role.Users.Select(ur => GetAllUsers().First(u => u.Id == ur.UserId)).ToList();
         }
 
         protected void RemoveUserFromRole(ApplicationUser user, string role)
         {
+            if (string.IsNullOrWhiteSpace(role))
+                return;
+
             _userManager.RemoveFromRole(user.Id, role);
         }
 

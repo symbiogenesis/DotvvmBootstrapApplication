@@ -12,22 +12,17 @@ namespace RingDownCentralConsole
         public void Page_Load()
         {
             PopulateUserManager();
+            PopulateRoleManager();
 
             Msg.Text = "";
 
             if (!IsPostBack)
             {
                 // Bind roles to ListBox.
-                PopulateRoles();
+                BindRoles();
 
                 // Bind users to ListBox.
-                PopulateUsers();
-            }
-
-            if (RolesListBox.SelectedItem != null)
-            {
-                // Show users in role. Bind user list to GridView.
-                PopulateRoles();
+                BindUsers();
             }
         }
 
@@ -68,7 +63,7 @@ namespace RingDownCentralConsole
             {
                 AddUsersToRole(newUsers, RolesListBox.SelectedItem.Value);
 
-                PopulateUsersInRole();
+                BindUsersInRole(RolesListBox.SelectedItem.Value);
             }
             catch (Exception e)
             {
@@ -84,15 +79,17 @@ namespace RingDownCentralConsole
 
             var index = Convert.ToInt32(args.CommandArgument);
 
-            var userName = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text;
+            var userName = ((DataBoundLiteralControl)UsersInRoleGrid.Rows[index].Cells[0].Controls[0]).Text.Trim('\r').Trim('\n').Trim();
 
             var user = _userManager.FindByName(userName);
 
             // Remove the user from the selected role.
 
+            var roleName = RolesListBox.SelectedItem.Text;
+
             try
             {
-                RemoveUserFromRole(user, RolesListBox.SelectedItem.Value);
+                RemoveUserFromRole(user, roleName);
             }
             catch (Exception e)
             {
@@ -100,28 +97,40 @@ namespace RingDownCentralConsole
                            " was encountered removing the user from the role.";
             }
 
-            // Re-bind users in role to GridView.
-            PopulateUserManager();
-
-            PopulateUsersInRole();
+            BindUsersInRole(roleName);
         }
 
-        private void PopulateUsers()
+        protected void RolesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rolesListBox = ((ListBox) sender);
+            var roleIndex = rolesListBox.SelectedIndex;
+            var rolesList = GetAllRoles();
+
+            if (roleIndex >= 0 && roleIndex < rolesList.Count)
+            {
+                var role = rolesList[roleIndex];
+                BindUsersInRole(role?.Name);
+            }
+            else
+            {
+                RolesListBox.DataSource = null;
+            }
+        }
+
+        private void BindUsers()
         {
             UsersListBox.DataSource = GetAllUsers();
             UsersListBox.DataBind();
         }
 
-        private void PopulateRoles()
+        private void BindRoles()
         {
             RolesListBox.DataSource = GetAllRoles();
             RolesListBox.DataBind();
         }
 
-        private void PopulateUsersInRole()
+        private void BindUsersInRole(string role)
         {
-            var role = (RolesListBox.SelectedItem.Value);
-
             UsersInRoleGrid.DataSource = GetUsersInRole(role);
             UsersInRoleGrid.DataBind();
         }
