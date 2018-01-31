@@ -24,18 +24,20 @@ namespace RingDownConsole.App.ViewModels
 
         private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
         private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
+        private static DateTime _lastSentDate = DateTime.MinValue;
 
-        private bool _showSettings;
-        private bool _showNameEntry;
-        private Location _location;
-        private Device _targetDevice;
-        private Task _taskRead;
-        private CancellationTokenSource _cancelRead;
-        private PhoneStatus? _currentPhoneStatus;
-        private DateTime _lastSentDate;
-        private string _currentPhoneUser;
-        private string _locationCode;
-        private string _locationName;
+        private static IEnumerable<Status> _statuses;
+
+        private static bool _showSettings;
+        private static bool _showNameEntry;
+        private static Location _location;
+        private static Device _targetDevice;
+        private static Task _taskRead;
+        private static CancellationTokenSource _cancelRead;
+        private static PhoneStatus? _currentPhoneStatus;
+        private static string _currentPhoneUser;
+        private static string _locationCode;
+        private static string _locationName;
 
         public MainViewModel()
         {
@@ -48,7 +50,6 @@ namespace RingDownConsole.App.ViewModels
 
             PopulateColors();
         }
-
 
         ~MainViewModel()
         {
@@ -191,7 +192,6 @@ namespace RingDownConsole.App.ViewModels
             catch
             {
                 ShowError("Couldn't connect to Web Service");
-                await _targetDevice.AcquisitionStopAsync();
             }
         }
 
@@ -207,10 +207,20 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task Initialize()
         {
+            if (_statuses == null)
+            {
+                _statuses = await GetStatuses();
+            }
+
             var deviceFound = await FindDevice();
 
             if (deviceFound)
                 await ToggleDataAcquisition();
+        }
+
+        private async Task<IEnumerable<Status>> GetStatuses()
+        {
+            return await _httpClient.GetDataAsync<Status>();
         }
 
         private void OnPowerChange(object s, PowerModeChangedEventArgs e)
@@ -295,6 +305,9 @@ namespace RingDownConsole.App.ViewModels
             //  Keep reading while acquiring data
             while (_targetDevice.IsAcquiring)
             {
+                if (!TimeHasElapsed())
+                    continue;
+
                 //  Read data and catch if cancelled (to exit loop and continue)
                 try
                 {
@@ -382,7 +395,7 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task SaveVoltageData(double voltage)
         {
-            if (_lastSentDate <= DateTime.UtcNow.AddSeconds(Settings.IntervalSeconds * -1))
+            if (TimeHasElapsed())
             {
                 CurrentPhoneStatus = GetStatus(voltage);
 
@@ -410,6 +423,11 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        private bool TimeHasElapsed()
+        {
+            return _lastSentDate <= DateTime.UtcNow.AddSeconds(Settings.IntervalSeconds * -1);
+        }
+
         private async Task SendStatus()
         {
             if (_location == null)
@@ -418,10 +436,12 @@ namespace RingDownConsole.App.ViewModels
                 return;
             }
 
+            var status = GetStatusEntity(_currentPhoneStatus);
+
             var locationStatus = new LocationStatus
             {
                 LocationId = _location.Id,
-                StatusId = (int) _currentPhoneStatus,
+                StatusId = status.Id,
                 CurrentPhoneUser = _currentPhoneUser,
                 RecordedDate = DateTime.UtcNow
             };
@@ -430,6 +450,19 @@ namespace RingDownConsole.App.ViewModels
 
             if (success.IsSuccessStatusCode)
                 _lastSentDate = locationStatus.RecordedDate;
+        }
+
+        private Status GetStatusEntity(PhoneStatus? currentPhoneStatus)
+        {
+            if (currentPhoneStatus == null)
+            {
+                return _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
+            }
+            else
+            {
+                var status = _statuses.FirstOrDefault(s => s.Name == currentPhoneStatus?.ToString());
+                return status ?? _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
+            }
         }
 
         private void ConfigureAnalogChannels()
