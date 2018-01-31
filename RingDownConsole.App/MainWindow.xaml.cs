@@ -30,7 +30,14 @@ namespace RingDownConsole.App
             InitializeComponent();
             Loaded += ToolWindow_Loaded;
             Style = (Style) FindResource(typeof(Window));
+            Application.Current.Exit += new ExitEventHandler(Current_Exit);
+
             //Icon = ConvertToBitmapSource((Path)this.Resources["CommunicationErrorIcon"]);
+        }
+
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            myNotifyIcon.Dispose();
         }
 
         public BitmapSource ConvertToBitmapSource(UIElement element)
