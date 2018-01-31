@@ -39,9 +39,15 @@ namespace RingDownCentralConsole
             if (RolesListBox.SelectedItem != null)
             {
                 // Show users in role. Bind user list to GridView.
+                //UsersInRoleGrid.DataSource = GetUsersInRole(RolesListBox.SelectedItem.Value);
+                //UsersInRoleGrid.DataBind();
 
-                UsersInRoleGrid.DataSource = GetUsersInRole(RolesListBox.SelectedItem.Value);
-                UsersInRoleGrid.DataBind();
+                //var role = RolesListBox.SelectedItem.Value;
+                //var usersInRole = _userManager.Users.Where(u => IsInRole(u, role));
+                //UsersInRoleGrid.DataSource = usersInRole;
+                //UsersInRoleGrid.DataBind();
+
+
             }
         }
 
