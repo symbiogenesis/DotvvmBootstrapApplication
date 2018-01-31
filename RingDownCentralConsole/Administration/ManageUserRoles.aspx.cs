@@ -16,13 +16,13 @@ namespace RingDownCentralConsole
 
         public void Page_Load()
         {
+            PopulateUserManager();
+
             Msg.Text = "";
 
             if (!IsPostBack)
             {
                 // Bind roles to ListBox.
-
-                PopulateUserManager();
 
                 var roles = _userManager.GetRoles(User.Identity.GetUserId<int>());
 
