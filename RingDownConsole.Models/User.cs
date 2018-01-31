@@ -15,6 +15,9 @@ namespace RingDownConsole.Models
         {
         }
 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         [NotMapped]
         public bool IsAdmin { get; set; }
 
@@ -22,7 +25,7 @@ namespace RingDownConsole.Models
         int IIdentifiable.Id { get => base.Id; set => value = base.Id; }
 
         [NotMapped]
-       public string Name { get => base.UserName; set => value = base.UserName; }
+        public string Name { get => base.UserName; set => value = base.UserName; }
 
         [NotMapped]
         public bool IsSaved { get; set; } = true;
