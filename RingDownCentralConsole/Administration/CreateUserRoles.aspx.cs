@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Web;
-using System.Web.UI;
-using Microsoft.AspNet.Identity.Owin;
 using RingDownCentralConsole.Models;
 
 namespace RingDownCentralConsole
 {
-    public partial class CreateUserRoles : Page
+    public partial class CreateUserRoles : IdentityPage
     {
-        private ApplicationRoleManager _roleManager;
-
         public void Page_Load(object sender, EventArgs args)
         {
             if (!IsPostBack)
@@ -48,29 +43,6 @@ namespace RingDownCentralConsole
                 Msg.Text = "Role '" + Server.HtmlEncode(roleName) + "' <u>not</u> created.";
                 Response.Write(e.ToString());
             }
-        }
-
-        private object GetAllRoles()
-        {
-            return _roleManager.Roles;
-        }
-
-        private bool RoleExists(string roleName)
-        {
-            return _roleManager.RoleExistsAsync(roleName).Result;
-        }
-
-        private void CreateRole(string roleName)
-        {
-            var role = new ApplicationRole();
-            role.Name = roleName;
-            var result = _roleManager.CreateAsync(role).Result;
-        }
-
-        private void PopulateRoleManager()
-        {
-            if (_roleManager == null)
-                _roleManager = Request.GetOwinContext().Get<ApplicationRoleManager>();
         }
     }
 }

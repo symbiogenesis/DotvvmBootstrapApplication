@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using RingDownCentralConsole.Models;
 
 namespace RingDownCentralConsole
 {
-    public partial class ManageUserRoles : Page
+    public partial class ManageUserRoles : IdentityPage
     {
-        private ApplicationUserManager _userManager;
-
         public void Page_Load()
         {
             PopulateUserManager();
@@ -23,26 +18,16 @@ namespace RingDownCentralConsole
             if (!IsPostBack)
             {
                 // Bind roles to ListBox.
-
-                var roles = _userManager.GetRoles(User.Identity.GetUserId<int>());
-                RolesListBox.DataSource = roles;
-                RolesListBox.DataBind();
+                PopulateRoles();
 
                 // Bind users to ListBox.
-
-                var users = _userManager.Users.ToList();
-                UsersListBox.DataSource = users;
-                UsersListBox.DataBind();
+                PopulateUsers();
             }
 
             if (RolesListBox.SelectedItem != null)
             {
                 // Show users in role. Bind user list to GridView.
-                //UsersInRoleGrid.DataSource = GetUsersInRole(RolesListBox.SelectedItem.Value);
-                //UsersInRoleGrid.DataBind();  
-                
-                 
-
+                PopulateRoles();
             }
         }
 
@@ -83,22 +68,11 @@ namespace RingDownCentralConsole
             {
                 AddUsersToRole(newUsers, RolesListBox.SelectedItem.Value);
 
-                // Re-bind users in role to GridView.
-
-                UsersInRoleGrid.DataSource = GetUsersInRole(RolesListBox.SelectedItem.Value);
-                UsersInRoleGrid.DataBind();
+                PopulateUsersInRole();
             }
             catch (Exception e)
             {
                 Msg.Text = e.Message;
-            }
-        }
-
-        private void AddUsersToRole(IEnumerable<ApplicationUser> newusers, string role)
-        {
-            foreach (var user in newusers)
-            {
-                _userManager.AddToRole(user.Id, role);
             }
         }
 
@@ -127,36 +101,29 @@ namespace RingDownCentralConsole
             }
 
             // Re-bind users in role to GridView.
-
-            var role = RolesListBox.SelectedItem.Value;
-
             PopulateUserManager();
 
-            var usersInRole = _userManager.Users.Where(u => IsInRole(u, role));
+            PopulateUsersInRole();
+        }
 
-            UsersInRoleGrid.DataSource = usersInRole;
+        private void PopulateUsers()
+        {
+            UsersListBox.DataSource = GetAllUsers();
+            UsersListBox.DataBind();
+        }
+
+        private void PopulateRoles()
+        {
+            RolesListBox.DataSource = GetAllRoles();
+            RolesListBox.DataBind();
+        }
+
+        private void PopulateUsersInRole()
+        {
+            var role = (RolesListBox.SelectedItem.Value);
+
+            UsersInRoleGrid.DataSource = GetUsersInRole(role);
             UsersInRoleGrid.DataBind();
-        }
-
-        private void RemoveUserFromRole(ApplicationUser user, string role)
-        {
-            _userManager.RemoveFromRole(user.Id, role);
-        }
-
-        private bool IsInRole(ApplicationUser u, string role)
-        {
-            return _userManager.IsInRole(u.Id, role);
-        }
-
-        private void PopulateUserManager()
-        {
-            if (_userManager == null)
-                _userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-        }
-
-        private IEnumerable<ApplicationUser> GetUsersInRole(string role)
-        {
-            return _userManager.Users.Where(u => IsInRole(u, role));
         }
     }
 }
