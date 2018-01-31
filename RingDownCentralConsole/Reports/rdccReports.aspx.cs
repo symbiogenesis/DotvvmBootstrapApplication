@@ -21,9 +21,8 @@ namespace RingDownCentralConsole
             ////If authenicated and role admin
             if ((!User.Identity.IsAuthenticated) && (!User.IsInRole("Administrator")))
             {
-                //Log user out (if logged in), redirect back to login.aspx
-                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                Response.Redirect("/Account/Login.aspx");
+                //Send user back to main console page, because user is not an "Administrator" role
+                Response.Redirect("~/RDCC/Default.aspx");
             }
         }
 
