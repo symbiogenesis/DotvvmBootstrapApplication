@@ -61,9 +61,11 @@ namespace RingDownCentralConsole
 
             try
             {
-                AddUsersToRole(newUsers, RolesListBox.SelectedItem.Value);
+                var roleName = RolesListBox.SelectedItem.Text;
 
-                BindUsersInRole(RolesListBox.SelectedItem.Value);
+                AddUsersToRole(newUsers, roleName);
+
+                BindUsersInRole(roleName);
             }
             catch (Exception e)
             {
