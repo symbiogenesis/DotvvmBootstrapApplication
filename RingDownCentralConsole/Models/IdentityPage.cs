@@ -11,6 +11,7 @@ namespace RingDownCentralConsole.Models
     {
         protected ApplicationRoleManager _roleManager;
         protected ApplicationUserManager _userManager;
+
         private List<ApplicationUser> _allUsers;
         private List<ApplicationRole> _allRoles;
 
@@ -49,7 +50,7 @@ namespace RingDownCentralConsole.Models
         {
             if (string.IsNullOrWhiteSpace(roleName))
                 return null;
-            
+
             var role = GetAllRoles().FirstOrDefault(r => r.Name == roleName);
 
             if (role == null)
