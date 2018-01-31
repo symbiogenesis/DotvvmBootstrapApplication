@@ -21,7 +21,7 @@ namespace RingDownCentralConsole.Account
             {
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 var code = manager.GenerateEmailConfirmationToken(user.Id);
-                var callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
+                var callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id.ToString(), Request);
                 manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
