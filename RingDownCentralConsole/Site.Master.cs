@@ -114,16 +114,10 @@ namespace RingDownCentralConsole
                                         {
                                             Menu1.Items.Remove(Menu1.FindItem("Reports"));
                                         }
-
-                                        if (register != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("Register"));
-                                        }
-
                                     }
 
                                      else
-                                        if (Page.User.IsInRole(""))
+                                    
                                             {
                                                  Response.Redirect("/Error/AuthenticationMenuError.aspx");
 
