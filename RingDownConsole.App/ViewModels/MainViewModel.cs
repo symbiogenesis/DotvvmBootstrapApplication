@@ -38,6 +38,7 @@ namespace RingDownConsole.App.ViewModels
         private static string _currentPhoneUser;
         private static string _locationCode;
         private static string _locationName;
+        private static IChannelIn _masterChannel;
 
         public MainViewModel()
         {
@@ -295,23 +296,22 @@ namespace RingDownConsole.App.ViewModels
         {
             // capture the first channel programmed as an input (MasterChannel)
             // and use it to track data availability for all input channels
-            IChannelIn MasterChannel = null;
-            for (int index = 0; (index <= _targetDevice.Channels.Count); index++)
+            if (_masterChannel == null)
             {
-                if (_targetDevice.Channels[index].GetType().GetInterfaces().Contains(typeof(IChannelIn)))
+                for (var index = 0; (index <= _targetDevice.Channels.Count); index++)
                 {
-                    MasterChannel = (IChannelIn) _targetDevice.Channels[index];
-                    //  we have our channel 
-                    break;
+                    if (_targetDevice.Channels[index].GetType().GetInterfaces().Contains(typeof(IChannelIn)))
+                    {
+                        _masterChannel = (IChannelIn) _targetDevice.Channels[index];
+                        //  we have our channel 
+                        break;
+                    }
                 }
             }
 
             //  Keep reading while acquiring data
             while (_targetDevice.IsAcquiring)
             {
-                if (!TimeHasElapsed())
-                    continue;
-
                 //  Read data and catch if cancelled (to exit loop and continue)
                 try
                 {
@@ -326,7 +326,7 @@ namespace RingDownConsole.App.ViewModels
                 }
 
                 // get here if acquisition is still active
-                if (MasterChannel.DataIn.Count == 0)
+                if (_masterChannel.DataIn.Count == 0)
                 {
                     // get here if no data in the channel buffer
                     // TODO: Continue While... Warning!!! not translated
@@ -334,7 +334,7 @@ namespace RingDownConsole.App.ViewModels
 
                 //  We have data. Convert it to strings
                 double voltage = 0;
-                for (var index = 0; (index <= (MasterChannel.DataIn.Count - 1)); index++)
+                for (var index = 0; (index <= (_masterChannel.DataIn.Count - 1)); index++)
                 {
                     if (_targetDevice.Channels.Count > 1)
                     {
