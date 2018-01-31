@@ -27,7 +27,7 @@ namespace RingDownCentralConsole
                 //IF NOT User or Administrator, yet Authenticated, then User does not have a role.  Sign user out and direct to
                 //error page
                 Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                Response.Redirect("~/Error/AuthenticationMenuError.aspx");
+                Response.Redirect("~/Messages/AccountReview.aspx");
             }
         }
 
