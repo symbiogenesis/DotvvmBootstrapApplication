@@ -10,7 +10,7 @@
  
     <br />
     <p class="text-center" style="color: #FF0000; font-size: medium;">
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="RDCC Home" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
     </p>
 
 
