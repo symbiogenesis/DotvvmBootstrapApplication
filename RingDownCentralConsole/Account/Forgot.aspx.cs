@@ -27,11 +27,13 @@ namespace RingDownCentralConsole.Account
                     ErrorMessage.Visible = true;
                     return;
                 }
+
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send email with the code and the redirect to reset password page
-                //string code = manager.GeneratePasswordResetToken(user.Id);
-                //string callbackUrl = IdentityHelper.GetResetPasswordRedirectUrl(code, Request);
-                //manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+                var code = manager.GeneratePasswordResetToken(user.Id);
+                var callbackUrl = IdentityHelper.GetResetPasswordRedirectUrl(code, Request);
+                manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+
                 loginForm.Visible = false;
                 DisplayEmail.Visible = true;
             }
