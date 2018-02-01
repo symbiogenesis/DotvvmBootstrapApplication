@@ -75,6 +75,7 @@ namespace RingDownCentralConsole
             MenuItem reports = Menu1.FindItem("Reports");
             //MenuItem managePassword = Menu1.FindItem("ManagePassword");
             MenuItem register = Menu1.FindItem("Register");
+            MenuItem manageroles = Menu1.FindItem("ManageUserRoles");
 
 
             if (!Page.User.Identity.IsAuthenticated)
@@ -114,7 +115,12 @@ namespace RingDownCentralConsole
                                         {
                                             Menu1.Items.Remove(Menu1.FindItem("Reports"));
                                         }
-                                    }
+
+                                        if (manageroles != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("ManageUserRoles"));
+                                        }
+                                      }
 
                                      else
                                     
