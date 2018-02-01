@@ -6,8 +6,8 @@
     <br />
 
     <p class="text-center" style="color: #000000; font-size: medium;">
-        <em>The system administratrator will have to review and approve your account before you gain access to the RDCC system. <br />
-            Please make sure that you log into your email account and click to confirm your account. <br />
+        <em>The system administratrator will have to review and approve your registration before you gain access to the RDCC system. <br />
+            Please make sure that you log into your email inbox and click to confirm your registration. <br />
             Thank you, RDCC Staff
         </em>. 
         
