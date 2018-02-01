@@ -11,19 +11,31 @@ namespace RingDownCentralConsole
     {
         public void Page_Load()
         {
-            PopulateUserManager();
-            PopulateRoleManager();
 
-            Msg.Text = "";
-
-            if (!IsPostBack)
+            ////If authenicated and role admin
+            if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
             {
-                // Bind roles to ListBox.
-                BindRoles();
+                PopulateUserManager();
+                PopulateRoleManager();
 
-                // Bind users to ListBox.
-                BindUsers();
+                Msg.Text = "";
+
+                if (!IsPostBack)
+                {
+                    // Bind roles to ListBox.
+                    BindRoles();
+
+                    // Bind users to ListBox.
+                    BindUsers();
+                }
             }
+            else
+            {
+                //Send user back to main console page, because user is not an "Administrator" role
+                Response.Redirect("~/RDCC/Default.aspx");
+            }
+                       
+        
         }
 
         public void AddUsers_OnClick(object sender, EventArgs args)
