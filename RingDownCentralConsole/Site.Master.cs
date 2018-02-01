@@ -121,14 +121,7 @@ namespace RingDownCentralConsole
                                             Menu1.Items.Remove(Menu1.FindItem("ManageUserRoles"));
                                         }
                                       }
-
-                                     else
-                                    
-                                            {
-                                                 Response.Redirect("~/Messages/AccountReview.aspx");
-
-                                            }
-                      
+                                            
             }
                       
 
@@ -137,7 +130,7 @@ namespace RingDownCentralConsole
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Response.Redirect("/Account/Login.aspx");
+            Response.Redirect("~/Account/Login.aspx");
         }
 
 
