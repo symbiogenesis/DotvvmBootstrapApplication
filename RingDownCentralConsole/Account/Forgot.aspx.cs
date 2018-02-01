@@ -21,7 +21,7 @@ namespace RingDownCentralConsole.Account
                 // Validate the user's email address
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = manager.FindByEmail(Email.Text);
-                if (user == null || !manager.IsEmailConfirmed(user.Id))
+                if (user == null || manager.IsEmailConfirmed(user.Id))
                 {
                     FailureText.Text = "The user either does not exist or is not confirmed.";
                     ErrorMessage.Visible = true;
