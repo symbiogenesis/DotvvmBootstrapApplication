@@ -14,7 +14,10 @@ namespace RingDownCentralConsole.Account
 
 
             protected void CreateUser_Click(object sender, EventArgs e)
-            {           
+            {
+
+            if (IsValid)
+            {
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
                 var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text, FirstName = FirstName.Text, LastName = LastName.Text };
@@ -33,6 +36,8 @@ namespace RingDownCentralConsole.Account
                 {
                     ErrorMessage.Text = result.Errors.FirstOrDefault();
                 }
+
+            }
             
             }
     }
