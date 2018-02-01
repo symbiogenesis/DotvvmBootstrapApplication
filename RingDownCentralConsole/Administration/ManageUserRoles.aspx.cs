@@ -32,7 +32,7 @@ namespace RingDownCentralConsole
             else
             {
                 //Send user back to main console page, because user is not an "Administrator" role
-                Response.Redirect("~/RDCC/Default.aspx");
+                Response.Redirect("~/Account/Login.aspx");
             }
                        
         
