@@ -18,7 +18,7 @@ namespace RingDownCentralConsole.Messages
         protected void Button1_Click(object sender, EventArgs e)
         {
             //Redirect new user back to main page/Login.aspx
-            Response.Redirect("~/RDCC/Default.aspx");
+            Response.Redirect("~/Account/Login.aspx");
         }
     }
 }
