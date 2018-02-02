@@ -145,6 +145,7 @@
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
+    <Content Include="Administration\SetRefresh.aspx" />
     <Content Include="Administration\Statuses.aspx" />
     <Content Include="Administration\StatusesArchive.aspx" />
     <Content Include="Contact.aspx" />
@@ -189,6 +190,7 @@
     <Content Include="Console.xss">
       <DependentUpon>Console.xsd</DependentUpon>
     </Content>
+    <None Include="Interval\RefreshVal.json" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="RDCC\Default.aspx" />
     <Content Include="Reports\rdccMainReport.aspx" />
@@ -362,6 +364,13 @@
     </Compile>
     <Compile Include="Administration\ManageUserRoles.aspx.designer.cs">
       <DependentUpon>ManageUserRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\SetRefresh.aspx.cs">
+      <DependentUpon>SetRefresh.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\SetRefresh.aspx.designer.cs">
+      <DependentUpon>SetRefresh.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Statuses.aspx.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>

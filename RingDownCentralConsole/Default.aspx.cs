@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +13,7 @@ namespace RingDownCentralConsole
     public partial class _Default : Page
     {
         private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+        private readonly string _path = "~/Interval/RefreshVal.json";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -109,8 +111,31 @@ namespace RingDownCentralConsole
         //5 second timer 
         protected void Timer1_Tick(object sender, EventArgs e)
         {
-            GridView1.DataBind();
-            BindData();
+
+            try
+            {
+                using (var sr = new StreamReader(Server.MapPath(_path)))
+                {
+                    var seconds = sr.ReadLine();
+                    Timer1.Interval = int.Parse(seconds);
+                    // Start the timer
+                    Timer1.Enabled = true;
+                    
+                    GridView1.DataBind();
+                     BindData();
+                }
+            }
+            catch (Exception ex)
+            {
+                Msg.Text = "Error loading refresh interval seconds:" + ex.ToString();
+            }
+
+
+
+
+
+
+           
         }
     }
 }
