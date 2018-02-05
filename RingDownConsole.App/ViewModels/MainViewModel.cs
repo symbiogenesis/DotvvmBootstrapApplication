@@ -321,7 +321,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 catch (OperationCanceledException ex)
                 {
-                    Log.Information("Acquisition cancelled");
+                    ShowError("Acquisition cancelled");
                     break;
                 }
 
@@ -416,7 +416,7 @@ namespace RingDownConsole.App.ViewModels
                         break;
                     case null:
                         ShowNameEntry = false;
-                        LogError($"Voltage {voltage} does not correspond to a status");
+                        ShowError($"Voltage {voltage} does not correspond to a status");
                         return;
                     default:
                         ShowNameEntry = false;
