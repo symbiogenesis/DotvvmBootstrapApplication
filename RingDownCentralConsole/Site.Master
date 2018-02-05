@@ -6,7 +6,6 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <script type = "text/javascript" src = "scripts/jquery-1.10.2.min.js"></script>
     <link href="Css/Layout.css" rel="stylesheet" type="text/css"  />
 
     <title>Chicago Department of Aviation (CDA) Ring Down Central Console</title>
