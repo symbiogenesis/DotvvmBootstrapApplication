@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Linq;
-using System.Web.Providers.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
@@ -17,6 +15,18 @@ namespace RingDownCentralConsole
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            var str = "3.3.1";
+
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/jquery-" + str + ".min.js", //your path will be ignored
+                DebugPath = "~/Scripts/jquery-" + str + ".js",  //your path will be ignored 
+                CdnPath = "http://code.jquery.com/jquery.min.js",
+                CdnDebugPath = "http://code.jquery.com/jquery-latest.js",
+                CdnSupportsSecureConnection = true,
+                LoadSuccessExpression = "window.jQuery"
+            });
+
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -101,7 +111,7 @@ namespace RingDownCentralConsole
                                         {
                                             Menu1.Items.Remove(Menu1.FindItem("Login"));
                                         }
-                                       
+
                                         if (locations != null)
                                         {
                                             Menu1.Items.Remove(Menu1.FindItem("Locations"));
@@ -127,10 +137,7 @@ namespace RingDownCentralConsole
                                             Menu1.Items.Remove(Menu1.FindItem("SetRefreshInterval"));
                                         }
                                     }
-                                            
             }
-                      
-
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
@@ -138,7 +145,6 @@ namespace RingDownCentralConsole
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Response.Redirect("~/Account/Login.aspx");
         }
-
 
         //protected void Menu1_DataBound(object sender, EventArgs e)
         //{
@@ -151,11 +157,5 @@ namespace RingDownCentralConsole
 
         //    Menu1.Items.Add(loginMenuItem);
         //}
-
-
-       
-
-
-
     }
 }
