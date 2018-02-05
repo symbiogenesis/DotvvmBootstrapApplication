@@ -75,6 +75,8 @@ namespace RingDownCentralConsole
             MenuItem reports = Menu1.FindItem("Reports");
             //MenuItem managePassword = Menu1.FindItem("ManagePassword");
             MenuItem register = Menu1.FindItem("Register");
+            MenuItem manageroles = Menu1.FindItem("ManageUserRoles");
+            MenuItem setrefresh = Menu1.FindItem("SetRefreshInterval");
 
 
             if (!Page.User.Identity.IsAuthenticated)
@@ -114,15 +116,18 @@ namespace RingDownCentralConsole
                                         {
                                             Menu1.Items.Remove(Menu1.FindItem("Reports"));
                                         }
+
+                                        if (manageroles != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("ManageUserRoles"));
+                                        }
+
+                                        if (setrefresh != null)
+                                        {
+                                            Menu1.Items.Remove(Menu1.FindItem("SetRefreshInterval"));
+                                        }
                                     }
-
-                                     else
-                                    
-                                            {
-                                                 Response.Redirect("~/Messages/AccountReview.aspx");
-
-                                            }
-                      
+                                            
             }
                       
 
@@ -131,7 +136,7 @@ namespace RingDownCentralConsole
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Response.Redirect("/Account/Login.aspx");
+            Response.Redirect("~/Account/Login.aspx");
         }
 
 

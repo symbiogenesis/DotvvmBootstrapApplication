@@ -145,6 +145,7 @@
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
+    <Content Include="Administration\SetRefresh.aspx" />
     <Content Include="Administration\Statuses.aspx" />
     <Content Include="Administration\StatusesArchive.aspx" />
     <Content Include="Contact.aspx" />
@@ -160,7 +161,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Default.aspx" />
-    <Content Include="Messages\AccountReview.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -177,6 +177,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\cda_logo_r.png" />
+    <Content Include="Messages\AccountReview.aspx" />
     <Content Include="Reports\Report.rdlc" />
     <Content Include="Console.xsc">
       <DependentUpon>Console.xsd</DependentUpon>
@@ -189,6 +190,7 @@
     <Content Include="Console.xss">
       <DependentUpon>Console.xsd</DependentUpon>
     </Content>
+    <None Include="Interval\RefreshVal.json" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="RDCC\Default.aspx" />
     <Content Include="Reports\rdccMainReport.aspx" />
@@ -363,6 +365,13 @@
     <Compile Include="Administration\ManageUserRoles.aspx.designer.cs">
       <DependentUpon>ManageUserRoles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\SetRefresh.aspx.cs">
+      <DependentUpon>SetRefresh.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\SetRefresh.aspx.designer.cs">
+      <DependentUpon>SetRefresh.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Statuses.aspx.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -410,15 +419,15 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Messages\AccountReview.aspx.cs">
       <DependentUpon>AccountReview.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Messages\AccountReview.aspx.designer.cs">
       <DependentUpon>AccountReview.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IdentityPage.cs">

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RingDownCentralConsole {
+namespace RingDownCentralConsole.Messages {
     
     
     public partial class AccountReview {
