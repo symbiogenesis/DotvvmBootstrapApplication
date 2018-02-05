@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SetRefresh.aspx.cs" Inherits="RingDownCentralConsole.Administration.SetRefresh" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <link rel="stylesheet" type="text/css" href="../Css/rdccCSS.css" /> 
     <div  class="center-div">
         Set Refresh Interval</div>
     <div>

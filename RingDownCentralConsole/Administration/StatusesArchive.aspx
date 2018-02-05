@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StatusesArchive.aspx.cs" Inherits="RingDownCentralConsole.StatusesArchive" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <link rel="stylesheet" type="text/css" href="rdccCSS.css" /> 
+    <link rel="stylesheet" type="text/css" href="../Css/rdccCSS.css" /> 
     <div  class="center-div">
 
      Statuses
