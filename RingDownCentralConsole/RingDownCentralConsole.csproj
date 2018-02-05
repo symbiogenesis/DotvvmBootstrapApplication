@@ -48,10 +48,14 @@
   <ItemGroup>
     <PackageReference Include="Antlr" Version="3.5.0.2" />
     <PackageReference Include="AspNet.ScriptManager.bootstrap" Version="3.3.7" />
-    <PackageReference Include="AspNet.ScriptManager.jQuery" Version="3.3.1" />
+    <PackageReference Include="AspNet.ScriptManager.jQuery">
+      <Version>3.3.1</Version>
+    </PackageReference>
     <PackageReference Include="bootstrap" Version="3.3.7" />
     <PackageReference Include="EntityFramework" Version="6.2.0" />
-    <PackageReference Include="jQuery" Version="3.3.1" />
+    <PackageReference Include="jQuery">
+      <Version>3.3.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.Agent.Intercept" Version="2.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.4.1" />
@@ -191,16 +195,11 @@
       <DependentUpon>Console.xsd</DependentUpon>
     </Content>
     <None Include="Interval\RefreshVal.json" />
-    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="RDCC\Default.aspx" />
     <Content Include="Reports\rdccMainReport.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -480,8 +479,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
