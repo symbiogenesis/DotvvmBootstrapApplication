@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Statuses.aspx.cs" Inherits="RingDownCentralConsole.Statuses" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StatusesAdd.aspx.cs" Inherits="RingDownCentralConsole.StatusesAdd" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <link rel="stylesheet" type="text/css" href="../Css/rdccCSS.css" /> 
     <div  class="center-div">
@@ -8,15 +8,36 @@
   </div>
        
 
- 
+  <table>
+      <tr><td>&nbsp;</td> 
+          <td> 
+              &nbsp;</td> <td> 
+               &nbsp;</td></tr>
+        <tr><td>Status Name</td>
+            <td><asp:TextBox ID="txtName" runat="server" ></asp:TextBox></td> 
+            <td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td>
+            <td><asp:RequiredFieldValidator ID="ReqName" runat="server" ControlToValidate="txtName" ErrorMessage="*" ForeColor="Red" >
+               </asp:RequiredFieldValidator> </td> 
+            <td>&nbsp;</td></tr>
+             <tr><td>Image</td> <td>  <asp:FileUpload ID="FileUpload1" runat="server" /></td>
+                 <td> </td></tr></table>
+    <br />
+
+   
+
+    <asp:Button ID="upload" runat="server" Font-Bold="true" Text="Insert Record" OnClick="upload_Click"  /> <br /><br />
+
+    <asp:Label ID="lblResult" runat="server"  Font-Bold="true"/>
+
    
     <asp:Label id="Msg" runat="server" ForeColor="maroon" /><br />
  
      
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
 AlternatingRowStyle-BackColor = "white" HeaderStyle-BackColor = "#507CD1" AllowPaging ="true"  ShowFooter = "false" 
-OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Status Records Entered"    
-      onrowcancelingedit="CancelEdit"  AllowSorting="true"  OnSorting="GridView1_Sorting">
+OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Status Records Entered"    onrowediting="EditStatus" 
+    onrowupdating="UpdateStatus"  onrowcancelingedit="CancelEdit"  AllowSorting="true"  OnSorting="GridView1_Sorting">
  <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#FEFCFF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
@@ -64,7 +85,13 @@ OnPageIndexChanging = "OnPaging" PageSize = "100" EmptyDataText="No Status Recor
     <asp:TemplateField ItemStyle-Width = "200px"  HeaderText = "Image Name" SortExpression="ImageName">
      <ItemTemplate>
          <asp:Label ID="lblImageName" runat="server" Text='<%# Eval("ImageName")%>'></asp:Label></ItemTemplate></asp:TemplateField>
-    
+    <asp:TemplateField>
+    <ItemTemplate>
+        <asp:LinkButton ID="lnkRemove" runat="server" CausesValidation="false" CommandArgument = '<%# Eval("Id")%>' 
+         OnClientClick = "return confirm('Would you like to make this record inactive?')" 
+        Text = "Inactive" OnClick = "InactivateRecord"></asp:LinkButton>
+    </ItemTemplate>
+    </asp:TemplateField>
     <asp:CommandField  ShowEditButton="False"  ValidationGroup="GridViewFields"/>
 
 </Columns>

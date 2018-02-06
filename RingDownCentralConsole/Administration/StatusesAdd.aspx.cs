@@ -1,0 +1,294 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.IO;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+
+namespace RingDownCentralConsole
+{
+    public partial class StatusesAdd : System.Web.UI.Page
+    {
+        private readonly string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            ////If authenicated and role admin
+            if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
+            {
+                if (!IsPostBack)
+                {
+                    BindData();
+                }
+            }
+            else
+            {
+                //Send user back to main console page, because user is not an "Administrator" role
+                Response.Redirect("~/Account/Login.aspx");
+            }
+        }
+
+        protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            var sortExpression = e.SortExpression;
+            var direction = string.Empty;
+            var strQuery = "SELECT * from Statuses Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
+
+            if (SortDirection == SortDirection.Ascending)
+            {
+                SortDirection = SortDirection.Descending;
+                direction = " DESC";
+            }
+            else
+            {
+                SortDirection = SortDirection.Ascending;
+                direction = " ASC";
+            }
+
+            DataTable table = this.GetData(cmd);
+            table.DefaultView.Sort = sortExpression + direction;
+            GridView1.DataSource = table;
+            GridView1.DataBind();
+        }
+
+        public SortDirection SortDirection
+
+        {
+            get
+            {
+                if (ViewState["SortDirection"] == null)
+                {
+                    ViewState["SortDirection"] = SortDirection.Ascending;
+                }
+                return (SortDirection) ViewState["SortDirection"];
+            }
+            set
+            {
+                ViewState["SortDirection"] = value;
+            }
+        }
+
+
+        private void BindData()
+        {
+            var strQuery = "SELECT * from Statuses Where IsActive=1";
+            var cmd = new SqlCommand(strQuery);
+            GridView1.DataSource = GetData(cmd);
+            GridView1.DataBind();
+        }
+
+        private DataTable GetData(SqlCommand cmd)
+        {
+            var dt = new DataTable();
+            var con = new SqlConnection(constr);
+            var sda = new SqlDataAdapter();
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = con;
+            con.Open();
+            sda.SelectCommand = cmd;
+            sda.Fill(dt);
+            return dt;
+        }
+
+        protected void upload_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
+                {
+
+                    var fileName = FileUpload1.FileName.ToLower().Trim();
+                    var savePath = Server.MapPath(string.Format("~/Images/", fileName));
+                    var pathToCheck = savePath + fileName;
+                    var extension = Path.GetExtension(FileUpload1.FileName).ToLower();
+                    var Name = txtName.Text.Trim();
+
+                    try
+                    {
+                        if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
+                        {
+
+
+                            if (System.IO.File.Exists(pathToCheck))
+                            {
+                                // Notify the user that the file name was changed.
+                                lblResult.Text = "An image with this name already exists";
+                                return;
+                            }
+                            else
+                            {
+
+                                // Append the name of the file to upload to the path.
+                                savePath += fileName;
+
+                                // file to the specified directory.
+                                FileUpload1.SaveAs(savePath);
+
+                                var cmd = new SqlCommand();
+                                cmd.CommandType = CommandType.Text;
+                                cmd.CommandText = "Insert into Statuses (Name, ImageName, Image, IsActive) " +
+                                "values (@Name, @ImageName, @Image, @IsActive);" +
+                                "Select * from Statuses Where IsActive=1";
+
+                                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                                cmd.Parameters.Add("@ImageName", SqlDbType.NVarChar).Value = fileName;
+                                cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "~/Images/" + fileName;
+                                cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 1;
+                                GridView1.DataSource = GetData(cmd);
+                                GridView1.DataBind();
+                           
+                                // Notify the user that the file was saved successfully.
+                                lblResult.Text = "The record has been inserted.";
+
+                                txtName.Text = string.Empty;
+
+                            }
+                        }
+                        else
+                        {
+                            lblResult.Text = "Only images excepted (.jpg, .png or .bmp)";
+                            return;
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        lblResult.Text = "upload_Click error" + ex;
+                    }
+                }
+            }
+        }
+                       
+
+        protected void InactivateRecord(object sender, EventArgs e)
+        {
+           
+                using (var con = new SqlConnection(constr))
+            {
+                var lnkRemove = (LinkButton) sender;
+
+                try
+                {
+                    var cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.Text;
+                    Msg.Text = "";
+                    cmd.CommandText = "Update Statuses set IsActive=@IsActive Where Id=@Id;" +
+                     "Select * from Statuses Where IsActive=1";
+                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = lnkRemove.CommandArgument;
+                    cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
+
+                    GridView1.DataSource = GetData(cmd);
+                    GridView1.DataBind();
+                    BindData();
+
+                }
+                catch (Exception ex)
+                {
+                    /*Handle error*/
+                    Msg.Text = "Connection Error in InactivateRecord module" + ex;
+                }
+
+            }
+
+        }
+        
+        protected void UpdateStatus(object sender, GridViewUpdateEventArgs e)
+        {
+
+            if (Page.IsValid)
+            {
+                //System.Web.UI.ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Your Message');", true);
+                var FileUpload2 = GridView1.Rows[e.RowIndex].FindControl("FileUpload2") as FileUpload;
+
+                if (FileUpload2.PostedFile != null && FileUpload2.PostedFile.ContentLength > 0)
+                {
+                    var fileName = FileUpload2.FileName.ToLower().Trim();
+                    var savePath = Server.MapPath(string.Format("~/Images/", fileName));
+                    var pathToCheck = savePath + fileName;
+                    var extension = System.IO.Path.GetExtension(FileUpload2.FileName).ToLower();
+                    var Name = ((TextBox) GridView1.Rows[e.RowIndex].FindControl("txtName")).Text.Trim();
+                    var Id = ((Label) GridView1.Rows[e.RowIndex].FindControl("lblId")).Text;
+
+                    try
+                    {
+                        if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
+                        {
+
+                            if (System.IO.File.Exists(pathToCheck))
+                            {
+                                // Notify the user that the file name was changed.
+                                Msg.Text = "An image with this name already exists.  Please select a different image or change the image's file name.";
+                                return;
+                            }
+                            else
+                            {
+
+                                // Append the name of the file to upload to the path.
+                                savePath += fileName;
+
+                                // file to the specified directory.
+                                FileUpload2.SaveAs(savePath);
+
+                                var cmd = new SqlCommand();
+                                cmd.CommandType = CommandType.Text;
+                                cmd.CommandText = "Update Statuses set Image=@Image, " +
+                             "ImageName=@ImageName, Name=@Name where Id=@Id;Select * From Statuses WHERE IsActive=1";
+
+                                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                                cmd.Parameters.Add("@ImageName", SqlDbType.NVarChar).Value = fileName;
+                                cmd.Parameters.Add("@Image", SqlDbType.NVarChar).Value = "~/Images/" + fileName;
+                                GridView1.EditIndex = -1;
+                                GridView1.DataSource = GetData(cmd);
+                                GridView1.DataBind();
+
+                                // Notify the user that the file was saved successfully.
+                                lblResult.Text = "The record has been updated.";
+
+                                // txtName.Text = string.Empty;            
+                            }
+
+                        }
+                        else
+                        {
+                            Msg.Text = "Only image files are allowed";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Msg.Text = "UpdateStatus Error " + ex;
+                    }
+                }
+            }
+        }
+        
+            protected void OnPaging(object sender, GridViewPageEventArgs e)
+            {
+            BindData();
+            GridView1.PageIndex = e.NewPageIndex;
+            GridView1.DataBind();
+            }
+
+            protected void EditStatus(object sender, GridViewEditEventArgs e)
+            {
+                GridView1.EditIndex = e.NewEditIndex;
+                BindData();
+            }
+
+            protected void CancelEdit(object sender, GridViewCancelEditEventArgs e)
+            {
+                GridView1.EditIndex = -1;
+                BindData();
+            }
+
+
+    }
+}
