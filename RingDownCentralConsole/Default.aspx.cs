@@ -54,47 +54,37 @@ namespace RingDownCentralConsole
                         var Start = DateTime.Now;
                         var RecDate = Convert.ToDateTime(reader["RecordedDate"].ToString());
 
-                        var minutes = Math.Floor((Start - RecDate).TotalMinutes);                    
+                        var minutes = Math.Floor((Start - RecDate).TotalMinutes);
 
                         TableCell statusCell = e.Row.Cells[2];
-                        if (statusCell.Text == "No Link")
-                        {
-                            // if ((Start - RecDate).TotalMinutes >= 30)
-                            if (minutes >= 10)
-                            {
-                                //10 minutes were passed from start                                 
-                                statusCell.Text = "Disconnected";
-                                e.Row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
-                            }
-                            else
-                            {
-                                e.Row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
-                            }
-                        }
 
-                        if (statusCell.Text == "Connected")
+                        switch (statusCell.Text)
                         {
-                            e.Row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
-                        }
-
-                        if (statusCell.Text == "No Dial Tone")
-                        {
-                            e.Row.Attributes.CssStyle.Value = "background-color: #F4F776; color: #00000";
-                        }
-
-                        if (statusCell.Text == "On Hook")
-                        {
-                            e.Row.Attributes.CssStyle.Value = "background-color: #E8F1D4; color: #00000";
-                        }
-
-                        if (statusCell.Text == "No Dial Tone")
-                        {
-                            e.Row.Attributes.CssStyle.Value = "background-color: #EEE9E9; color: #00000";
-                        }
-
-                        if (statusCell.Text == "Off Hook")
-                        {
-                            e.Row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
+                            case "No Link":
+                                // if ((Start - RecDate).TotalMinutes >= 30)
+                                if (minutes >= 10)
+                                {
+                                    //10 minutes were passed from start                                 
+                                    statusCell.Text = "Disconnected";
+                                    e.Row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
+                                }
+                                else
+                                {
+                                    e.Row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
+                                }
+                                break;
+                            case "Connected":
+                                e.Row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
+                                break;
+                            case "No Dial Tone":
+                                e.Row.Attributes.CssStyle.Value = "background-color: #EEE9E9; color: #00000";
+                                break;
+                            case "On Hook":
+                                e.Row.Attributes.CssStyle.Value = "background-color: #E8F1D4; color: #00000";
+                                break;
+                            case "Off Hook":
+                                e.Row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
+                                break;
                         }
                     }
                 }
