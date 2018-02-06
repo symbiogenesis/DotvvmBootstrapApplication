@@ -108,7 +108,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridV
 
 </asp:TemplateField>
 
-      <asp:CommandField  ShowEditButton="True" />
+      <asp:CommandField  ShowEditButton="False" />
 
 </Columns>
 <AlternatingRowStyle BackColor="white"  />
