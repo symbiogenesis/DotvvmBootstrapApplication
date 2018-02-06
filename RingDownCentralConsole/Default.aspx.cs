@@ -44,22 +44,24 @@ namespace RingDownCentralConsole
 
                 var minutes = Math.Floor((start - recDateTime).TotalMinutes);
 
-                TableCell statusCell = row.Cells[2];
+                var statusCell = row.Cells[2];
+
+                //have 10 minutes since
+                if (minutes >= 10)
+                {
+                    var imageCell = row.Cells[3];
+
+                    row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
+                    statusCell.Text = "Disconnected";
+                    var image = (Image) imageCell.FindControl("Image1");
+                    image.ImageUrl = "~/Images/no_link_t.png";
+                    return;
+                }
 
                 switch (statusCell.Text)
                 {
                     case "No Link":
-                        // if ((Start - RecDate).TotalMinutes >= 30)
-                        if (minutes >= 10)
-                        {
-                            //10 minutes were passed from start                                 
-                            statusCell.Text = "Disconnected";
-                            row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
-                        }
-                        else
-                        {
-                            row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
-                        }
+                        row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
                         break;
                     case "Connected":
                         row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
