@@ -15,7 +15,7 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ////If authenicated and role admin
+            //If authenicated and role admin
             if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
             {
                 if (!IsPostBack)
@@ -28,7 +28,6 @@ namespace RingDownCentralConsole
                 //Log user out (if logged in), redirect back to login.aspx
                 Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
-
             }
         }
 
@@ -36,7 +35,7 @@ namespace RingDownCentralConsole
         {
             var sortExpression = e.SortExpression;
             var direction = string.Empty;
-            var strQuery = "SELECT * from Locations Where IsActive=1";
+            const string strQuery = "SELECT * from Locations Where IsActive=1";
             var cmd = new SqlCommand(strQuery);
 
             if (SortDirection == SortDirection.Ascending)
@@ -57,7 +56,6 @@ namespace RingDownCentralConsole
         }
 
         public SortDirection SortDirection
-
         {
             get
             {
@@ -75,7 +73,7 @@ namespace RingDownCentralConsole
 
         private void BindData()
         {
-            var strQuery = "SELECT * from Locations Where IsActive=1";
+            const string strQuery = "SELECT * from Locations Where IsActive=1";
             var cmd = new SqlCommand(strQuery);
             GridView1.DataSource = GetData(cmd);
             GridView1.DataBind();
@@ -83,16 +81,23 @@ namespace RingDownCentralConsole
 
         private DataTable GetData(SqlCommand cmd)
         {
-            var dt = new DataTable();
-            var con = new SqlConnection(_constr);
-            var sda = new SqlDataAdapter();
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            con.Open();
-            sda.SelectCommand = cmd;
-            sda.Fill(dt);
-            return dt;
 
+            using (var dt = new DataTable())
+            {
+                using (var con = new SqlConnection(_constr))
+                {
+                    using (var sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con;
+                        con.Open();
+                        sda.SelectCommand = cmd;
+                        sda.Fill(dt);
+                    }
+                    con.Close();
+                    return dt;
+                }
+            }
         }
 
         protected void InactivateLocation(object sender, EventArgs e)
@@ -105,7 +110,7 @@ namespace RingDownCentralConsole
                     var cmd = new SqlCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "Update Locations set IsActive=@IsActive Where Id=@Id;" +
-                     "Select * from Locations Where IsActive=1";
+                        "Select * from Locations Where IsActive=1";
                     cmd.Parameters.Add("@Id", SqlDbType.VarChar).Value = lnkRemove.CommandArgument;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
                     Msg.Text = "";
@@ -263,8 +268,8 @@ namespace RingDownCentralConsole
                     {
                         //Serial does not exist (no duplicate Serial Number)   
                         cmd.CommandText = "Insert into Locations (Code, Name, SerialNumber, IsActive) " +
-                      "values (@Code, @Name, @SerialNumber, @IsActive);" +
-                       "Select * From Locations WHERE IsActive=1";
+                            "values (@Code, @Name, @SerialNumber, @IsActive);" +
+                            "Select * From Locations WHERE IsActive=1";
                         cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
                         cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
                         // SerialNumber declared above
