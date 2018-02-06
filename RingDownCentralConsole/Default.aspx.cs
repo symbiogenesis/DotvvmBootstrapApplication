@@ -38,7 +38,7 @@ namespace RingDownCentralConsole
             {
                 var row = e.Row;
 
-                var start = DateTime.Now;
+                var start = DateTime.UtcNow;
                 var recordedDate = DataBinder.Eval(row.DataItem, "RecordedDate");
                 var recDateTime = (recordedDate == null) ? DateTime.MinValue : Convert.ToDateTime(recordedDate.ToString());
 
