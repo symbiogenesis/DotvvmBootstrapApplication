@@ -137,11 +137,13 @@ namespace RingDownCentralConsole
             using (var conn = new SqlConnection(_constr))
             {
                 // write the sql statement to execute
-                var sql = "SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
-                             "Statuses.Name AS Status, Image, Locations.IsActive AS LocIsActive, Statuses.IsActive As StatusIsActive, RecordedDate " +
-                             "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
-                             "ON Statuses.Id = LocationStatuses.StatusId WHERE Locations.IsActive=1 " +
-                             "ORDER BY RecordedDate DESC, Locations.Name DESC";
+                var sql = "SELECT Name, Code, SerialNumber, IsActive" +
+                            "FROM dbo.Locations AS loc" +
+                            "CROSS APPLY" +
+                            "     (select top 1 * " +
+                            "      FROM LocationStatuses" +
+                            "      WHERE LocationId = loc.Id" +
+                            "      ORDER BY RecordedDate desc) AS ls";
 
                 // instantiate the command object to fire
                 using (var cmd = new SqlCommand(sql, conn))
