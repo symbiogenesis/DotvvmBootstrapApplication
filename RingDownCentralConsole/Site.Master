@@ -58,7 +58,7 @@
                         <asp:MenuItem NavigateUrl="~/Administration/LocationsArchive.aspx" Target="_self" Text="Locations Archive" ToolTip="Locations Archive" Value="LocationsArchive"></asp:MenuItem>      
                     </asp:MenuItem>
                                 
-                        <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="StatusesSub"></asp:MenuItem>   
+                        <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="Statuses"></asp:MenuItem>   
                       
                 
                         <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>                       
