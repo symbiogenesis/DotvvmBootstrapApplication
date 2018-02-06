@@ -57,13 +57,13 @@
                         <asp:MenuItem NavigateUrl="~/Administration/Locations.aspx" Target="_self" Text="Locations" ToolTip="Locations" Value="LocationsSub"></asp:MenuItem> 
                         <asp:MenuItem NavigateUrl="~/Administration/LocationsArchive.aspx" Target="_self" Text="Locations Archive" ToolTip="Locations Archive" Value="LocationsArchive"></asp:MenuItem>      
                     </asp:MenuItem>
-                    <asp:MenuItem Text="Statuses" Value="Statuses" Selectable="false">                        
+                                
                         <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="StatusesSub"></asp:MenuItem>   
-                        <asp:MenuItem NavigateUrl="~/Administration/StatusesArchive.aspx" Target="_self" Text="Statuses Archive" ToolTip="Statuses Archive" Value="StatusesArchive"></asp:MenuItem>   
-                    </asp:MenuItem>    
+                      
+                
                         <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>                       
                         <asp:MenuItem NavigateUrl="~/Administration/ManageUserRoles.aspx" Target="_self" Text="Manage User Roles"  ToolTip="Manage User Roles" Value="ManageUserRoles"></asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/Administration/SetRefresh.aspx" Target="_self" Text="Set Refresh Interval"  ToolTip="Set Refresh Interval" Value="SetRefreshInterval"></asp:MenuItem>
+                      
                         <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
                 </Items>
                 <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
