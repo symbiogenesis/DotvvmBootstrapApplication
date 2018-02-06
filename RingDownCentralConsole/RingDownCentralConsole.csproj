@@ -149,9 +149,7 @@
     <Content Include="Administration\Locations.aspx" />
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
-    <Content Include="Administration\StatusesAdd.aspx" />
     <Content Include="Administration\Statuses.aspx" />
-    <Content Include="Administration\StatusesArchive.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -363,26 +361,12 @@
     <Compile Include="Administration\ManageUserRoles.aspx.designer.cs">
       <DependentUpon>ManageUserRoles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\StatusesAdd.aspx.cs">
-      <DependentUpon>StatusesAdd.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\StatusesAdd.aspx.designer.cs">
-      <DependentUpon>StatusesAdd.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Statuses.aspx.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Administration\Statuses.aspx.designer.cs">
       <DependentUpon>Statuses.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administration\StatusesArchive.aspx.cs">
-      <DependentUpon>StatusesArchive.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\StatusesArchive.aspx.designer.cs">
-      <DependentUpon>StatusesArchive.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
