@@ -110,7 +110,7 @@ namespace RingDownCentralConsole
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
                     Msg.Text = "";
 
-                    GridView1.EditIndex = -1;
+                    SetNormalMode();
                     GridView1.DataSource = GetData(cmd);
                     GridView1.DataBind();
                     BindData();
@@ -133,14 +133,26 @@ namespace RingDownCentralConsole
 
         protected void EditLocation(object sender, GridViewEditEventArgs e)
         {
-            GridView1.EditIndex = e.NewEditIndex;
+            SetEditMode(e.NewEditIndex);
             BindData();
         }
 
         protected void CancelEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            GridView1.EditIndex = -1;
+            SetNormalMode();
             BindData();
+        }
+
+        private void SetEditMode(int index)
+        {
+            GridView1.EditIndex = index;
+            GridView1.ShowFooter = false;
+        }
+
+        private void SetNormalMode()
+        {
+            GridView1.EditIndex = -1;
+            GridView1.ShowFooter = true;
         }
 
         protected void UpdateLocation(object sender, GridViewUpdateEventArgs e)
@@ -183,7 +195,7 @@ namespace RingDownCentralConsole
                         if (updated > 0)
                         {
                             var cmd3 = new SqlCommand("Select* From Locations WHERE IsActive = 1", con);
-                            GridView1.EditIndex = -1;
+                            SetNormalMode();
                             GridView1.DataSource = GetData(cmd3);
                             GridView1.DataBind();
                             con.Close();
