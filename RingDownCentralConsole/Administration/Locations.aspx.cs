@@ -25,7 +25,7 @@ namespace RingDownCentralConsole
             }
             else
             {
-               //Send user back to main console page, because user is not an "Administrator" role
+                //Send user back to main console page, because user is not an "Administrator" role
                 Response.Redirect("~/Account/Login.aspx");
             }
         }
@@ -154,21 +154,21 @@ namespace RingDownCentralConsole
                     try
                     {
                         con.Open();
-                        var cmd = new SqlCommand("Select SerialNumber from Locations where SerialNumber=@SerialNumber", con);
+                        var cmd = new SqlCommand("Select Id, SerialNumber from Locations where SerialNumber=@SerialNumber", con);
                         cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
+                        cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;                      
                         SqlDataReader reader = cmd.ExecuteReader();
                         Msg.Text = "";
 
-                        if (reader.HasRows)
+                        //Allows for current record to be updated if there exists the same serial number and ID
+                        //and if the serial number does not exist, otherwise consider duplicate.
+                        if (reader.Read())
+                        {  
+                            if (!reader.HasRows || (reader["Id"].ToString().Equals(Id) && reader.HasRows))
                         {
-                            //Serial Exists
-                            Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";                       
-                        }
-                        else
-                        {
+
                             cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
-                            "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
+                           "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
                             cmd.CommandType = CommandType.Text;
                             cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
                             cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
@@ -179,6 +179,13 @@ namespace RingDownCentralConsole
                             GridView1.DataBind();
                             con.Close();
                             BindData();
+
+                        }
+                        else
+                        {
+                            //Serial Exists
+                            Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";
+                        }
                         }
                     }
                     catch (Exception ex)

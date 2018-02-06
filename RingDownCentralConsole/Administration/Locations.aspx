@@ -17,7 +17,6 @@
         <div id = "dvGrid" style ="padding:10px;width:550px">
 
 
-  
 <asp:GridView ID="GridView1" runat="server"  Width = "800px" AutoGenerateColumns = "false" ForeColor="#333333" GridLines="None" 
  AllowPaging ="true"  ShowFooter = "true" OnPageIndexChanging = "OnPaging" onrowediting="EditLocation" onrowupdating="UpdateLocation"  
     onrowcancelingedit="CancelEdit"
@@ -108,7 +107,7 @@ PageSize = "100" EmptyDataText="No Location Records Entered"    OnSorting="GridV
 
 </asp:TemplateField>
 
-      <asp:CommandField  ShowEditButton="False" />
+      <asp:CommandField  ShowEditButton="True" />
 
 </Columns>
 <AlternatingRowStyle BackColor="white"  />
