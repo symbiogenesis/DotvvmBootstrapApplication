@@ -34,65 +34,51 @@ namespace RingDownCentralConsole
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            using (var con = new SqlConnection(_constr))
+            try
             {
-                try
+                var row = e.Row;
+
+                var start = DateTime.Now;
+                var recordedDate = DataBinder.Eval(row.DataItem, "RecordedDate");
+                var recDateTime = (recordedDate == null) ? DateTime.MinValue : Convert.ToDateTime(recordedDate.ToString());
+
+                var minutes = Math.Floor((start - recDateTime).TotalMinutes);
+
+                TableCell statusCell = row.Cells[2];
+
+                switch (statusCell.Text)
                 {
-                    con.Open();
-                    var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
-                             "Statuses.Name AS Status, Image, Locations.IsActive AS LocIsActive, Statuses.IsActive As StatusIsActive, RecordedDate " +
-                             "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
-                             "ON Statuses.Id = LocationStatuses.StatusId WHERE Locations.IsActive=1", con);
-                    cmd.CommandType = CommandType.Text;                    
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    Msg.Text = "";
-
-                    if (reader.Read())
-                    {
-                       // 2/5/2018 
-
-                        var Start = DateTime.Now;
-                        var RecDate = Convert.ToDateTime(reader["RecordedDate"].ToString());
-
-                        var minutes = Math.Floor((Start - RecDate).TotalMinutes);
-
-                        TableCell statusCell = e.Row.Cells[2];
-
-                        switch (statusCell.Text)
+                    case "No Link":
+                        // if ((Start - RecDate).TotalMinutes >= 30)
+                        if (minutes >= 10)
                         {
-                            case "No Link":
-                                // if ((Start - RecDate).TotalMinutes >= 30)
-                                if (minutes >= 10)
-                                {
-                                    //10 minutes were passed from start                                 
-                                    statusCell.Text = "Disconnected";
-                                    e.Row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
-                                }
-                                else
-                                {
-                                    e.Row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
-                                }
-                                break;
-                            case "Connected":
-                                e.Row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
-                                break;
-                            case "No Dial Tone":
-                                e.Row.Attributes.CssStyle.Value = "background-color: #EEE9E9; color: #00000";
-                                break;
-                            case "On Hook":
-                                e.Row.Attributes.CssStyle.Value = "background-color: #E8F1D4; color: #00000";
-                                break;
-                            case "Off Hook":
-                                e.Row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
-                                break;
+                            //10 minutes were passed from start                                 
+                            statusCell.Text = "Disconnected";
+                            row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
                         }
-                    }
+                        else
+                        {
+                            row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
+                        }
+                        break;
+                    case "Connected":
+                        row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
+                        break;
+                    case "No Dial Tone":
+                        row.Attributes.CssStyle.Value = "background-color: #EEE9E9; color: #00000";
+                        break;
+                    case "On Hook":
+                        row.Attributes.CssStyle.Value = "background-color: #E8F1D4; color: #00000";
+                        break;
+                    case "Off Hook":
+                        row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    /*Handle error*/
-                    Msg.Text = "Connection Error in GridView1_RowDataBound" + ex;
-                }
+            }
+            catch (Exception ex)
+            {
+                /*Handle error*/
+                Msg.Text = "Connection Error in GridView1_RowDataBound" + ex;
             }
         }
 
