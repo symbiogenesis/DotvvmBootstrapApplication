@@ -154,34 +154,45 @@ namespace RingDownCentralConsole
 
                 try
                 {
-
-                    con.Open();
-                    var cmd = new SqlCommand("Select Id, SerialNumber from Locations where SerialNumber=@SerialNumber", con);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
-                    SqlDataReader reader = cmd.ExecuteReader();
                     Msg.Text = "";
 
-                    if (reader.HasRows)
+                    con.Open();
+
+                    var cmd1 = new SqlCommand("Select Count(*) from Locations where Id!=@Id and SerialNumber=@SerialNumber", con);
+                    cmd1.CommandType = CommandType.Text;
+                    cmd1.Parameters.Add("@Id", SqlDbType.NVarChar).Value = Id;
+                    cmd1.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
+                    var existing = cmd1.ExecuteScalar();
+                    var numOfExisting = existing != null ? Convert.ToInt32(existing) : 0;
+
+                    if (numOfExisting > 0)
                     {
                         //Serial Exists
                         Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";
                     }
                     else
                     {
-                        cmd.CommandText = "Update Locations set Code=@Code, SerialNumber=@SerialNumber, " +
-                        "Name=@Name where Id=@Id;Select * From Locations WHERE IsActive=1";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
-                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
-                        cmd.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
-                        // Serial Number defined above
-                        GridView1.EditIndex = -1;
-                        GridView1.DataSource = GetData(cmd);
-                        GridView1.DataBind();
-                        con.Close();
-                    }
+                        var cmd2 = new SqlCommand("Update Locations set Code=@Code, SerialNumber=@SerialNumber, Name=@Name where Id=@Id", con);
+                        cmd2.CommandType = CommandType.Text;
+                        cmd2.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+                        cmd2.Parameters.Add("@Name", SqlDbType.NVarChar).Value = Name;
+                        cmd2.Parameters.Add("@Code", SqlDbType.NVarChar).Value = Code;
+                        cmd2.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
+                        var updated = cmd2.ExecuteNonQuery();
 
+                        if (updated > 0)
+                        {
+                            var cmd3 = new SqlCommand("Select* From Locations WHERE IsActive = 1", con);
+                            GridView1.EditIndex = -1;
+                            GridView1.DataSource = GetData(cmd3);
+                            GridView1.DataBind();
+                            con.Close();
+                        }
+                        else
+                        {
+                            Msg.Text = "Update failed. No rows updated.";
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -191,10 +202,31 @@ namespace RingDownCentralConsole
             }
         }
 
+        private string GetExistingSerialNumber(SqlCommand cmd)
+        {
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            string existingSerialNumber = null;
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    existingSerialNumber = reader.GetString(1);
+                }
+            }
+            else
+            {
+                Msg.Text = "Location record not found. Cannot update this record.";
+            }
+
+            reader.Close();
+
+            return existingSerialNumber;
+        }
+
         protected void AddNewLocation(object sender, EventArgs e)
         {
-
-
             using (var con = new SqlConnection(_constr))
             {
                 var Code = ((TextBox) GridView1.FooterRow.FindControl("txtCode")).Text.Trim();
