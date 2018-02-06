@@ -38,6 +38,9 @@ namespace RingDownCentralConsole
             {
                 var row = e.Row;
 
+                if (row.RowType != DataControlRowType.DataRow)
+                    return;
+
                 var start = DateTime.UtcNow;
                 var recordedDate = DataBinder.Eval(row.DataItem, "RecordedDate");
                 var recDateTime = (recordedDate == null) ? DateTime.MinValue : Convert.ToDateTime(recordedDate.ToString());
@@ -137,13 +140,16 @@ namespace RingDownCentralConsole
             using (var conn = new SqlConnection(_constr))
             {
                 // write the sql statement to execute
-                var sql = "SELECT Name, Code, SerialNumber, IsActive" +
-                            "FROM dbo.Locations AS loc" +
-                            "CROSS APPLY" +
-                            "     (select top 1 * " +
-                            "      FROM LocationStatuses" +
-                            "      WHERE LocationId = loc.Id" +
-                            "      ORDER BY RecordedDate desc) AS ls";
+                const string sql = "SELECT loc.Name AS LocationName, Code, SerialNumber, ls.RecordedDate, s.Image, s.Name AS Status " +
+                                    "FROM dbo.Locations AS loc " +
+                                    "CROSS APPLY " +
+                                    "     (SELECT TOP 1 * " +
+                                    "      FROM LocationStatuses " +
+                                    "      WHERE LocationId = loc.Id " +
+                                    "      ORDER BY RecordedDate desc) AS ls " +
+                                    "INNER JOIN Statuses s ON ls.StatusId = s.Id AND s.IsActive = 1 " +
+                                    "WHERE loc.IsActive = 1 " +
+                                    "ORDER BY loc.Name DESC";
 
                 // instantiate the command object to fire
                 using (var cmd = new SqlCommand(sql, conn))
