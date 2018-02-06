@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,11 +12,10 @@ namespace RingDownCentralConsole
     public partial class _Default : Page
     {
         private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-      //  private readonly string _path = "~/Interval/RefreshVal.json";
+        //private readonly string _path = "~/Interval/RefreshVal.json";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")) || (User.IsInRole("User")))
             {
                 if (!IsPostBack)
@@ -34,14 +32,10 @@ namespace RingDownCentralConsole
             }
         }
 
-
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
-
             using (var con = new SqlConnection(_constr))
             {
-            
                 try
                 {
                     con.Open();
@@ -61,17 +55,17 @@ namespace RingDownCentralConsole
                         var RecDate = Convert.ToDateTime(reader["RecordedDate"].ToString());
 
                         var minutes = Math.Floor((Start - RecDate).TotalMinutes);                    
-                       
+
                         TableCell statusCell = e.Row.Cells[2];
                         if (statusCell.Text == "No Link")
-                        {     
+                        {
                             // if ((Start - RecDate).TotalMinutes >= 30)
                             if (minutes >= 10)
-                            {                              
+                            {
                                 //10 minutes were passed from start                                 
                                 statusCell.Text = "Disconnected";
                                 e.Row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
-                            }  
+                            }
                             else
                             {
                                 e.Row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
@@ -101,11 +95,8 @@ namespace RingDownCentralConsole
                         if (statusCell.Text == "Off Hook")
                         {
                             e.Row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
-                        }                        
-
+                        }
                     }
-
-                    
                 }
                 catch (Exception ex)
                 {
@@ -113,11 +104,6 @@ namespace RingDownCentralConsole
                     Msg.Text = "Connection Error in GridView1_RowDataBound" + ex;
                 }
             }
-
-
-
-
-           
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
@@ -143,7 +129,6 @@ namespace RingDownCentralConsole
         }
 
         public SortDirection SortDirection
-
         {
             get
             {
