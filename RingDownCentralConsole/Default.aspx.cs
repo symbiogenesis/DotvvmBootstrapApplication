@@ -13,7 +13,7 @@ namespace RingDownCentralConsole
     public partial class _Default : Page
     {
         private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-        private readonly string _path = "~/Interval/RefreshVal.json";
+      //  private readonly string _path = "~/Interval/RefreshVal.json";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +32,92 @@ namespace RingDownCentralConsole
                 Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("~/Messages/AccountReview.aspx");
             }
+        }
+
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+
+            using (var con = new SqlConnection(_constr))
+            {
+            
+                try
+                {
+                    con.Open();
+                    var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
+                             "Statuses.Name AS Status, Image, Locations.IsActive AS LocIsActive, Statuses.IsActive As StatusIsActive, RecordedDate " +
+                             "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
+                             "ON Statuses.Id = LocationStatuses.StatusId WHERE Locations.IsActive=1", con);
+                    cmd.CommandType = CommandType.Text;                    
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    Msg.Text = "";
+
+                    if (reader.Read())
+                    {
+                       // 2/5/2018 
+
+                        var Start = DateTime.Now;
+                        var RecDate = Convert.ToDateTime(reader["RecordedDate"].ToString());
+
+                        var minutes = Math.Floor((Start - RecDate).TotalMinutes);                    
+                       
+                        TableCell statusCell = e.Row.Cells[2];
+                        if (statusCell.Text == "No Link")
+                        {     
+                            // if ((Start - RecDate).TotalMinutes >= 30)
+                            if (minutes >= 10)
+                            {                              
+                                //10 minutes were passed from start                                 
+                                statusCell.Text = "Disconnected";
+                                e.Row.Attributes.CssStyle.Value = "background-color: #EE6363; color: #00000";
+                            }  
+                            else
+                            {
+                                e.Row.Attributes.CssStyle.Value = "background-color: #fb968b; color: #00000";
+                            }
+                        }
+
+                        if (statusCell.Text == "Connected")
+                        {
+                            e.Row.Attributes.CssStyle.Value = "background-color: #AADD00; color: #00000";
+                        }
+
+                        if (statusCell.Text == "No Dial Tone")
+                        {
+                            e.Row.Attributes.CssStyle.Value = "background-color: #F4F776; color: #00000";
+                        }
+
+                        if (statusCell.Text == "On Hook")
+                        {
+                            e.Row.Attributes.CssStyle.Value = "background-color: #E8F1D4; color: #00000";
+                        }
+
+                        if (statusCell.Text == "No Dial Tone")
+                        {
+                            e.Row.Attributes.CssStyle.Value = "background-color: #EEE9E9; color: #00000";
+                        }
+
+                        if (statusCell.Text == "Off Hook")
+                        {
+                            e.Row.Attributes.CssStyle.Value = "background-color: #CDC9C9; color: #00000";
+                        }                        
+
+                    }
+
+                    
+                }
+                catch (Exception ex)
+                {
+                    /*Handle error*/
+                    Msg.Text = "Connection Error in GridView1_RowDataBound" + ex;
+                }
+            }
+
+
+
+
+           
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
@@ -89,9 +175,9 @@ namespace RingDownCentralConsole
             {
                 // write the sql statement to execute
                 var sql = "SELECT Locations.Id AS LocationID, Code, Locations.Name AS LocationName, " +
-                             "Statuses.Name AS Status, Image, Locations.IsActive, Statuses.IsActive, RecordedDate " +
+                             "Statuses.Name AS Status, Image, Locations.IsActive AS LocIsActive, Statuses.IsActive As StatusIsActive, RecordedDate " +
                              "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
-                             "ON Statuses.Id = LocationStatuses.StatusId WHERE(((Locations.IsActive) = 1) AND((Statuses.IsActive) = 1)) " +
+                             "ON Statuses.Id = LocationStatuses.StatusId WHERE Locations.IsActive=1 " +
                              "ORDER BY RecordedDate DESC, Locations.Name DESC";
 
                 // instantiate the command object to fire
@@ -111,31 +197,8 @@ namespace RingDownCentralConsole
         //5 second timer 
         protected void Timer1_Tick(object sender, EventArgs e)
         {
-
-            try
-            {
-                using (var sr = new StreamReader(Server.MapPath(_path)))
-                {
-                    var seconds = sr.ReadLine();
-                    Timer1.Interval = int.Parse(seconds);
-                    // Start the timer
-                    Timer1.Enabled = true;
-                    
-                    GridView1.DataBind();
-                     BindData();
-                }
-            }
-            catch (Exception ex)
-            {
-                Msg.Text = "Error loading refresh interval seconds:" + ex.ToString();
-            }
-
-
-
-
-
-
-           
+            GridView1.DataBind();
+            BindData();
         }
     }
 }

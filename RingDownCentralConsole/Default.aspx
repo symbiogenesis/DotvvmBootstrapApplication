@@ -9,11 +9,11 @@
     </div>
         <div>
 
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-            <asp:Timer ID="Timer1" runat="server"   Interval="1000" OnTick="Timer1_Tick"></asp:Timer>
+            <asp:Timer ID="Timer1" runat="server" Interval="5000" ontick="Timer1_Tick"></asp:Timer>
             <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None"  Font-Size="Medium" Font-Bold="true" AutoGenerateColumns="false" width="800px" 
-                AllowSorting="True"  OnSorting="GridView1_Sorting" EmptyDataText="No Records Available" >
+                AllowSorting="True"  OnSorting="GridView1_Sorting" EmptyDataText="No Records Available" OnRowDataBound="GridView1_RowDataBound" >
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
