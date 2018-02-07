@@ -12,6 +12,20 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script>
+
+         $(document).ready(function () {
+        
+             $("#txtStartDate").attr('readonly', true).datepicker({ onSelect: function () { } })
+             $("#txtEndDate").attr('readonly', true).datepicker({ onSelect: function () { } });
+         });    
+  </script>
+
+
 
 </head>
 <body>
@@ -64,7 +78,7 @@
                         <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>                       
                         <asp:MenuItem NavigateUrl="~/Administration/ManageUserRoles.aspx" Target="_self" Text="Manage User Roles"  ToolTip="Manage User Roles" Value="ManageUserRoles"></asp:MenuItem>
                       
-                        <asp:MenuItem NavigateUrl="~/Reports/rdccReports.aspx" Target="_self" Text="Reports" ToolTip="Reports" Value="Reports"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/Reports/Report.aspx" Target="_self" Text="Report" ToolTip="Report" Value="Report"></asp:MenuItem>
                 </Items>
                 <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
                 <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />

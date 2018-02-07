@@ -183,6 +183,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\cda_logo_r.png" />
     <Content Include="Messages\AccountReview.aspx" />
+    <Content Include="Reports\Report.aspx" />
     <Content Include="Reports\Report.rdlc" />
     <Content Include="Console.xsc">
       <DependentUpon>Console.xsd</DependentUpon>
@@ -439,6 +440,13 @@
     </Compile>
     <Compile Include="Reports\rdccReports.aspx.designer.cs">
       <DependentUpon>rdccReports.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
