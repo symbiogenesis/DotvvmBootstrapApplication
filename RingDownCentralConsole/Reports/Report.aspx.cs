@@ -36,6 +36,7 @@ namespace RingDownCentralConsole.Reports
             this.Msg.Text = "";
             this.txtEndDate.Text = "";
             this.txtStartDate.Text = "";
+            GridView1.DataBind();
         }
 
         protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
