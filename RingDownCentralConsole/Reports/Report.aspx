@@ -43,31 +43,31 @@
            <br />
             <asp:Label id="Msg2" runat="server" ForeColor="black" Font-Bold="true" /><br />
        </div>
-       <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" width="600px">
+       <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" width="800px" >
     
               <AlternatingRowStyle BackColor="White" ForeColor="#000000"  />
   
            <RowStyle HorizontalAlign="Center" />
               <Columns>
-
+         
             
 
-                        <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="20%" ItemStyle-Wrap="true" SortExpression="Code"  HeaderStyle-VerticalAlign="Middle">
+                        <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="Code"  HeaderStyle-VerticalAlign="Middle">
 <HeaderStyle Width="20%"></HeaderStyle>
 
 <ItemStyle Wrap="True"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField DataField="LocationName" HeaderText="Location Name" HeaderStyle-Width="20%" ItemStyle-Wrap="true" SortExpression="LocationName" HeaderStyle-VerticalAlign="Middle">
+                        <asp:BoundField DataField="LocationName" HeaderText="Location Name" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="LocationName" HeaderStyle-VerticalAlign="Middle">
 <HeaderStyle Width="20%"></HeaderStyle>
 
 <ItemStyle Wrap="True"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField DataField="Status" HeaderText="Status" HeaderStyle-Width="10%" ItemStyle-Wrap="true" SortExpression="Status" HeaderStyle-VerticalAlign="Middle">                        
+                        <asp:BoundField DataField="Status" HeaderText="Status" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="Status" HeaderStyle-VerticalAlign="Middle">                        
 <HeaderStyle Width="10%"></HeaderStyle>
 
 <ItemStyle Wrap="True"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField DataField="RecordedDate" HeaderText="Recorded Date" HeaderStyle-Width="20%" ItemStyle-Wrap="true" SortExpression="RecordedDate" DataFormatString="{0:M/dd/yyyy}" HeaderStyle-VerticalAlign="Middle">
+                        <asp:BoundField DataField="RecordedDate" HeaderText="Recorded Date" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="RecordedDate" DataFormatString="{0:M/dd/yyyy}" HeaderStyle-VerticalAlign="Middle">
 <HeaderStyle Width="20%"></HeaderStyle>
 
 <ItemStyle Wrap="True"></ItemStyle>
