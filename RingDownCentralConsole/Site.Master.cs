@@ -27,6 +27,15 @@ namespace RingDownCentralConsole
                 LoadSuccessExpression = "window.jQuery"
             });
 
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery-ui", new ScriptResourceDefinition
+            {
+                Path = "~/Scripts/jquery-ui-" + str + ".min.js", //your path will be ignored
+                DebugPath = "~/Scripts/jquery-ui-" + str + ".js",  //your path will be ignored 
+                CdnPath = "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js",
+                CdnDebugPath = "http://code.jquery.com/ui/1.12.1/jquery-ui.js",
+                CdnSupportsSecureConnection = true
+            });
+
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
