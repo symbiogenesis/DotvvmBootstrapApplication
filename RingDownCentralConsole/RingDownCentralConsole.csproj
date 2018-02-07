@@ -179,6 +179,11 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\cda_logo_r.png" />
+    <Content Include="Images\connected_t.png" />
+    <Content Include="Images\no_dial_tone_t.png" />
+    <Content Include="Images\no_link_t.png" />
+    <Content Include="Images\offhook_t.png" />
+    <Content Include="Images\onhook_t.png" />
     <Content Include="Messages\AccountReview.aspx" />
     <Content Include="Reports\Report.aspx" />
     <Content Include="Reports\Report.rdlc" />
