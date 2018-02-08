@@ -221,7 +221,7 @@ namespace RingDownConsole.App.ViewModels
             }
             catch (Exception e)
             {
-                LogError(e.Message);
+                ShowError(e.Message);
             }
         }
 
