@@ -32,7 +32,7 @@ namespace RingDownCentralConsole
             }
         }
 
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void ConsoleGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace RingDownCentralConsole
             }
         }
 
-        protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+        protected void ConsoleGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
             var sortExpression = e.SortExpression;
             var direction = string.Empty;
@@ -105,8 +105,8 @@ namespace RingDownCentralConsole
 
             DataTable table = this.GetData();
             table.DefaultView.Sort = sortExpression + direction;
-            GridView1.DataSource = table;
-            GridView1.DataBind();
+            ConsoleGridView.DataSource = table;
+            ConsoleGridView.DataBind();
         }
 
         public SortDirection SortDirection
@@ -128,9 +128,9 @@ namespace RingDownCentralConsole
         private void BindData()
         {
             // specify the data source for the GridView
-            GridView1.DataSource = this.GetData();
+            ConsoleGridView.DataSource = this.GetData();
             // bind the data now
-            GridView1.DataBind();
+            ConsoleGridView.DataBind();
         }
 
         private DataTable GetData()
@@ -168,7 +168,7 @@ namespace RingDownCentralConsole
         //5 second timer 
         protected void Timer1_Tick(object sender, EventArgs e)
         {
-            GridView1.DataBind();
+            ConsoleGridView.DataBind();
             BindData();
         }
     }
