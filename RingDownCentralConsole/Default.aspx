@@ -10,9 +10,9 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <asp:Timer ID="Timer1" runat="server" Interval="5000" OnTick="Timer1_Tick"></asp:Timer>
-                <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false" Width="800px"
+                <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" GridLines="None" AutoGenerateColumns="false"
                     AllowSorting="True" OnSorting="GridView1_Sorting" EmptyDataText="No Records Available" OnRowDataBound="GridView1_RowDataBound">
-                    <RowStyle CssClass="cursor-pointer" />
+                    <RowStyle CssClass="cursor-pointer" HorizontalAlign="Center" VerticalAlign="Middle" />
                     <Columns>
                         <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="20%" ItemStyle-Wrap="true" SortExpression="Code" />
                         <asp:BoundField DataField="LocationName" HeaderText="Location Name" HeaderStyle-Width="30%" ItemStyle-Wrap="true" SortExpression="LocationName" />

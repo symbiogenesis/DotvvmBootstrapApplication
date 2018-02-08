@@ -6,22 +6,10 @@
 
     <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
 
-    <asp:GridView ID="GridView1" runat="server" Width="800px" AutoGenerateColumns="false" ForeColor="#333333" GridLines="None"
-        AlternatingRowStyle-BackColor="white" HeaderStyle-BackColor="#507CD1" AllowPaging="true" ShowFooter="false"
-        OnPageIndexChanging="OnPaging" PageSize="100" EmptyDataText="No Status Records Entered"
+    <asp:GridView ID="GridView1" runat="server" Width="800px" AutoGenerateColumns="false" GridLines="None" ShowFooter="false"
+        OnPageIndexChanging="OnPaging" EmptyDataText="No Status Records Entered" CssClass="table table-hover table-striped" 
         OnRowCancelingEdit="CancelEdit" AllowSorting="true" OnSorting="GridView1_Sorting">
-        <AlternatingRowStyle BackColor="White" />
-        <EditRowStyle BackColor="#FEFCFF" />
-        <FooterStyle BackColor="#507CD1" Font-Bold="False" ForeColor="Black" />
-        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-        <RowStyle BackColor="#EFF3FB" HorizontalAlign="Center" />
-        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-        <SortedAscendingCellStyle BackColor="#F5F7FB" />
-        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-        <SortedDescendingCellStyle BackColor="#E9EBEF" />
-        <SortedDescendingHeaderStyle BackColor="#4870BE" />
-        <EmptyDataRowStyle Font-Bold="True" ForeColor="Black" BorderColor="Red" BorderWidth="2px" />
+        <RowStyle CssClass="cursor-pointer" />
         <Columns>
             <asp:TemplateField ItemStyle-Width="50px" Visible="false">
                 <ItemTemplate>

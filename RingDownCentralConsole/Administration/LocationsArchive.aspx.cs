@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
-using System.Configuration;
-using System.Web.Security;
-using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole
 {
-    public partial class LocationsArchive : System.Web.UI.Page
+    public partial class LocationsArchive : Page
     {
         private readonly string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
@@ -37,7 +32,7 @@ namespace RingDownCentralConsole
         {
             var sortExpression = e.SortExpression;
             var direction = string.Empty;
-            var strQuery = "SELECT * from Locations Where IsActive=1";
+            const string strQuery = "SELECT * from Locations Where IsActive=1";
             var cmd = new SqlCommand(strQuery);
 
             if (SortDirection == SortDirection.Ascending)
@@ -74,18 +69,13 @@ namespace RingDownCentralConsole
             }
         }
 
-
-
-
-
         private void BindData()
         {
             var strQuery = "SELECT * from Locations Where IsActive=0";
             var cmd = new SqlCommand(strQuery);          
             GridView1.DataSource = GetData(cmd);
-            GridView1.DataBind();           
+            GridView1.DataBind();
         }
-
 
         private DataTable GetData(SqlCommand cmd)
         {
@@ -100,12 +90,8 @@ namespace RingDownCentralConsole
             return dt;
         }
 
-
-
-               
         protected void ActivateLocation(object sender, EventArgs e)
-        {         
-            
+        {
             using (var con = new SqlConnection(constr))
             {
                 var lnkRemove = (LinkButton)sender;
@@ -121,20 +107,15 @@ namespace RingDownCentralConsole
                     GridView1.EditIndex = -1;
                     GridView1.DataSource = GetData(cmd);
                     GridView1.DataBind();
-                    BindData();                   
+                    BindData();
                 }
                 catch (Exception ex)
                 {
                     /*Handle error*/
                     Msg.Text = "Connection Error in ActivateLocation module" + ex;
                 }
-
             }
-            
-           
         }
-
-
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
@@ -142,15 +123,5 @@ namespace RingDownCentralConsole
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
         }
-
-
-     
-       
-
-       
-
-
-
-       
     }
 }
