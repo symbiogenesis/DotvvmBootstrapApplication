@@ -15,27 +15,6 @@ namespace RingDownCentralConsole
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            var str = "3.3.1";
-
-            ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
-            {
-                Path = "~/Scripts/jquery-" + str + ".min.js", //your path will be ignored
-                DebugPath = "~/Scripts/jquery-" + str + ".js",  //your path will be ignored 
-                CdnPath = "http://code.jquery.com/jquery.min.js",
-                CdnDebugPath = "http://code.jquery.com/jquery-latest.js",
-                CdnSupportsSecureConnection = true,
-                LoadSuccessExpression = "window.jQuery"
-            });
-
-            ScriptManager.ScriptResourceMapping.AddDefinition("jquery-ui", new ScriptResourceDefinition
-            {
-                Path = "~/Scripts/jquery-ui-" + str + ".min.js", //your path will be ignored
-                DebugPath = "~/Scripts/jquery-ui-" + str + ".js",  //your path will be ignored 
-                CdnPath = "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js",
-                CdnDebugPath = "http://code.jquery.com/ui/1.12.1/jquery-ui.js",
-                CdnSupportsSecureConnection = true
-            });
-
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -87,16 +66,12 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             MenuItem login = Menu1.FindItem("Login");
             MenuItem locations = Menu1.FindItem("Locations");
             MenuItem statuses = Menu1.FindItem("Statuses");
             MenuItem reports = Menu1.FindItem("Reports");
-            //MenuItem managePassword = Menu1.FindItem("ManagePassword");
             MenuItem register = Menu1.FindItem("Register");
             MenuItem manageroles = Menu1.FindItem("ManageUserRoles");
-          //  MenuItem setrefresh = Menu1.FindItem("SetRefreshInterval");
-
 
             if (!Page.User.Identity.IsAuthenticated)
                 {
