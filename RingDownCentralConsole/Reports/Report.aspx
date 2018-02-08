@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type="text/javascript" src="~/Content/date-input-polyfill.dist.js"></script>
     <script>
         $(document).ready(function () {
             $("#txtStartDate").attr('type', 'date');
@@ -31,11 +32,10 @@
                 <asp:RequiredFieldValidator ID="ReqEndDate" runat="server" ControlToValidate="txtEndDate" ErrorMessage="*" ForeColor="Red" EnableClientScript="false">
                 </asp:RequiredFieldValidator>
             </div>
-            <br class="col-md-12" />
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding: 10px;">
                 <asp:Button ID="btnFilter" CssClass="form-control btn-primary" runat="server" Text="Filter" OnClick="btnSearch_Click" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding: 10px;">
                 <asp:Button ID="btnClear" runat="server" CssClass="form-control btn-warning" Text="Clear" OnClick="btnClear_Click" CausesValidation="false" />
             </div>
         </div>
