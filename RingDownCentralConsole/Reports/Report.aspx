@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <link rel="stylesheet" type="text/css" href="../Css/rdccCSS.css" />
+    <webopt:bundlereference runat="server" path="~/Content/css/jQuery/theme" />    
     <script>
         $(document).ready(function () {
             $("#txtStartDate").attr('readonly', true).datepicker({ onSelect: function () { } })
