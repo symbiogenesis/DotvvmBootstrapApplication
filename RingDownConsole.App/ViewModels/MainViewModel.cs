@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Dataq.Devices;
 using Dataq.Devices.DI1100;
 using Dataq.Misc;
@@ -24,14 +25,13 @@ namespace RingDownConsole.App.ViewModels
 
         private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://ringdownuat.flychicago.com:3456") };
         private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
+        private static readonly DispatcherTimer _timer = new DispatcherTimer();
+
         private static DateTime _lastSentDate = DateTime.MinValue;
-
         private static IEnumerable<Status> _statuses;
-
         private static bool _showSettings;
         private static bool _showNameEntry;
         private static Location _location;
-        private static Device _targetDevice;
         private static Task _taskRead;
         private static CancellationTokenSource _cancelRead;
         private static PhoneStatus? _currentPhoneStatus;
@@ -39,6 +39,7 @@ namespace RingDownConsole.App.ViewModels
         private static string _locationCode;
         private static string _locationName;
         private static IChannelIn _masterChannel;
+        private static IReadOnlyList<IDevice> _allDevices;
 
         public MainViewModel()
         {
@@ -46,6 +47,10 @@ namespace RingDownConsole.App.ViewModels
 
             _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
             _worker.RunWorkerAsync();
+
+            _timer.Interval = TimeSpan.FromSeconds(5);
+            _timer.IsEnabled = true;
+            _timer.Tick += Timer_Tick;
 
             SystemEvents.PowerModeChanged += OnPowerChange;
 
@@ -179,6 +184,12 @@ namespace RingDownConsole.App.ViewModels
 
         #endregion
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (!_worker.IsBusy)
+                _worker.RunWorkerAsync();
+        }
+
         private async Task GetLocation(string serialNumber)
         {
             try
@@ -260,9 +271,9 @@ namespace RingDownConsole.App.ViewModels
             if (_targetDevice == null)
             {
                 //  Get a list of devices with model DI-1100
-                IReadOnlyList<IDevice> AllDevices = await Discovery.ByModelAsync(typeof(Device));
+                _allDevices = await Discovery.ByModelAsync(typeof(Device));
 
-                var anyDevice = AllDevices.Count > 0;
+                var anyDevice = _allDevices.Count > 0;
 
                 if (anyDevice)
                 {
@@ -271,7 +282,7 @@ namespace RingDownConsole.App.ViewModels
                     Log.Information("Found a DI-1100.");
 
                     //  Cast first device from generic device to specific DI-1100 type
-                    _targetDevice = ((Device) (AllDevices[0]));
+                    _targetDevice = ((Device) (_allDevices[0]));
 
                     await GetLocation(_targetDevice.Serial);
 
@@ -362,15 +373,7 @@ namespace RingDownConsole.App.ViewModels
                     await SaveVoltageData(voltage);
                 }
 
-                // get the next row
-                //  purge displayed data
-                foreach (var ch in _targetDevice.Channels)
-                {
-                    if (ch.GetType().GetInterfaces().Contains(typeof(IChannelIn)))
-                    {
-                        ((IChannelIn) (ch)).DataIn.Clear();
-                    }
-                }
+                PurgeChannelData();
             }
         }
 
