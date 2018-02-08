@@ -21,24 +21,17 @@
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="jquery-ui" />
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="container">
-            <img class="img-valign" src="<%= Page.ResolveUrl("~")%>Images/cda_logo_r.png" alt="Chicago Department of Aviation Ring Down Central Console" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img class="logo" src="<%= Page.ResolveUrl("~")%>Images/cda_logo_r.png" alt="Chicago Department of Aviation Ring Down Central Console" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 
-            <span style="font-size: large; font-weight: bold; color:  #284E98">Ring Down Central Console</span>              
-               
-            <br />
-            <br />
-            <br />                                 
-
-            <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DynamicHorizontalOffset="2"  
-                Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" StaticSubMenuIndent="10px"   orientation="Horizontal">
+        <span class="application-title">Ring Down Central Console</span>              
+        <div class="row" style="margin: 0; padding: 10px 0;">
+            <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DynamicHorizontalOffset="2" Orientation="Horizontal">
                 <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
                 <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
                 <DynamicMenuStyle BackColor="#B5C7DE" />
@@ -58,40 +51,33 @@
                       
                         <asp:MenuItem NavigateUrl="~/Reports/Report.aspx" Target="_self" Text="Report" ToolTip="Report" Value="Report"></asp:MenuItem>
                 </Items>
-                <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
-                <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
-                <StaticSelectedStyle BackColor="#507CD1" />
-                </asp:Menu>
-                <%--                        <asp:MenuItem>
-                        <asp:LoginView runat="server" ViewStateMode="Disabled">
-                            <AnonymousTemplate>
-                                <asp:MenuItem NavigateUrl="~/Account/Register" Target="_self" Text="Register" ToolTip="Log Out" Value="Register"></asp:MenuItem>
-                                <asp:MenuItem NavigateUrl="~/Account/Login" Target="_self" Text="Log In" ToolTip="Log Out" Value="Log In"></asp:MenuItem>
-                            </AnonymousTemplate>
-                            <LoggedInTemplate>
-                                <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Manage" ToolTip="Manage" Value="Manage">
-                                    Hello, <%: Context.User.Identity.GetUserName()  %> !
-                                </asp:MenuItem>
-                                <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Log off" ToolTip="Log off" Value="Log off">
-                                </asp:MenuItem>
-                            </LoggedInTemplate>
-                        </asp:LoginView>
-                    </asp:MenuItem>--%>
+            </asp:Menu>
+            <%--                        <asp:MenuItem>
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <asp:MenuItem NavigateUrl="~/Account/Register" Target="_self" Text="Register" ToolTip="Log Out" Value="Register"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Account/Login" Target="_self" Text="Log In" ToolTip="Log Out" Value="Log In"></asp:MenuItem>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Manage" ToolTip="Manage" Value="Manage">
+                                Hello, <%: Context.User.Identity.GetUserName()  %> !
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Log off" ToolTip="Log off" Value="Log off">
+                            </asp:MenuItem>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </asp:MenuItem>--%>
 
-            <asp:LoginView runat="server" ViewStateMode="Disabled" >
+            <asp:LoginView runat="server" ViewStateMode="Disabled">
                 <LoggedInTemplate>
                     <asp:LoginStatus ID="Login1Status1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                 </LoggedInTemplate>
             </asp:LoginView>
-             
-        </div>
+        </div>  
+
         
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                  
-            </footer>
         </div>
     </form>
 </body>

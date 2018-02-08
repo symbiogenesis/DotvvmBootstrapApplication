@@ -1,10 +1,4 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Wrapping element */
+﻿/* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -25,6 +19,17 @@ input[type="email"],
 input[type="tel"],
 input[type="select"] {
     max-width: 280px;
+}
+
+#MainContent_ConsoleGridView > tbody > tr > td {
+    line-height: 65px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.status-page {
+    max-width: 800px;
+    text-align: center;
 }
 
 .center-div {
@@ -51,14 +56,34 @@ th {
     color: Red;
 }
 
+.application-title {
+    font-size: large;
+    font-weight: bold;
+    color: #284E98;
+}
+
+#Menu1 {
+    border-radius: 20px;
+}
+
+ul.level2 {
+    border-radius: 0 0 20px 20px;
+}
+
+#Menu1 ul li {
+    padding: 10px;
+}
+
+#Menu1 ul li a{
+    color: #284E98;
+}
+
 /* 
 
  * Use margin-bottom
 */
 
-.img-valign {
-    vertical-align: middle;
-    margin-bottom: 0.75em;
+.logo {
     height: 59px;
     width: 199px;
 }
