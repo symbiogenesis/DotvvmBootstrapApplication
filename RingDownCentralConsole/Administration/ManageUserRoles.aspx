@@ -9,40 +9,40 @@
     </div>
 
     <asp:Label ID="Msg" ForeColor="maroon" runat="server" /><br />
-    <table>
-      <tr>
-        <td>Roles:</td>
-        <td>
-          <asp:ListBox ID="RolesListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Name" DataValueField="Id" AutoPostBack="true" OnSelectedIndexChanged="RolesListBox_SelectedIndexChanged" />
-        </td>
-        <td>Users:</td>
-        <td>
-          <asp:ListBox ID="UsersListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Username" SelectionMode="Multiple" /></td>
-        <td>
-          <asp:Button Text="Add User(s) to Role" CssClass="form-control" ID="AddUsersButton" runat="server" OnClick="AddUsers_OnClick" />
-        </td>
-      </tr>
-      <tr>
-        <td>Users In Role:</td>
-        <td>
-            <asp:GridView runat="server" CellPadding="4" ID="UsersInRoleGrid" AutoGenerateColumns="false" CssClass="table table-hover table-striped" 
-                GridLines="None" CellSpacing="0" OnRowCommand="UsersInRoleGrid_RemoveFromRole">
-                <Columns>
-                    <asp:TemplateField HeaderText="User Name" >
-                    <ItemTemplate>
-                        <%# ((RingDownCentralConsole.Models.ApplicationUser) Container.DataItem).UserName %>
-                    </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:ButtonField Text="Remove From Role" ButtonType="Link" ControlStyle-CssClass="form-control" />
-                </Columns>
-            </asp:GridView>
-        </td>
-      </tr>
-    </table>
 
+    <div class="row">
+        <div class="col-md-6">
+            <p style="font-weight: bold; font-size: 1.2em;">Roles:</p>
+        </div>
+        <div class="col-md-6">
+            <p style="font-weight: bold; font-size: 1.2em;">Users:</p>
+        </div>
+        <div class="col-md-6" style="padding: 10px;">
+            <asp:ListBox ID="RolesListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Name" DataValueField="Id" AutoPostBack="true" OnSelectedIndexChanged="RolesListBox_SelectedIndexChanged" />
+        </div>
+        <div class="col-md-6" style="padding: 10px;">
+            <asp:ListBox ID="UsersListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Username" SelectionMode="Multiple" />
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6" style="padding: 10px;">
+            <asp:Button Text="Add User(s) to Role" CssClass="form-control btn-primary" ID="AddUsersButton" runat="server" OnClick="AddUsers_OnClick" />
+        </div>
+    </div>
 
+    <p style="font-weight: bold; font-size: 1.2em;">Users In Role:</p>
 
-
-
+    <asp:GridView runat="server" ID="UsersInRoleGrid" AutoGenerateColumns="false" CssClass="table table-hover table-striped" Width="500px"
+        GridLines="None" OnRowCommand="UsersInRoleGrid_RemoveFromRole">
+        <RowStyle HorizontalAlign="Center" />
+        <Columns>            
+            <asp:TemplateField HeaderText="User Name" >
+            <ItemTemplate>
+                <%# ((RingDownCentralConsole.Models.ApplicationUser) Container.DataItem).UserName %>
+            </ItemTemplate>
+            </asp:TemplateField>
+            <asp:ButtonField Text="Remove From Role" ButtonType="Button" ControlStyle-CssClass="form-control btn-warning" ControlStyle-Width="160" />
+        </Columns>
+    </asp:GridView>
 
 </asp:Content>
