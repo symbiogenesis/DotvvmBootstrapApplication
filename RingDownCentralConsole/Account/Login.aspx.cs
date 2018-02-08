@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
+using RingDownCentralConsole.Models;
 using System;
 using System.Web;
 using System.Web.UI;
@@ -9,8 +10,7 @@ namespace RingDownCentralConsole.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //Spoke with manager, registration link on login page will not be needed
+            ////Spoke with manager, registration link on login page will not be needed
             //RegisterHyperLink.NavigateUrl = "Register";
             //// Enable this once you have account confirmation enabled for password reset functionality
             ////ForgotPasswordHyperLink.NavigateUrl = "Forgot";

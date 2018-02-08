@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using RingDownCentralConsole.Models;
 using System;
 using System.Web;
 using System.Web.UI;
@@ -8,15 +9,11 @@ namespace RingDownCentralConsole.Account
 {
     public partial class Confirm : Page
     {
-        protected string StatusMessage
-        {
-            get;
-            private set;
-        }
+        protected string StatusMessage { get; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string code = IdentityHelper.GetCodeFromRequest(Request);
+            var code = IdentityHelper.GetCodeFromRequest(Request);
             int.TryParse(IdentityHelper.GetUserIdFromRequest(Request), out int userId);
             if (code != null && userId != 0)
             {

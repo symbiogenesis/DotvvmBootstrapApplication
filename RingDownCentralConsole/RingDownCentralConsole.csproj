@@ -44,6 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <NoWarn>NU1605</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Antlr" Version="3.5.0.2" />
@@ -373,9 +374,8 @@
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="Console.cs">
       <DependentUpon>Console.xsd</DependentUpon>
     </Compile>
@@ -408,6 +408,7 @@
     <Compile Include="Messages\AccountReview.aspx.designer.cs">
       <DependentUpon>AccountReview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\IdentityHelper.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IdentityPage.cs">
       <SubType>ASPXCodeBehind</SubType>

@@ -1,12 +1,16 @@
-﻿using Microsoft.Owin;
+﻿using System.Web.Optimization;
+using System.Web.Routing;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(RingDownCentralConsole.Startup))]
+[assembly: OwinStartup(typeof(RingDownCentralConsole.Startup))]
 namespace RingDownCentralConsole
 {
     public partial class Startup {
         public void Configuration(IAppBuilder app) {
-            ConfigureAuth(app);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            IdentityConfig.ConfigureAuth(app);
         }
     }
 }
