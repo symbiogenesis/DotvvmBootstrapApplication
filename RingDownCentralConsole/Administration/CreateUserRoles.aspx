@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateUserRoles.aspx.cs" Inherits="RingDownCentralConsole.CreateUserRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
  
-    <link rel="stylesheet" type="text/css" href="../Css/rdccCSS.css" /> 
     <div  class="center-div">
       Create User Roles
     </div>
