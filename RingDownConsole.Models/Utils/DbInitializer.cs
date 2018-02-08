@@ -70,7 +70,7 @@ namespace RingDownConsole.Models.Utils
         private async Task CreateUsersAndRoles()
         {
             //Create Roles
-            await CreateRoles(new string[] { nameof(Roles.Administrator), nameof(Roles.User) });
+            await CreateRoles(new string[] { nameof(Roles.Administrator), nameof(Roles.Manager), nameof(Roles.User) });
 
             //Create the default Admin account and apply the Administrator role
             await CreateUser("admin", "z0mgChangethis!", true);
