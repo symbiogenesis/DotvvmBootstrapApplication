@@ -22,7 +22,7 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
+        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://ringdownuat.flychicago.com:3456") };
         private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
         private static DateTime _lastSentDate = DateTime.MinValue;
 
@@ -210,12 +210,19 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task Initialize()
         {
-            await PopulateStatuses();
+            try
+            {
+                await PopulateStatuses();
 
-            var deviceFound = await FindDevice();
+                var deviceFound = await FindDevice();
 
-            if (deviceFound)
-                await ToggleDataAcquisition();
+                if (deviceFound)
+                    await ToggleDataAcquisition();
+            }
+            catch (Exception e)
+            {
+                LogError(e.Message);
+            }
         }
 
         private async Task PopulateStatuses()
