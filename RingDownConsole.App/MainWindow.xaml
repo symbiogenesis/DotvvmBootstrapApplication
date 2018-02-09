@@ -80,22 +80,22 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="On Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" Increment=".1" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOnHookVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" Increment=".1" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOffHookVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Connected:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectdVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" />
         </StackPanel>
