@@ -38,7 +38,7 @@ namespace RingDownConsole.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task Post([FromBody]T record)
+        public virtual async Task Post([FromBody]T record)
         {
             // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see https://go.microsoft.com/fwlink/?LinkID=717803
 
