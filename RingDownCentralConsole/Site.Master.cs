@@ -69,7 +69,7 @@ namespace RingDownCentralConsole
             MenuItem login = Menu1.FindItem("Login");
             MenuItem locations = Menu1.FindItem("Locations");
             MenuItem statuses = Menu1.FindItem("Statuses");
-            MenuItem reports = Menu1.FindItem("Reports");
+            MenuItem report = Menu1.FindItem("Report");
             MenuItem register = Menu1.FindItem("Register");
             MenuItem manageroles = Menu1.FindItem("ManageUserRoles");
 
@@ -106,9 +106,9 @@ namespace RingDownCentralConsole
                                             Menu1.Items.Remove(Menu1.FindItem("Statuses"));
                                         }
 
-                                        if (reports != null)
+                                        if (report != null)
                                         {
-                                            Menu1.Items.Remove(Menu1.FindItem("Reports"));
+                                            Menu1.Items.Remove(Menu1.FindItem("Report"));
                                         }
 
                                         if (manageroles != null)
