@@ -149,7 +149,7 @@ namespace RingDownCentralConsole
                                     "      FROM LocationStatuses " +
                                     "      WHERE LocationId = loc.Id " +
                                     "      ORDER BY RecordedDate desc) AS ls " +
-                                    "INNER JOIN Statuses s ON ls.StatusId = s.Id AND s.IsActive = 1 " +
+                                    "INNER JOIN Statuses s ON ls.StatusId = s.Id " +
                                     "WHERE loc.IsActive = 1 " +
                                     "ORDER BY loc.Name DESC";
 
