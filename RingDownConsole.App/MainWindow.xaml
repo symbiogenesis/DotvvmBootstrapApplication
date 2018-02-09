@@ -45,16 +45,16 @@
                 <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center"/>
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch">
-                <Label  Content="Status:" FontWeight="Bold" />
+            <DockPanel>
+                <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
+                <Label Content="Status:" FontWeight="Bold" />
                 <!--<Image "{Binding CurrentPhoneStatus}" />-->
                 <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" />
                 <Label Content="Location ID:" FontWeight="Bold" />
                 <Label Content="{Binding LocationCode}" />
-                <Label  Content="Location Name:" FontWeight="Bold" />
+                <Label Content="Location Name:" FontWeight="Bold" />
                 <Label Content="{Binding LocationName}" />
-                <ToggleButton Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
-            </StackPanel>
+            </DockPanel>
         </StackPanel>
 
         <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="{Binding ShowNameEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -74,28 +74,28 @@
             <Label Content="Voltage Thresholds" Height="29" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             <StackPanel Orientation="Horizontal">
                 <Label Content="Online:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOnlineVoltage}" Width="50" Margin="5" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MaxOnlineVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOnlineVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOnlineVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="On Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOnHookVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOnHookVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinOffHookVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxOffHookVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Connected:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectedVoltage}" Width="50" Margin="5" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectdVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" />
-                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
+                <xctk:DecimalUpDown Value="{Binding Settings.MaxNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" />
         </StackPanel>

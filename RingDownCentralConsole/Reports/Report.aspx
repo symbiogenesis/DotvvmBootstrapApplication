@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <script type="text/javascript" src="~/Content/date-input-polyfill.dist.js"></script>
+    <script type="text/javascript" src="/Content/date-input-polyfill.dist.js"></script>
     <script>
         $(document).ready(function () {
             $("#txtStartDate").attr('type', 'date');

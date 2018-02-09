@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -22,43 +21,33 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3456") };
-        private static readonly BackgroundWorker _worker = new BackgroundWorker { WorkerReportsProgress = true };
+        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://ringdownuat.flychicago.com:3456") };
+
         private static DateTime _lastSentDate = DateTime.MinValue;
-
         private static IEnumerable<Status> _statuses;
-
         private static bool _showSettings;
         private static bool _showNameEntry;
         private static Location _location;
-        private static Device _targetDevice;
-        private static Task _taskRead;
-        private static CancellationTokenSource _cancelRead;
         private static PhoneStatus? _currentPhoneStatus;
         private static string _currentPhoneUser;
         private static string _locationCode;
         private static string _locationName;
         private static IChannelIn _masterChannel;
+        private static Status _unknown;
 
         public MainViewModel()
         {
             Settings = new SettingsViewModel();
 
-            _worker.DoWork += async (object sender, DoWorkEventArgs e) => await Initialize();
-            _worker.RunWorkerAsync();
-
-            SystemEvents.PowerModeChanged += OnPowerChange;
+            Task.Run(async () => await Initialize());
+            SystemEvents.PowerModeChanged += async (object s, PowerModeChangedEventArgs e) => await OnPowerChange(e);
 
             PopulateColors();
         }
 
         ~MainViewModel()
         {
-            if (_targetDevice != null)
-            {
-                _targetDevice.Dispose();
-                _targetDevice = null;
-            }
+            DisposeDevice();
         }
 
         #region Properties
@@ -161,7 +150,7 @@ namespace RingDownConsole.App.ViewModels
             {
                 return new DelegateCommand
                 {
-                    CommandAction = async () => await FindDevice()
+                    CommandAction = async () => await Initialize()
                 };
             }
         }
@@ -210,12 +199,20 @@ namespace RingDownConsole.App.ViewModels
 
         private async Task Initialize()
         {
-            await PopulateStatuses();
+            try
+            {
+                ResetUsb();
 
-            var deviceFound = await FindDevice();
+                await PopulateStatuses();
 
-            if (deviceFound)
-                await ToggleDataAcquisition();
+                await FindDevice();
+
+                await StartDataAcquisition();
+            }
+            catch (Exception e)
+            {
+                ShowError(e.Message);
+            }
         }
 
         private async Task PopulateStatuses()
@@ -223,19 +220,20 @@ namespace RingDownConsole.App.ViewModels
             try
             {
                 if (_statuses == null)
+                {
                     _statuses = await _httpClient.GetDataAsync<Status>();
+                    _unknown = _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
+                }
             }
             catch {}
         }
 
-        private void OnPowerChange(object s, PowerModeChangedEventArgs e)
+        private async Task OnPowerChange(PowerModeChangedEventArgs e)
         {
             switch (e.Mode)
             {
-                case PowerModes.Resume:
-                    //ResetUsb();
-                    _worker.CancelAsync();
-                    _worker.RunWorkerAsync();
+                case PowerModes.Resume:                    
+                    await Initialize();
                     break;
                 case PowerModes.Suspend:
                     break;
@@ -244,18 +242,23 @@ namespace RingDownConsole.App.ViewModels
 
         private void ResetUsb()
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 4, RegistryValueKind.DWord);
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 3, RegistryValueKind.DWord);
+            if (IsAdministrator())
+            {
+                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 4, RegistryValueKind.DWord);
+                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\USBSTOR", "Start", 3, RegistryValueKind.DWord);
+            }
         }
 
-        private async Task<bool> FindDevice()
+        private async Task FindDevice()
         {
-            if (_targetDevice == null)
+            try
             {
-                //  Get a list of devices with model DI-1100
-                IReadOnlyList<IDevice> AllDevices = await Discovery.ByModelAsync(typeof(Device));
+                DisposeDevice();
 
-                var anyDevice = AllDevices.Count > 0;
+                //  Get a list of devices with model DI-1100
+                var allDevices = await Discovery.ByModelAsync(typeof(Device));
+
+                var anyDevice = allDevices.Count > 0;
 
                 if (anyDevice)
                 {
@@ -264,7 +267,7 @@ namespace RingDownConsole.App.ViewModels
                     Log.Information("Found a DI-1100.");
 
                     //  Cast first device from generic device to specific DI-1100 type
-                    _targetDevice = ((Device) (AllDevices[0]));
+                    _targetDevice = ((Device) (allDevices[0]));
 
                     await GetLocation(_targetDevice.Serial);
 
@@ -273,23 +276,88 @@ namespace RingDownConsole.App.ViewModels
                 else
                 {
                     ShowError("No DI-1100 found.");
-                    return false;
+                    return;
+                }
+
+                // Disconnect any open connections
+                await _targetDevice.DisconnectAsync();
+
+                // Try to connect
+                await _targetDevice.ConnectAsync();
+
+                //  Ensure it's stopped
+                await _targetDevice.AcquisitionStopAsync();
+
+                //  Query device for some info
+                await _targetDevice.QueryDeviceAsync();
+
+                ShowErrorPanel = false;
+            }
+            catch (Exception e)
+            {
+                ShowError(e.Message);
+            }
+        }
+
+        private async Task StartDataAcquisition()
+        {
+            // get here if we're starting a new acquisition process
+            _targetDevice.Channels.Clear();
+
+            // initialize the device
+            this.ConfigureAnalogChannels();
+            if (this.SampleRateBad())
+            {
+                // get here if requested sample rate is out of range
+                // It's a bust, so...
+                return;
+            }
+
+            // otherwise, the selected sample rate is good, so use it
+            _targetDevice.SetSampleRateOnChannels(SAMPLE_RATE);
+
+            try
+            {
+                await _targetDevice.InitializeAsync();
+                // configure the device as defined. Errors if no channels are enabled
+            }
+            catch (Exception ex)
+            {
+                ShowError("Please enable at least one analog channel or digital port.");
+
+                // Detect if no channels are enabled, and bail if so. 
+                //MessageBox.Show(ErrorMessage, "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // now determine what sample rate per channel the device is using from the 
+            // first enabled input channel, and display it
+            ChannelIn FirstInChannel;
+            bool NoInputChannels = true;
+            for (int index = 0; (index <= (_targetDevice.Channels.Count - 1)); index++)
+            {
+                if (_targetDevice.Channels[index].GetType().GetInterfaces().Contains(typeof(IChannelIn)))
+                {
+                    FirstInChannel = (ChannelIn) _targetDevice.Channels[index];
+                    NoInputChannels = false;
+                    break;
                 }
             }
 
-            // Disconnect any open connections
-            await _targetDevice.DisconnectAsync();
+            if (NoInputChannels)
+            {
+                ShowError("Please configure at least one analog channel or digital port as an input");
+                return;
+            }
 
-            // Try to connect
-            await _targetDevice.ConnectAsync();
+            // Everything is good, so...
+            //  Create the cancellation token
+            await _targetDevice.AcquisitionStartAsync();
 
-            //  Ensure it's stopped
-            await _targetDevice.AcquisitionStopAsync();
-
-            //  Query device for some info
-            await _targetDevice.QueryDeviceAsync();
-
-            return true;
+            // start acquiring
+            //  NOTE: assumes at least one input channel enabled
+            //  Start a task in the background to read data
+            await GetChannelData();
         }
 
         private async Task GetChannelData()
@@ -298,6 +366,29 @@ namespace RingDownConsole.App.ViewModels
             // and use it to track data availability for all input channels
             if (_masterChannel == null)
             {
+                if (_targetDevice == null)
+                {
+                    await FindDevice();
+                }
+
+                if (_targetDevice.Channels == null)
+                {
+                    ShowError("Channels are null");
+                    return;
+                }
+
+                if (_targetDevice.Channels.Count == 0)
+                {
+                    ShowError("No Channels found");
+                    return;
+                }
+
+                if (_targetDevice.Channels.Count > 1)
+                {
+                    ShowError("Too many channels found");
+                    return;
+                }
+
                 for (var index = 0; (index <= _targetDevice.Channels.Count); index++)
                 {
                     if (_targetDevice.Channels[index].GetType().GetInterfaces().Contains(typeof(IChannelIn)))
@@ -309,6 +400,8 @@ namespace RingDownConsole.App.ViewModels
                 }
             }
 
+            var voltages = new List<double>();
+
             //  Keep reading while acquiring data
             while (_targetDevice.IsAcquiring)
             {
@@ -317,12 +410,16 @@ namespace RingDownConsole.App.ViewModels
                 {
                     // throws an error if acquisition has been cancelled
                     // otherwise refreshes the buffer DataIn with new data
-                    await _targetDevice.ReadDataAsync(_cancelRead.Token);
+                    await _targetDevice.ReadDataAsync();
                 }
                 catch (OperationCanceledException ex)
                 {
                     ShowError("Acquisition cancelled");
                     break;
+                }
+                catch (DataMisalignedException e)
+                {
+                    var data = e.Data;
                 }
 
                 // get here if acquisition is still active
@@ -339,6 +436,7 @@ namespace RingDownConsole.App.ViewModels
                     if (_targetDevice.Channels.Count > 1)
                     {
                         ShowError("Too many channels found");
+                        return;
                     }
 
                     //  this is the row (scan) counter
@@ -349,21 +447,19 @@ namespace RingDownConsole.App.ViewModels
                         if (ch.GetType().GetInterfaces().Contains(typeof(IChannelIn)))
                         {
                             voltage = ((IChannelIn) (ch)).DataIn[index];
+                            voltages.Add(voltage);
                         }
                     }
 
-                    await SaveVoltageData(voltage);
-                }
-
-                // get the next row
-                //  purge displayed data
-                foreach (var ch in _targetDevice.Channels)
-                {
-                    if (ch.GetType().GetInterfaces().Contains(typeof(IChannelIn)))
+                    if (voltages.Count >= 10)
                     {
-                        ((IChannelIn) (ch)).DataIn.Clear();
+                        var average = voltages.Average();
+                        await SaveVoltageData(average);
+                        voltages.Clear();
                     }
                 }
+
+                PurgeChannelData();
             }
         }
 
@@ -408,11 +504,6 @@ namespace RingDownConsole.App.ViewModels
                     case PhoneStatus.OffHook:
                     case PhoneStatus.Connected:
                         ShowNameEntry = true;
-                        //var dispatcherOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
-                        //{
-                        //    if (Application.Current.MainWindow.Visibility == Visibility.Hidden)
-                        //        Application.Current.MainWindow.Show();
-                        //}));
                         break;
                     case null:
                         ShowNameEntry = false;
@@ -462,13 +553,23 @@ namespace RingDownConsole.App.ViewModels
 
             if (currentPhoneStatus == null)
             {
-                return _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
+                return _unknown;
             }
             else
             {
-                var status = _statuses.FirstOrDefault(s => s.Name == currentPhoneStatus?.ToString());
-                return status ?? _statuses.First(s => s.Name == nameof(PhoneStatus.Unknown));
+                var status = _statuses.FirstOrDefault(s => s.Name == FromCamelCase(currentPhoneStatus));
+                return status ?? _unknown;
             }
+        }
+
+        private static string FromCamelCase(PhoneStatus? currentPhoneStatus)
+        {
+            var statusName = currentPhoneStatus?.ToString();
+
+            if (statusName == null)
+                return null;
+
+            return Regex.Replace(statusName, "(\\B[A-Z])", " $1");
         }
 
         private void ConfigureAnalogChannels()
@@ -479,10 +580,16 @@ namespace RingDownConsole.App.ViewModels
         private bool SampleRateBad()
         {
             // ensure that the sample rate per channel is not out of range
-            Dataq.Collections.IReadOnlyRange<double> SampleRateRange = ((Dataq.Devices.Dynamic.IReadOnlyChannelSampleRate) (_targetDevice.Channels[0])).GetSupportedSampleRateRange(_targetDevice);
+            if (_targetDevice.Channels.Count <= 0)
+            {
+                ShowError($"No Channels Found");
+                return true;
+            }
+
+            var SampleRateRange = ((Dataq.Devices.Dynamic.IReadOnlyChannelSampleRate) (_targetDevice.Channels[0])).GetSupportedSampleRateRange(_targetDevice);
             if (!SampleRateRange.ContainsValue(SAMPLE_RATE))
             {
-                MessageBox.Show($"Selected sample rate is outside the range of  {SampleRateRange.Minimum.ToString()} to {SampleRateRange.Maximum.ToString()} Hz inclusive for your current channel settings.", "Sample Rate Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError($"Selected sample rate is outside the range of  {SampleRateRange.Minimum.ToString()} to {SampleRateRange.Maximum.ToString()} Hz inclusive for your current channel settings.");
                 return true;
             }
 
@@ -492,81 +599,6 @@ namespace RingDownConsole.App.ViewModels
         private async void SetLightColor(LedColor1 color)
         {
             await _targetDevice.Protocol.SetLedColorAsync(color);
-        }
-
-        private async Task ToggleDataAcquisition()
-        {
-            if (_cancelRead != null)
-            {
-                // get here if an acquisition process is in progress and we've been commanded to stop
-                _cancelRead.Cancel();
-                // cancel the read process
-                _cancelRead = null;
-                await _taskRead;
-                // wait for the read process to complete
-                _taskRead = null;
-                await _targetDevice.AcquisitionStopAsync();
-                // stop the device from acquiring
-            }
-            else
-            {
-                // get here if we're starting a new acquisition process
-                _targetDevice.Channels.Clear();
-                // initialize the device
-                this.ConfigureAnalogChannels();
-                if (this.SampleRateBad())
-                {
-                    // get here if requested sample rate is out of range
-                    // It's a bust, so...
-                    return;
-                }
-
-                // otherwise, the selected sample rate is good, so use it
-                _targetDevice.SetSampleRateOnChannels(SAMPLE_RATE);
-
-                try
-                {
-                    await _targetDevice.InitializeAsync();
-                    // configure the device as defined. Errors if no channels are enabled
-                }
-                catch (Exception ex)
-                {
-                    ShowError("Please enable at least one analog channel or digital port.");
-
-                    // Detect if no channels are enabled, and bail if so. 
-                    //MessageBox.Show(ErrorMessage, "No Enabled Channels", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // now determine what sample rate per channel the device is using from the 
-                // first enabled input channel, and display it
-                ChannelIn FirstInChannel;
-                bool NoInputChannels = true;
-                for (int index = 0; (index <= (_targetDevice.Channels.Count - 1)); index++)
-                {
-                    if (_targetDevice.Channels[index].GetType().GetInterfaces().Contains(typeof(IChannelIn)))
-                    {
-                        FirstInChannel = (ChannelIn) _targetDevice.Channels[index];
-                        NoInputChannels = false;
-                        break;
-                    }
-                }
-
-                if (NoInputChannels)
-                {
-                    ShowError("Please configure at least one analog channel or digital port as an input");
-                    return;
-                }
-
-                // Everything is good, so...
-                _cancelRead = new CancellationTokenSource();
-                //  Create the cancellation token
-                await _targetDevice.AcquisitionStartAsync();
-                // start acquiring
-                //  NOTE: assumes at least one input channel enabled
-                //  Start a task in the background to read data
-                _taskRead = Task.Run(async () => await GetChannelData(), _cancelRead.Token);
-            }
         }
     }
 }
