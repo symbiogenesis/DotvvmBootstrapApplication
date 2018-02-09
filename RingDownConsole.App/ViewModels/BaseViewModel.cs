@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Windows;
 using Dataq.Devices;
 using Dataq.Devices.DI1100;
@@ -15,6 +15,13 @@ namespace RingDownConsole.App.ViewModels
         private bool _showErrorPanel;
 
         protected static Device _targetDevice;
+
+        protected static bool IsAdministrator()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
 
         public bool ShowErrorPanel
         {
@@ -58,6 +65,9 @@ namespace RingDownConsole.App.ViewModels
 
         protected void PurgeChannelData()
         {
+            if (_targetDevice == null)
+                return;
+
             // get the next row
             //  purge displayed data
             foreach (var ch in _targetDevice.Channels)
@@ -67,6 +77,19 @@ namespace RingDownConsole.App.ViewModels
                     ((IChannelIn) (ch)).DataIn.Clear();
                 }
             }
+        }
+
+        protected void DisposeDevice()
+        {
+            if (_targetDevice == null)
+                return;
+
+            PurgeChannelData();
+
+            _targetDevice.AcquisitionStopAsync();
+
+            _targetDevice.Dispose();
+            _targetDevice = null;
         }
 
         public string ErrorMessage
