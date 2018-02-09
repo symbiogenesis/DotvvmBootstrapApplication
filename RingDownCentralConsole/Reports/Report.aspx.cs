@@ -77,6 +77,13 @@ namespace RingDownCentralConsole.Reports
             }
         }
 
+        private void BindData()
+        {
+            // specify the data source for the GridView
+            GridView1.DataSource = this.GetData();
+            // bind the data now
+            GridView1.DataBind();
+        }
 
 
         private DataTable GetData()
@@ -106,8 +113,15 @@ namespace RingDownCentralConsole.Reports
             return table;
         }
 
+              
 
-
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+            GridView1.DataBind();
+            BindData();
+           
+        }
 
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -129,8 +143,14 @@ namespace RingDownCentralConsole.Reports
                 {
                     using (var da = new SqlDataAdapter(cmd))
                     {
-                       
-                         cmd.Parameters.AddWithValue("@From", Convert.ToDateTime(this.txtStartDate.Text, new CultureInfo("en-US")));
+
+                            var start = Convert.ToDateTime(this.txtStartDate.Text);
+                            var startDate = String.Format("{0:MM/dd/yyyy}", start);
+
+                            var end = Convert.ToDateTime(this.txtEndDate.Text);
+                            var endDate = String.Format("{0:MM/dd/yyyy}", end);
+
+                            cmd.Parameters.AddWithValue("@From", Convert.ToDateTime(this.txtStartDate.Text, new CultureInfo("en-US")));
                         cmd.Parameters.AddWithValue("@To", Convert.ToDateTime(this.txtEndDate.Text, new CultureInfo("en-US")));
                         var ds = new DataSet();
                         da.Fill(ds);
@@ -145,10 +165,9 @@ namespace RingDownCentralConsole.Reports
                             }
                         else
                             {
-                                this.Msg2.Text = "Results for " + this.txtStartDate.Text.ToString() + " to " + this.txtEndDate.Text.ToString();
+                                this.Msg2.Text = "Results for " + startDate + " to " + endDate;
                                 this.Msg.Text = "";
-                                this.txtEndDate.Text = "";
-                                this.txtStartDate.Text = "";
+                               
                             }
                         }
                 }

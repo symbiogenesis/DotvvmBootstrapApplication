@@ -44,7 +44,7 @@
             <br class="col-md-12" />
             <br class="col-md-12" />
         </div>
-        <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None">
+        <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None" AllowPaging="true"  OnPageIndexChanging="GridView1_PageIndexChanging" >
             <RowStyle CssClass="cursor-pointer" />
             <Columns>
                 <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="Code" HeaderStyle-VerticalAlign="Middle">
@@ -62,7 +62,7 @@
 
                     <ItemStyle Wrap="True"></ItemStyle>
                 </asp:BoundField>
-                <asp:BoundField DataField="RecordedDate" HeaderText="Recorded Date" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="RecordedDate" DataFormatString="{0:M/dd/yyyy}" HeaderStyle-VerticalAlign="Middle">
+                <asp:BoundField DataField="RecordedDate" HeaderText="Recorded Date" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="RecordedDate" DataFormatString="{0:M/dd/yyyy hh:mm tt}" HeaderStyle-VerticalAlign="Middle">
                     <HeaderStyle Width="20%"></HeaderStyle>
 
                     <ItemStyle Wrap="True"></ItemStyle>
