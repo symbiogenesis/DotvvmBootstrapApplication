@@ -11,16 +11,22 @@ namespace RingDownConsole.App.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private string _errorMessage = "Device not found";
-        private bool _showErrorPanel;
+        private static string _errorMessage = "Device not found";
+        private static bool _showErrorPanel;
+        private static bool? _isAdmin;
 
         protected static Device _targetDevice;
 
         protected static bool IsAdministrator()
         {
+            if (_isAdmin.HasValue)
+                return _isAdmin.Value;
+
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+            _isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+
+            return _isAdmin.Value;
         }
 
         public bool ShowErrorPanel
