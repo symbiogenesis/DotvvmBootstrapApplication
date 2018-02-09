@@ -46,6 +46,7 @@
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
             <DockPanel>
+                <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
                 <Label Content="Status:" FontWeight="Bold" />
                 <!--<Image "{Binding CurrentPhoneStatus}" />-->
                 <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" />
@@ -53,7 +54,6 @@
                 <Label Content="{Binding LocationCode}" />
                 <Label Content="Location Name:" FontWeight="Bold" />
                 <Label Content="{Binding LocationName}" />
-                <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}" />
             </DockPanel>
         </StackPanel>
 
