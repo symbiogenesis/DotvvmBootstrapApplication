@@ -57,13 +57,13 @@
     <PackageReference Include="jQuery">
       <Version>3.3.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.4.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.5.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.Agent.Intercept" Version="2.4.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.4.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.PerfCounterCollector" Version="2.4.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.4.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer" Version="2.4.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="2.4.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.5.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.PerfCounterCollector" Version="2.5.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.5.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer" Version="2.5.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="2.5.0" />
     <PackageReference Include="Microsoft.AspNet.FriendlyUrls" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNet.FriendlyUrls.Core" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNet.Providers.Core" Version="2.0.0" />
@@ -143,6 +143,8 @@
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Content\date-input-polyfill.dist.js" />
+    <Content Include="Images\cda_logo.svg" />
     <Content Include="Manager\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\ResetPassword.aspx" />
@@ -159,7 +161,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\date-input-polyfill.dist.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -467,6 +468,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="fonts\fa.woff" />
+    <Content Include="fonts\fa.woff2" />
     <None Include="Properties\PublishProfiles\UAT.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
