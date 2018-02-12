@@ -11,16 +11,12 @@
     <asp:Label ID="Msg" ForeColor="maroon" runat="server" /><br />
 
     <div class="row">
-        <div class="col-md-6">
-            <p style="font-weight: bold; font-size: 1.2em;">Roles:</p>
-        </div>
-        <div class="col-md-6">
-            <p style="font-weight: bold; font-size: 1.2em;">Users:</p>
-        </div>
         <div class="col-md-6" style="padding: 10px;">
+            <p style="font-weight: bold; font-size: 1.2em;">Roles:</p>
             <asp:ListBox ID="RolesListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Name" DataValueField="Id" AutoPostBack="true" OnSelectedIndexChanged="RolesListBox_SelectedIndexChanged" />
         </div>
         <div class="col-md-6" style="padding: 10px;">
+            <p style="font-weight: bold; font-size: 1.2em;">Users:</p>
             <asp:ListBox ID="UsersListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Username" SelectionMode="Multiple" />
         </div>
         <div class="col-md-6">
