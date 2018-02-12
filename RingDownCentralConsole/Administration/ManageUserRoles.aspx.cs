@@ -139,6 +139,7 @@ namespace RingDownCentralConsole
 
         private void BindRoles()
         {
+            
             RolesListBox.DataSource = GetAllRoles();
             RolesListBox.DataBind();
         }

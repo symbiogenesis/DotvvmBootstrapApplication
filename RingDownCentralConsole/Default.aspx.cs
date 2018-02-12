@@ -109,6 +109,8 @@ namespace RingDownCentralConsole
             ConsoleGridView.DataBind();
         }
 
+       
+
         public SortDirection SortDirection
         {
             get
