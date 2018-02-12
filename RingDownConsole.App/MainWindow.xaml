@@ -20,7 +20,7 @@
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
-        <Grid Background="Teal">
+        <Grid Background="LightGray">
         <tb:TaskbarIcon x:Name="myNotifyIcon"
                     Visibility="Visible"
                     ToolTipText="Ring Down status monitor"
@@ -40,20 +40,22 @@
             </tb:TaskbarIcon.DataContext>
         </tb:TaskbarIcon>
         
-        <StackPanel VerticalAlignment="Top">
+        <StackPanel VerticalAlignment="Top" Orientation="Vertical">
             <StackPanel Name="grpDeviceNotFound" Height="50" Background="OrangeRed" Visibility="{Binding ShowErrorPanel, Converter={StaticResource BoolToVisibility}}">
                 <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center"/>
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
             <DockPanel>
                 <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
-                <Label Content="Status:" FontWeight="Bold" />
-                <!--<Image "{Binding CurrentPhoneStatus}" />-->
-                <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" />
-                <Label Content="Location ID:" FontWeight="Bold" />
-                <Label Content="{Binding LocationCode}" />
-                <Label Content="Location Name:" FontWeight="Bold" />
-                <Label Content="{Binding LocationName}" />
+                <StackPanel Name="grpInfo" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowNameEntry, Converter={StaticResource InvertedBoolToVisibility}}" >
+                    <Label Content="Status" FontWeight="Bold" FontSize="25" Foreground="Teal" />
+                    <!--<Image "{Binding CurrentPhoneStatus}" />-->
+                    <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" FontSize="25" Margin="5 0 5 10" />
+                    <Label Content="Location ID" FontWeight="Bold" FontSize="25" Foreground="Teal" />
+                    <Label Content="{Binding LocationCode}" FontSize="25" Margin="5 0 5 10" />
+                    <Label Content="Location Name" FontWeight="Bold"  FontSize="25"  Foreground="Teal" />
+                    <Label Content="{Binding LocationName}"  FontSize="25"  Margin="5 0"/>
+                </StackPanel>
             </DockPanel>
         </StackPanel>
 
@@ -63,15 +65,15 @@
         </StackPanel>
 
 
-        <StackPanel Name="grpSettings" Orientation="Vertical" Background="Gray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
-            <Label Content="Settings Panel" Height="29" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Name="grpSettings" Orientation="Vertical" Background="LightGray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
+            <Label Content="Settings Panel" FontSize="15" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Foreground="Teal" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Interval (seconds):" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <xctk:IntegerUpDown Value="{Binding Settings.IntervalSeconds}" VerticalAlignment="Center" />
+                <xctk:IntegerUpDown Value="{Binding Settings.IntervalSeconds}" VerticalAlignment="Center" Margin="0 0 10 0" />
                 <Label Content="Prompt for Name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                <CheckBox IsChecked="{Binding Settings.PromptForName}" VerticalAlignment="Center" />
+                <CheckBox IsChecked="{Binding Settings.PromptForName}" VerticalAlignment="Center" Margin="0 0 10 0" />
             </StackPanel>
-            <Label Content="Voltage Thresholds" Height="29" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+            <Label Content="Voltage Thresholds" FontSize="15" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="Teal" />
             <StackPanel Orientation="Horizontal">
                 <Label Content="Online:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinOnlineVoltage}" Width="50" Margin="5" Increment=".1" />
@@ -97,7 +99,7 @@
                 <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MaxNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
-            <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" />
+            <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" Background="Teal" Foreground="White" Padding="0 3 0 5" />
         </StackPanel>
     </Grid>
 </Window>
