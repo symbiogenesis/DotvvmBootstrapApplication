@@ -21,7 +21,7 @@
             <asp:ListBox ID="RolesListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Name" DataValueField="Id" AutoPostBack="true" OnSelectedIndexChanged="RolesListBox_SelectedIndexChanged" />
         </div>
         <div class="col-md-6" style="padding: 10px;">
-            <asp:ListBox ID="UsersListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Username" SelectionMode="Multiple" />
+            <asp:ListBox ID="UsersListBox" runat="server" CssClass="form-control" Rows="8" DataTextField="Username" SelectionMode="Multiple"  />
         </div>
         <div class="col-md-6">
         </div>
