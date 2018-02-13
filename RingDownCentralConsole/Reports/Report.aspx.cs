@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 
 namespace RingDownCentralConsole.Reports
 {
-    public partial class Report : System.Web.UI.Page
+    public partial class Report : Page
     {
-
         private readonly string _constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,9 +23,7 @@ namespace RingDownCentralConsole.Reports
                 Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("/Account/Login.aspx");
             }
-
         }
-
 
         protected void btnClear_Click(object sender, EventArgs e)
         {
@@ -113,64 +108,89 @@ namespace RingDownCentralConsole.Reports
             return table;
         }
 
-              
-
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
             BindData();
-           
-        }
 
+        }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
             if (Page.IsValid)
-            {  
-            
-            using (var con = new SqlConnection(_constr))
             {
-                // using (var cmd = new SqlCommand("SELECT OrderID, OrderDate, ShipName, ShipCity FROM Orders WHERE OrderDate BETWEEN @From AND @To", con))
-                using (var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Locations.Code AS Code, Locations.Name AS LocationName, RecordedDate, " +
-                                                "Statuses.Name AS Status, Statuses.Image, Locations.IsActive " +
-                                                "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
-                                                "ON Statuses.Id = LocationStatuses.StatusId " +
-                                                "WHERE (CAST(RecordedDate As DATE) >= @From) And (CAST(RecordedDate As DATE) <= @To) And Locations.IsActive=1 " +
-                                                "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Image, Locations.IsActive, RecordedDate " +                                             
-                                                "ORDER BY RecordedDate DESC, Locations.Name DESC", con))
+                using (var con = new SqlConnection(_constr))
                 {
-                    using (var da = new SqlDataAdapter(cmd))
+                    // using (var cmd = new SqlCommand("SELECT OrderID, OrderDate, ShipName, ShipCity FROM Orders WHERE OrderDate BETWEEN @From AND @To", con))
+                    using (var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Locations.Code AS Code, Locations.Name AS LocationName, RecordedDate, " +
+                                                    "Statuses.Name AS Status, Statuses.Image, Locations.IsActive " +
+                                                    "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
+                                                    "ON Statuses.Id = LocationStatuses.StatusId " +
+                                                    "WHERE (CAST(RecordedDate As DATE) >= @From) And (CAST(RecordedDate As DATE) <= @To) And Locations.IsActive=1 " +
+                                                    "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Image, Locations.IsActive, RecordedDate " +
+                                                    "ORDER BY RecordedDate DESC, Locations.Name DESC", con))
                     {
+                        using (var da = new SqlDataAdapter(cmd))
+                        {
+                            if (!string.IsNullOrWhiteSpace(txtStartDate.Text) && !string.IsNullOrWhiteSpace(txtEndDate.Text))
+                            {
+                                //Prevent start date from being greater than end date
+                                if (Convert.ToDateTime(this.txtStartDate.Text) > Convert.ToDateTime(this.txtEndDate.Text))
+                                {
+                                    Msg.Text = "Start date cannot be greater than end date";
+                                    return;
+                                }
+                            }
 
-                            var start = Convert.ToDateTime(this.txtStartDate.Text);
+                            DateTime start;
+                            DateTime end;
+
+                            if (string.IsNullOrWhiteSpace(txtStartDate.Text))
+                            {
+                                start = DateTime.UtcNow.AddYears(-200);
+                            }
+                            else
+                            {
+                                start = DateTimeOffset.Parse(txtStartDate.Text).UtcDateTime;
+                            }
+
+                            if (string.IsNullOrWhiteSpace(txtEndDate.Text))
+                            {
+                                end = DateTime.MaxValue;
+                            }
+                            else
+                            {
+                                end = DateTimeOffset.Parse(txtEndDate.Text).UtcDateTime;
+
+                            }
+
                             var startDate = String.Format("{0:MM/dd/yyyy}", start);
-
-                            var end = Convert.ToDateTime(this.txtEndDate.Text);
                             var endDate = String.Format("{0:MM/dd/yyyy}", end);
 
-                            cmd.Parameters.AddWithValue("@From", Convert.ToDateTime(this.txtStartDate.Text, new CultureInfo("en-US")));
-                        cmd.Parameters.AddWithValue("@To", Convert.ToDateTime(this.txtEndDate.Text, new CultureInfo("en-US")));
-                        var ds = new DataSet();
-                        da.Fill(ds);
-                        GridView1.DataSource = ds;
-                        GridView1.DataBind();
-                        con.Close();
+                            // Msg.Text = DateTime.MinValue.ToString();
 
-                        if (ds.Tables[0].Rows.Count == 0)
-                            {  
-                            this.Msg.Text = "No Records Found";
-                            this.Msg2.Text = "";
+                            cmd.Parameters.AddWithValue("@From", start);
+                            cmd.Parameters.AddWithValue("@To", end);
+                            var ds = new DataSet();
+                            da.Fill(ds);
+                            GridView1.DataSource = ds;
+                            GridView1.DataBind();
+                            con.Close();
+
+
+                            if (ds.Tables[0].Rows.Count == 0)
+                            {
+                                this.Msg.Text = "No Records Found";
+                                this.Msg2.Text = "";
                             }
-                        else
+                            else
                             {
                                 this.Msg2.Text = "Results for " + startDate + " to " + endDate;
                                 this.Msg.Text = "";
-                               
                             }
                         }
-                }
+                    }//using
                 }
             }
         }

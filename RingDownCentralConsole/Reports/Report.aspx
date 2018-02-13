@@ -19,18 +19,19 @@
 
     <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
     <div id="dvGrid">
+        
         <div class="row">
             <div class="col-md-6">
                 Start Date:<asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="ReqStartDate" runat="server" ControlToValidate="txtStartDate" ErrorMessage="*" ForeColor="Red" EnableClientScript="false">
-                </asp:RequiredFieldValidator>
-                <br />
+                                 
+                   <br class="col-md-12" />
             </div>
             <div class="col-md-6">
                 End Date:
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="ReqEndDate" runat="server" ControlToValidate="txtEndDate" ErrorMessage="*" ForeColor="Red" EnableClientScript="false">
-                </asp:RequiredFieldValidator>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>  
+                
+              
+                    <br class="col-md-12" />
             </div>
             <div class="col-md-6" style="padding: 10px;">
                 <asp:Button ID="btnFilter" CssClass="form-control btn-primary" runat="server" Text="Filter" OnClick="btnSearch_Click" />
@@ -41,6 +42,7 @@
         </div>
         <div class="row">
             <asp:Label ID="Msg2" runat="server" ForeColor="black" Font-Bold="true" />
+            
             <br class="col-md-12" />
             <br class="col-md-12" />
         </div>
