@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="RingDownCentralConsole.Reports.Report" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="RingDownCentralConsole.Reports.Report" EnableEventValidation="false"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -18,6 +18,9 @@
     </div>
 
     <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
+
+
+
     <div id="dvGrid">
         
         <div class="row">
@@ -46,6 +49,8 @@
             <br class="col-md-12" />
             <br class="col-md-12" />
         </div>
+      
+
         <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None" AllowPaging="true"  OnPageIndexChanging="GridView1_PageIndexChanging" >
             <RowStyle CssClass="cursor-pointer" />
             <Columns>
@@ -73,4 +78,8 @@
 
         </asp:GridView>
     </div>
+
+      <div> 
+            <asp:Button ID="btnExcel" runat="server" Text="Export to Excel"  class="btn btn-success" OnClick="btnExcelExport_Click" Visible="false"/>
+        </div>
 </asp:Content>
