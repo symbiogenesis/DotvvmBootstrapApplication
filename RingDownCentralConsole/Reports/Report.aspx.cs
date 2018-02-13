@@ -146,13 +146,20 @@ namespace RingDownCentralConsole.Reports
                             DateTime start;
                             DateTime end;
 
+                            var minDate = DateTime.UtcNow.AddYears(-250);
+
                             if (string.IsNullOrWhiteSpace(txtStartDate.Text))
                             {
-                                start = DateTime.UtcNow.AddYears(-200);
+                                start = minDate;
                             }
                             else
                             {
                                 start = DateTimeOffset.Parse(txtStartDate.Text).UtcDateTime;
+
+                                if (start < minDate)
+                                {
+                                    start = minDate;
+                                }
                             }
 
                             if (string.IsNullOrWhiteSpace(txtEndDate.Text))
@@ -163,6 +170,10 @@ namespace RingDownCentralConsole.Reports
                             {
                                 end = DateTimeOffset.Parse(txtEndDate.Text).UtcDateTime;
 
+                                if (end < minDate)
+                                {
+                                    end = minDate;
+                                }
                             }
 
                             var startDate = String.Format("{0:MM/dd/yyyy}", start);
