@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="RingDownCentralConsole.Reports.Report" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="RingDownCentralConsole.Reports.Report" EnableEventValidation="false"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -18,19 +18,23 @@
     </div>
 
     <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
+
+
+
     <div id="dvGrid">
+        
         <div class="row">
             <div class="col-md-6">
                 Start Date:<asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="ReqStartDate" runat="server" ControlToValidate="txtStartDate" ErrorMessage="*" ForeColor="Red" EnableClientScript="false">
-                </asp:RequiredFieldValidator>
-                <br />
+                                 
+                   <br class="col-md-12" />
             </div>
             <div class="col-md-6">
                 End Date:
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="ReqEndDate" runat="server" ControlToValidate="txtEndDate" ErrorMessage="*" ForeColor="Red" EnableClientScript="false">
-                </asp:RequiredFieldValidator>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>  
+                
+              
+                    <br class="col-md-12" />
             </div>
             <div class="col-md-6" style="padding: 10px;">
                 <asp:Button ID="btnFilter" CssClass="form-control btn-primary" runat="server" Text="Filter" OnClick="btnSearch_Click" />
@@ -41,9 +45,12 @@
         </div>
         <div class="row">
             <asp:Label ID="Msg2" runat="server" ForeColor="black" Font-Bold="true" />
+            
             <br class="col-md-12" />
             <br class="col-md-12" />
         </div>
+      
+
         <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None" AllowPaging="true"  OnPageIndexChanging="GridView1_PageIndexChanging" >
             <RowStyle CssClass="cursor-pointer" />
             <Columns>
@@ -71,4 +78,8 @@
 
         </asp:GridView>
     </div>
+
+      <div> 
+            <asp:Button ID="btnExcel" runat="server" Text="Export to Excel"  class="btn btn-success" OnClick="btnExcelExport_Click" Visible="false"/>
+        </div>
 </asp:Content>

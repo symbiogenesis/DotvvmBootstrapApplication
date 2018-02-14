@@ -33,8 +33,7 @@ namespace RingDownCentralConsole.Models
         protected List<ApplicationRole> GetAllRoles()
         {
             if (_allRoles == null)
-                _allRoles = _roleManager.Roles.ToList();
-
+                _allRoles = _roleManager.Roles.ToList();         
             return _allRoles;
         }
 
