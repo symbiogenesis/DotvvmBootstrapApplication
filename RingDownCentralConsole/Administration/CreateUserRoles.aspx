@@ -1,15 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateUserRoles.aspx.cs" Inherits="RingDownCentralConsole.CreateUserRoles" %>
+﻿<%@ Page Title="Create User Roles" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateUserRoles.aspx.cs" Inherits="RingDownCentralConsole.CreateUserRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
  
-    <div  class="center-div">
-      Create User Roles
-    </div>
-    <div>
-        <p></p>
-    </div>
-
-
-
   <asp:Label id="Msg" ForeColor="maroon" runat="server" /><br />
 
   Role name: 

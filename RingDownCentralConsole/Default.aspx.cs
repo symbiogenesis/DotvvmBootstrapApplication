@@ -16,6 +16,8 @@ namespace RingDownCentralConsole
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ClearMessage();
+
             if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")) || (User.IsInRole("User")))
             {
                 if (!IsPostBack)
@@ -30,6 +32,18 @@ namespace RingDownCentralConsole
                 Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 Response.Redirect("~/Messages/AccountReview.aspx");
             }
+        }
+
+        private void ClearMessage()
+        {
+            Msg.Visible = false;
+            Msg.Text = "";
+        }
+
+        private void ShowMessage(string message)
+        {
+            Msg.Visible = true;
+            Msg.Text = message;
         }
 
         protected void ConsoleGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -83,7 +97,7 @@ namespace RingDownCentralConsole
             catch (Exception ex)
             {
                 /*Handle error*/
-                Msg.Text = "Connection Error in GridView1_RowDataBound" + ex;
+                ShowMessage($"Connection Error in GridView1_RowDataBound {ex}");
             }
         }
 

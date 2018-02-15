@@ -1,14 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Statuses.aspx.cs" Inherits="RingDownCentralConsole.Statuses" %>
+﻿<%@ Page Title="Statuses" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Statuses.aspx.cs" Inherits="RingDownCentralConsole.Statuses" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="status-page">
-        <div class="center-div">Statuses</div>
 
         <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
 
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None" ShowFooter="false"
-            OnPageIndexChanging="OnPaging" EmptyDataText="No Status Records Entered" CssClass="table table-hover table-striped" 
+            OnPageIndexChanging="OnPaging" EmptyDataText="No Status Records Entered" CssClass="table table-hover table-striped"
             OnRowCancelingEdit="CancelEdit" AllowSorting="true" OnSorting="GridView1_Sorting">
             <RowStyle CssClass="cursor-pointer" HorizontalAlign="Center" />
             <Columns>
@@ -55,5 +54,5 @@
             <AlternatingRowStyle BackColor="white" />
         </asp:GridView>
     </div>
-    
+
 </asp:Content>

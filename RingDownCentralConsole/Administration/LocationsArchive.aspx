@@ -1,19 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LocationsArchive.aspx.cs" Inherits="RingDownCentralConsole.LocationsArchive" %>
+﻿<%@ Page Title="Locations Archive" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LocationsArchive.aspx.cs" Inherits="RingDownCentralConsole.LocationsArchive" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="center-div">Locations Archive</div>
-    
-    <div>
-        <p></p>
-    </div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
 
             <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
             <div id="dvGrid">
 
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None"  CssClass="table table-hover table-striped"
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None" CssClass="table table-hover table-striped"
                     ShowFooter="false" OnPageIndexChanging="OnPaging" EmptyDataText="No Archived Location Records" OnSorting="GridView1_Sorting" AllowSorting="true">
                     <RowStyle CssClass="cursor-pointer" />
                     <Columns>
@@ -60,8 +55,5 @@
             <asp:AsyncPostBackTrigger ControlID="GridView1" />
         </Triggers>
     </asp:UpdatePanel>
-
-
-    </div>
 
 </asp:Content>

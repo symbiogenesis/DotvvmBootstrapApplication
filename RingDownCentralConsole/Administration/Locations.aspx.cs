@@ -113,7 +113,7 @@ namespace RingDownCentralConsole
                         "Select * from Locations Where IsActive=1";
                     cmd.Parameters.Add("@Id", SqlDbType.VarChar).Value = lnkRemove.CommandArgument;
                     cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = 0;
-                    Msg.Text = "";
+                    ClearMessage();
 
                     SetNormalMode();
                     GridView1.DataSource = GetData(cmd);
@@ -124,9 +124,21 @@ namespace RingDownCentralConsole
                 catch (Exception ex)
                 {
                     /*Handle error*/
-                    Msg.Text = "Connection Error in InactivateLocation module" + ex;
+                    ShowMessage($"Connection Error in InactivateLocation module {ex}");
                 }
             }
+        }
+
+        private void ClearMessage()
+        {
+            Msg.Text = "";
+            Msg.Visible = false;
+        }
+
+        private void ShowMessage(string message)
+        {
+            Msg.Text = message;
+            Msg.Visible = true;
         }
 
         protected void OnPaging(object sender, GridViewPageEventArgs e)
@@ -138,6 +150,7 @@ namespace RingDownCentralConsole
 
         protected void EditLocation(object sender, GridViewEditEventArgs e)
         {
+            ClearMessage();
             SetEditMode(e.NewEditIndex);
             BindData();
         }
@@ -156,6 +169,7 @@ namespace RingDownCentralConsole
 
         private void SetNormalMode()
         {
+            ClearMessage();
             GridView1.EditIndex = -1;
             GridView1.ShowFooter = true;
         }
@@ -171,7 +185,7 @@ namespace RingDownCentralConsole
 
                 try
                 {
-                    Msg.Text = "";
+                    ClearMessage();
 
                     con.Open();
 
@@ -185,7 +199,7 @@ namespace RingDownCentralConsole
                     if (numOfExisting > 0)
                     {
                         //Serial Exists
-                        Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";
+                        ShowMessage("Location/Serial Numbers exists in database. Please review active and unactive location records");
                     }
                     else
                     {
@@ -207,14 +221,14 @@ namespace RingDownCentralConsole
                         }
                         else
                         {
-                            Msg.Text = "Update failed. No rows updated.";
+                            ShowMessage("Update failed. No rows updated.");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     /*Handle error*/
-                    Msg.Text = "Connection Error in UpdateLocation module" + ex;
+                    ShowMessage($"Connection Error in UpdateLocation module {ex}");
                 }
             }
         }
@@ -234,7 +248,7 @@ namespace RingDownCentralConsole
             }
             else
             {
-                Msg.Text = "Location record not found. Cannot update this record.";
+                ShowMessage("Location record not found. Cannot update this record.");
             }
 
             reader.Close();
@@ -256,13 +270,12 @@ namespace RingDownCentralConsole
                     var cmd = new SqlCommand("Select SerialNumber from Locations where SerialNumber=@SerialNumber", con);
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add("@SerialNumber", SqlDbType.NVarChar).Value = SerialNumber;
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    Msg.Text = "";
+                    SqlDataReader reader = cmd.ExecuteReader();                    
 
                     if (reader.HasRows)
                     {
                         //Serial Exists
-                        Msg.Text = "Location/Serial Numbers exists in database. Please review active and unactive location records";
+                        ShowMessage("Location/Serial Numbers exists in database. Please review active and unactive location records");
                     }
                     else
                     {
@@ -282,7 +295,7 @@ namespace RingDownCentralConsole
                 catch (Exception ex)
                 {
                     /*Handle error*/
-                    Msg.Text = "Connection Error in AddNewLocation module" + ex;
+                    ShowMessage($"Connection Error in AddNewLocation module {ex}");
                 }
             }
         }

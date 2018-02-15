@@ -64,66 +64,6 @@ namespace RingDownCentralConsole
             }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            MenuItem login = Menu1.FindItem("Login");
-            MenuItem locations = Menu1.FindItem("Locations");
-            MenuItem statuses = Menu1.FindItem("Statuses");
-            MenuItem report = Menu1.FindItem("Report");
-            MenuItem register = Menu1.FindItem("Register");
-            MenuItem manageroles = Menu1.FindItem("ManageUserRoles");
-
-            if (!Page.User.Identity.IsAuthenticated)
-                {
-                    Menu1.Visible = false;
-                }
-                else
-                {
-                    Menu1.Visible = true;
-
-                      if (Page.User.IsInRole("Administrator"))
-                        {
-                            if (login != null)
-                            {
-                                Menu1.Items.Remove(Menu1.FindItem("Login"));
-                            }
-                        }
-                          else
-                                if (Page.User.IsInRole("User"))
-                                    {
-                                        if (login != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("Login"));
-                                        }
-
-                                        if (locations != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("Locations"));
-                                        }
-
-                                        if (statuses != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("Statuses"));
-                                        }
-
-                                        if (report != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("Report"));
-                                        }
-
-                                        if (manageroles != null)
-                                        {
-                                            Menu1.Items.Remove(Menu1.FindItem("ManageUserRoles"));
-                                        }
-
-                                        //if (setrefresh != null)
-                                        //{
-                                        //    Menu1.Items.Remove(Menu1.FindItem("SetRefreshInterval"));
-                                        //}
-                                    }
-            }
-        }
-
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
