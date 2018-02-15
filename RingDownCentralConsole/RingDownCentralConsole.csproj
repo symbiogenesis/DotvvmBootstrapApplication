@@ -136,7 +136,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
     <Content Include="Account\AddPhoneNumber.aspx" />
     <Content Include="Account\Confirm.aspx" />
     <Content Include="Account\Forgot.aspx" />
@@ -159,8 +158,12 @@
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Administration\Statuses.aspx" />
-    <Content Include="Contact.aspx" />
-    <Content Include="Content\site.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\date-input-polyfill.dist.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -180,22 +183,10 @@
     <Content Include="Images\offhook_t.png" />
     <Content Include="Images\onhook_t.png" />
     <Content Include="Messages\AccountReview.aspx" />
+    <Content Include="Reports\Report2.aspx" />
     <Content Include="Reports\Report.aspx" />
-    <Content Include="Reports\Report.rdlc" />
-    <Content Include="Console.xsc">
-      <DependentUpon>Console.xsd</DependentUpon>
-    </Content>
-    <None Include="Console.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Console1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Console.xss">
-      <DependentUpon>Console.xsd</DependentUpon>
-    </Content>
-    <Content Include="RDCC\Default.aspx" />
-    <Content Include="Reports\rdccMainReport.aspx" />
-    <Content Include="Reports\rdccReports.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
@@ -360,30 +351,8 @@
       <DependentUpon>Statuses.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="Console.cs">
-      <DependentUpon>Console.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Console1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Console.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -407,26 +376,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RDCC\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Reports\Report2.aspx.cs">
+      <DependentUpon>Report2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RDCC\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\rdccMainReport.aspx.cs">
-      <DependentUpon>rdccMainReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\rdccMainReport.aspx.designer.cs">
-      <DependentUpon>rdccMainReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\rdccReports.aspx.cs">
-      <DependentUpon>rdccReports.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\rdccReports.aspx.designer.cs">
-      <DependentUpon>rdccReports.aspx</DependentUpon>
+    <Compile Include="Reports\Report2.aspx.designer.cs">
+      <DependentUpon>Report2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
