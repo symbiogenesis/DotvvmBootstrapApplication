@@ -100,7 +100,7 @@ namespace RingDownCentralConsole.Reports
 
                 //To Export all pages
                 GridView1.AllowPaging = false;
-                this.BindData();
+                this.GetData();
 
                 GridView1.HeaderRow.BackColor = Color.White;
                 foreach (TableCell cell in GridView1.HeaderRow.Cells)
