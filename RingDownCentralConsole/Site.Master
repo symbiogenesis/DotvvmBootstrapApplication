@@ -97,9 +97,9 @@
                         </span>
                     </LoggedInTemplate>
                     <AnonymousTemplate>
-                        <li class="nav-item">
+                        <span class="nav-item">
                             <asp:LoginStatus ID="LoginStatus2" CssClass="nav-link text-white fa fa-login" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                        </li>
+                        </span>
                     </AnonymousTemplate>
                 </asp:LoginView>
 
