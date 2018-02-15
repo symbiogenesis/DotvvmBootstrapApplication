@@ -180,8 +180,6 @@
     <Content Include="Messages\AccountReview.aspx" />
     <Content Include="Reports\Report2.aspx" />
     <Content Include="Reports\Report.aspx" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
