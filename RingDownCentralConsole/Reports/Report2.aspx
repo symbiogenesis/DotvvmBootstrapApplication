@@ -10,13 +10,6 @@
         });
     </script>
 
-    <div class="center-div">
-        Report
-    </div>
-    <div>
-        <p></p>
-    </div>
-
     <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
 
     <div id="dvGrid">
@@ -30,11 +23,13 @@
             <div class="col-md-6">
                 End Date:
                 <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
+
+
+                <br class="col-md-12" />
             </div>
 
-            <div class="row">
 
-                <div class="col-md-6">
+            <div class="col-md-6">
                     Location:
                     <br />
                     <asp:DropDownList ID="ddlLocations" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlLocations_SelectedIndexChanged">
@@ -54,7 +49,8 @@
                     <br class="col-md-12" />
                 </div>
 
-            </div>
+
+
 
             <div class="col-md-6" style="padding: 10px;">
                 <asp:Button ID="btnFilter" CssClass="form-control btn-primary" runat="server" Text="Filter" OnClick="btnSearch_Click" />
@@ -63,7 +59,6 @@
                 <asp:Button ID="btnClear" runat="server" CssClass="form-control btn-warning" Text="Clear" OnClick="btnClear_Click" CausesValidation="false" />
             </div>
         </div>
-
         <div class="row">
             <asp:Label ID="Msg2" runat="server" ForeColor="black" Font-Bold="true" />
 
@@ -71,7 +66,7 @@
             <br class="col-md-12" />
         </div>
 
-        <asp:GridView ID="GridView1" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None" AllowPaging="false" OnPageIndexChanging="GridView1_PageIndexChanging">
+        <asp:GridView ID="GridView1" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" AllowSorting="True" OnSorting="GridView1_Sorting" GridLines="None" AllowPaging="true" OnPageIndexChanging="GridView1_PageIndexChanging">
             <Columns>
                 <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="25%" ItemStyle-Wrap="true" SortExpression="Code" HeaderStyle-VerticalAlign="Middle">
                     <HeaderStyle Width="20%"></HeaderStyle>

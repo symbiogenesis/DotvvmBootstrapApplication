@@ -122,6 +122,9 @@ namespace RingDownCentralConsole.Reports
             this.Msg.Text = "";
             this.txtEndDate.Text = "";
             this.txtStartDate.Text = "";
+            this.btnExcel.Visible = false;
+            this.ddlLocations.Text = "";
+            this.ddlStatuses.Text = "";
             GridView1.DataBind();
         }
         
@@ -178,13 +181,14 @@ namespace RingDownCentralConsole.Reports
             Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.xls");
             Response.Charset = "";
             Response.ContentType = "application/vnd.ms-excel";
-            using (StringWriter sw = new StringWriter())
+            using (var sw = new StringWriter())
             {
-                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                var hw = new HtmlTextWriter(sw);
 
                 //To Export all pages
-                GridView1.AllowPaging = false;          
-                this.GetData();
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = ViewState["datasetname"];
+                //this.GetData();    
 
                 GridView1.HeaderRow.BackColor = Color.White;
                 foreach (TableCell cell in GridView1.HeaderRow.Cells)
@@ -235,13 +239,9 @@ namespace RingDownCentralConsole.Reports
                                                 "Statuses.Name AS Status, Statuses.Image, Locations.IsActive " +
                                                 "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
                                                 "ON Statuses.Id = LocationStatuses.StatusId " +
-                                                "WHERE Locations.IsActive=1 ";
+                                                "WHERE Locations.IsActive=1 ";             
 
-             
-
-                    //ddlContinents.SelectedItem.Text
-
-                // instantiate the command object to fire
+                 // instantiate the command object to fire
                 using (var cmd = new SqlCommand(sql, conn))
                 {
                     // get the adapter object and attach the command object to it
@@ -259,7 +259,7 @@ namespace RingDownCentralConsole.Reports
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
-            GridView1.DataBind();
+            GridView1.DataSource = ViewState["datasetname"];
             BindData();
         }
 
@@ -267,6 +267,8 @@ namespace RingDownCentralConsole.Reports
         {
             if (Page.IsValid)
             {
+                
+
                 using (var con = new SqlConnection(_constr))
                 {
                     // using (var cmd = new SqlCommand("SELECT OrderID, OrderDate, ShipName, ShipCity FROM Orders WHERE OrderDate BETWEEN @From AND @To", con))
@@ -348,13 +350,14 @@ namespace RingDownCentralConsole.Reports
 
                                 cmd.Parameters.AddWithValue("@StatusID", "");
                             }
-                           
+
 
                             cmd.Parameters.AddWithValue("@From", start);
                             cmd.Parameters.AddWithValue("@To", end);
                             var ds = new DataSet();
                             da.Fill(ds);
                             GridView1.DataSource = ds;
+                            ViewState["datasetname"] = ds;
                             GridView1.DataBind();
                             con.Close();
 
@@ -363,6 +366,7 @@ namespace RingDownCentralConsole.Reports
                             {
                                 this.Msg.Text = "No Records Found";
                                 this.Msg2.Text = "";
+                                this.btnExcel.Visible = false;
                             }
                             else
                             {
