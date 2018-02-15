@@ -7,9 +7,8 @@
         <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
 
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None" ShowFooter="false"
-            OnPageIndexChanging="OnPaging" EmptyDataText="No Status Records Entered" CssClass="table table-hover table-striped"
+            OnPageIndexChanging="OnPaging" EmptyDataText="No Status Records Entered" CssClass="table table-striped"
             OnRowCancelingEdit="CancelEdit" AllowSorting="true" OnSorting="GridView1_Sorting">
-            <RowStyle CssClass="cursor-pointer" HorizontalAlign="Center" />
             <Columns>
                 <asp:TemplateField Visible="false">
                     <ItemTemplate>

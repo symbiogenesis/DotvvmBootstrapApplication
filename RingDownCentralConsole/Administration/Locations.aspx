@@ -4,9 +4,8 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <asp:Label ID="Msg" runat="server" ForeColor="maroon" Visible="false" />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover table-striped"
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-striped"
                 GridLines="None" ShowFooter="true" OnPageIndexChanging="OnPaging" OnRowEditing="EditLocation" OnRowUpdating="UpdateLocation" OnRowCancelingEdit="CancelEdit" EmptyDataText="No Location Records Entered" OnSorting="GridView1_Sorting" AllowSorting="true">
-                <RowStyle CssClass="cursor-pointer" />
                 <Columns>
                     <asp:TemplateField Visible="false">
                         <ItemTemplate>

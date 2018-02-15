@@ -8,9 +8,8 @@
             <asp:Label ID="Msg" runat="server" ForeColor="maroon" /><br />
             <div id="dvGrid">
 
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None" CssClass="table table-hover table-striped"
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" GridLines="None" CssClass="table table-striped"
                     ShowFooter="false" OnPageIndexChanging="OnPaging" EmptyDataText="No Archived Location Records" OnSorting="GridView1_Sorting" AllowSorting="true">
-                    <RowStyle CssClass="cursor-pointer" />
                     <Columns>
                         <asp:TemplateField ItemStyle-Width="50px" Visible="false">
                             <ItemTemplate>
