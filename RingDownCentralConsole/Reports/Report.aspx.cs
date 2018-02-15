@@ -35,6 +35,7 @@ namespace RingDownCentralConsole.Reports
             this.Msg.Text = "";
             this.txtEndDate.Text = "";
             this.txtStartDate.Text = "";
+            this.btnExcel.Visible = false;
             GridView1.DataBind();
         }
 
@@ -89,50 +90,21 @@ namespace RingDownCentralConsole.Reports
 
         protected void btnExcelExport_Click(object sender, EventArgs e)
         {
+           //Exports entire contents of gridview 
             Response.Clear();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.xls");
+            Response.AddHeader("content-disposition", "attachment;filename=ExportData1.xls");
             Response.Charset = "";
-            Response.ContentType = "application/vnd.ms-excel";
-            using (var sw = new StringWriter())
-            {
-                var hw = new HtmlTextWriter(sw);
+            Response.ContentType = "application/vnd.xls";
+            var StringWriter = new System.IO.StringWriter();
+            var HtmlTextWriter = new HtmlTextWriter(StringWriter);
+          
+            GridView1.AllowPaging = false;
+            GridView1.DataSource = ViewState["datasetname"];
+            GridView1.DataBind();            
 
-                //To Export all pages
-                GridView1.AllowPaging = false;
-                this.GetData();
-
-                GridView1.HeaderRow.BackColor = Color.White;
-                foreach (TableCell cell in GridView1.HeaderRow.Cells)
-                {
-                    cell.BackColor = GridView1.HeaderStyle.BackColor;
-                }
-                foreach (GridViewRow row in GridView1.Rows)
-                {
-                    row.BackColor = Color.White;
-                    foreach (TableCell cell in row.Cells)
-                    {
-                        if (row.RowIndex % 2 == 0)
-                        {
-                            cell.BackColor = GridView1.AlternatingRowStyle.BackColor;
-                        }
-                        else
-                        {
-                            cell.BackColor = GridView1.RowStyle.BackColor;
-                        }
-                        cell.CssClass = "textmode";
-                    }
-                }
-
-                GridView1.RenderControl(hw);
-
-                //style to format numbers to string
-                var style = @"<style> .textmode { } </style>";
-                Response.Write(style);
-                Response.Output.Write(sw.ToString());
-                Response.Flush();
-                Response.End();
-            }
+            GridView1.RenderControl(HtmlTextWriter);
+            Response.Write(StringWriter.ToString());
+            Response.End();
         }
 
         public override void VerifyRenderingInServerForm(Control control)
@@ -253,6 +225,7 @@ namespace RingDownCentralConsole.Reports
                             {
                                 this.Msg.Text = "No Records Found";
                                 this.Msg2.Text = "";
+                                this.btnExcel.Visible = false;
                             }
                             else
                             {
