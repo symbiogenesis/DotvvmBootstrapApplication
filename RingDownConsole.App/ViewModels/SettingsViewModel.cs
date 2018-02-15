@@ -169,5 +169,19 @@
                 }
             }
         }
+
+        public string WebApiConnectionString
+        {
+            get { return Settings.Default.WebApiConnectionString; }
+            set
+            {
+                if (Settings.Default.WebApiConnectionString != value)
+                {
+                    Settings.Default.WebApiConnectionString = value;
+                    Settings.Default.Save();
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

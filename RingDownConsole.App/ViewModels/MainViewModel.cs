@@ -21,7 +21,7 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://ringdownuat.flychicago.com:3456") };
+        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(Settings.WebApiConnectionString) };
 
         private static DateTime _lastSentDate = DateTime.MinValue;
         private static IEnumerable<Status> _statuses;
@@ -37,8 +37,6 @@ namespace RingDownConsole.App.ViewModels
 
         public MainViewModel()
         {
-            Settings = new SettingsViewModel();
-
             Task.Run(async () => await Initialize());
             SystemEvents.PowerModeChanged += async (object s, PowerModeChangedEventArgs e) => await OnPowerChange(e);
 
@@ -52,7 +50,7 @@ namespace RingDownConsole.App.ViewModels
 
         #region Properties
 
-        public SettingsViewModel Settings { get; }
+        public static SettingsViewModel Settings { get; } = new SettingsViewModel();
 
         public PhoneStatus? CurrentPhoneStatus
         {

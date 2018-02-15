@@ -166,5 +166,17 @@ namespace RingDownConsole.App {
                 this["PromptForName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ringdownuat.flychicago.com:3456")]
+        public string WebApiConnectionString {
+            get {
+                return ((string)(this["WebApiConnectionString"]));
+            }
+            set {
+                this["WebApiConnectionString"] = value;
+            }
+        }
     }
 }
