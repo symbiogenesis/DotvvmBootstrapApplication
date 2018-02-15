@@ -38,5 +38,8 @@
     <Setting Name="PromptForName" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="WebApiConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://ringdownuat.flychicago.com:3456</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
