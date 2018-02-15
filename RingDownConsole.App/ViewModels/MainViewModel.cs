@@ -21,7 +21,7 @@ namespace RingDownConsole.App.ViewModels
     {
         private const double SAMPLE_RATE = 915.55;
 
-        private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(Settings.WebApiConnectionString) };
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         private static DateTime _lastSentDate = DateTime.MinValue;
         private static IEnumerable<Status> _statuses;
@@ -37,6 +37,9 @@ namespace RingDownConsole.App.ViewModels
 
         public MainViewModel()
         {
+            Settings = new SettingsViewModel();
+            _httpClient.BaseAddress = new Uri(Settings.WebApiConnectionString);
+
             Task.Run(async () => await Initialize());
             SystemEvents.PowerModeChanged += async (object s, PowerModeChangedEventArgs e) => await OnPowerChange(e);
 
@@ -50,7 +53,7 @@ namespace RingDownConsole.App.ViewModels
 
         #region Properties
 
-        public static SettingsViewModel Settings { get; } = new SettingsViewModel();
+        public SettingsViewModel Settings { get; }
 
         public PhoneStatus? CurrentPhoneStatus
         {
@@ -203,9 +206,10 @@ namespace RingDownConsole.App.ViewModels
 
                 await PopulateStatuses();
 
-                await FindDevice();
+                var found = await FindDevice();
 
-                await StartDataAcquisition();
+                if (found)
+                    await StartDataAcquisition();
             }
             catch (Exception e)
             {
@@ -230,7 +234,7 @@ namespace RingDownConsole.App.ViewModels
         {
             switch (e.Mode)
             {
-                case PowerModes.Resume:                    
+                case PowerModes.Resume:
                     await Initialize();
                     break;
                 case PowerModes.Suspend:
@@ -247,7 +251,7 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        private async Task FindDevice()
+        private async Task<bool> FindDevice()
         {
             try
             {
@@ -274,7 +278,7 @@ namespace RingDownConsole.App.ViewModels
                 else
                 {
                     ShowError("No DI-1100 found.");
-                    return;
+                    return false;
                 }
 
                 // Disconnect any open connections
@@ -294,7 +298,10 @@ namespace RingDownConsole.App.ViewModels
             catch (Exception e)
             {
                 ShowError(e.Message);
+                return false;
             }
+
+            return true;
         }
 
         private async Task StartDataAcquisition()
