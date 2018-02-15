@@ -94,13 +94,13 @@ namespace RingDownCentralConsole.Reports
             Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.xls");
             Response.Charset = "";
             Response.ContentType = "application/vnd.ms-excel";
-            using (StringWriter sw = new StringWriter())
+            using (var sw = new StringWriter())
             {
-                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                var hw = new HtmlTextWriter(sw);
 
                 //To Export all pages
                 GridView1.AllowPaging = false;
-                this.BindData();
+                this.GetData();
 
                 GridView1.HeaderRow.BackColor = Color.White;
                 foreach (TableCell cell in GridView1.HeaderRow.Cells)
@@ -127,7 +127,7 @@ namespace RingDownCentralConsole.Reports
                 GridView1.RenderControl(hw);
 
                 //style to format numbers to string
-                string style = @"<style> .textmode { } </style>";
+                var style = @"<style> .textmode { } </style>";
                 Response.Write(style);
                 Response.Output.Write(sw.ToString());
                 Response.Flush();
