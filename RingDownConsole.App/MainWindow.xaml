@@ -12,7 +12,7 @@
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
-        
+
         <utils:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
         <utils:BoolToVisibilityConverter x:Key="InvertedBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
         <utils:PhoneStatusToStringConverter x:Key="PhoneStatusToStringConverter" />
@@ -39,7 +39,7 @@
                 <viewModels:NotifyIconViewModel />
             </tb:TaskbarIcon.DataContext>
         </tb:TaskbarIcon>
-        
+
         <StackPanel VerticalAlignment="Top" Orientation="Vertical">
             <StackPanel Name="grpDeviceNotFound" Height="50" Background="OrangeRed" Visibility="{Binding ShowErrorPanel, Converter={StaticResource BoolToVisibility}}">
                 <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center"/>
@@ -47,6 +47,13 @@
             </StackPanel>
             <DockPanel>
                 <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
+                <StackPanel DockPanel.Dock="Left">
+                    <ContentControl Height="100" Visibility="{Binding IsCommunicationError}" Content="{StaticResource CommunicationErrorIcon}" />
+                    <ContentControl Height="100" Visibility="{Binding IsConnected}" Content="{StaticResource ConnectedIcon}" />
+                    <ContentControl Height="100" Visibility="{Binding IsOffHook}" Content="{StaticResource OffHookIcon}" />
+                    <ContentControl Height="100" Visibility="{Binding IsOnHook}" Content="{StaticResource OnHookIcon}" />
+                </StackPanel>
+
                 <StackPanel Name="grpInfo" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowNameEntry, Converter={StaticResource InvertedBoolToVisibility}}" >
                     <Label Content="Status" FontWeight="Bold" FontSize="25" Foreground="Teal" />
                     <!--<Image "{Binding CurrentPhoneStatus}" />-->

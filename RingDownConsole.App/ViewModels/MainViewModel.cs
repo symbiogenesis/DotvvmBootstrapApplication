@@ -34,6 +34,12 @@ namespace RingDownConsole.App.ViewModels
         private static string _locationName;
         private static IChannelIn _masterChannel;
         private static Status _unknown;
+        private bool _isCommunicationError;
+        private bool _isConnected;
+        private bool _isNoDialTone;
+        private bool _isOffHook;
+        private bool _isOnHook;
+        private bool _isUnknown;
 
         public MainViewModel()
         {
@@ -44,6 +50,7 @@ namespace RingDownConsole.App.ViewModels
             SystemEvents.PowerModeChanged += async (object s, PowerModeChangedEventArgs e) => await OnPowerChange(e);
 
             PopulateColors();
+            SetImageVisibility(null);
         }
 
         ~MainViewModel()
@@ -64,6 +71,8 @@ namespace RingDownConsole.App.ViewModels
                 {
                     _currentPhoneStatus = value;
                     RaisePropertyChanged();
+
+                    SetImageVisibility(_currentPhoneStatus);
                 }
             }
         }
@@ -167,7 +176,116 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        public bool IsCommunicationError
+        {
+            get { return _isCommunicationError; }
+            private set
+            {
+                if (_isCommunicationError != value)
+                {
+                    _isCommunicationError = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+            private set {
+                if (_isConnected != value)
+                {
+                    _isConnected = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsNoDialTone
+        {
+            get { return _isNoDialTone; }
+            private set
+            {
+                if (_isNoDialTone != value)
+                {
+                    _isNoDialTone = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsOffHook
+        {
+            get { return _isOffHook; }
+            private set
+            {
+                if (_isOffHook != value)
+                {
+                    _isOffHook = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsOnHook
+        {
+            get { return _isOnHook; }
+            private set
+            {
+                if (_isOnHook != value)
+                {
+                    _isOnHook = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool IsUnknown
+        {
+            get { return _isUnknown; }
+            private set
+            {
+                if (_isUnknown != value)
+                {
+                    _isUnknown = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         #endregion
+
+        private void SetImageVisibility(PhoneStatus? currentPhoneStatus)
+        {
+            IsCommunicationError = false;
+            IsConnected = false;
+            IsNoDialTone = false;
+            IsOffHook = false;
+            IsOnHook = false;
+            IsUnknown = false;
+
+            switch (currentPhoneStatus)
+            {
+                case PhoneStatus.NoLink:
+                    IsCommunicationError = true;
+                    break;
+                case PhoneStatus.Connected:
+                    IsConnected = true;
+                    break;
+                case PhoneStatus.NoDialTone:
+                    IsNoDialTone = true;
+                    break;
+                case PhoneStatus.OffHook:
+                    IsOffHook = true;
+                    break;
+                case PhoneStatus.OnHook:
+                    IsOnHook = true;
+                    break;
+                default:
+                    IsUnknown = true;
+                    break;
+            }
+        }
 
         private async Task GetLocation(string serialNumber)
         {
