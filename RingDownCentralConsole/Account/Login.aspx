@@ -8,7 +8,6 @@
             <section id="loginForm">
                 <div class="form-horizontal">
                     <h4>&nbsp;</h4>
-                    <hr />
                     <asp:PlaceHolder runat="server" ID="ErrorMessage" >
                         <p class="text-danger">
                             <asp:Literal runat="server" ID="FailureText" />

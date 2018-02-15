@@ -3,7 +3,6 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="form-horizontal">
         <h4>Add a phone number</h4>
-        <hr />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <p class="text-danger">
             <asp:Literal runat="server" ID="ErrorMessage" />
