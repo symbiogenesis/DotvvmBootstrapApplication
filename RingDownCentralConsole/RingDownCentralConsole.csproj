@@ -145,7 +145,6 @@
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
-    <Content Include="Content\date-input-polyfill.dist.js" />
     <Content Include="Images\cda_logo.svg" />
     <Content Include="Manager\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
@@ -158,10 +157,6 @@
     <Content Include="Administration\LocationsArchive.aspx" />
     <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Administration\Statuses.aspx" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\date-input-polyfill.dist.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
