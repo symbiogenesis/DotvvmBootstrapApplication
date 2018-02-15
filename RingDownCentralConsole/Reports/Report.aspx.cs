@@ -170,9 +170,8 @@ namespace RingDownCentralConsole.Reports
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
-            GridView1.DataBind();
-            BindData();
-
+            GridView1.DataSource = ViewState["datasetname"];
+            GridView1.DataBind();      
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -245,6 +244,7 @@ namespace RingDownCentralConsole.Reports
                             var ds = new DataSet();
                             da.Fill(ds);
                             GridView1.DataSource = ds;
+                            ViewState["datasetname"] = ds;
                             GridView1.DataBind();
                             con.Close();
 
