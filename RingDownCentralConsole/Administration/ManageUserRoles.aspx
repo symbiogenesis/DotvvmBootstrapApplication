@@ -1,12 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageUserRoles.aspx.cs" Inherits="RingDownCentralConsole.ManageUserRoles" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿<%@ Page Title="Manage User Roles" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageUserRoles.aspx.cs" Inherits="RingDownCentralConsole.ManageUserRoles" %>
 
-    <div  class="center-div">
-      Manage User Roles
-    </div>
-    <div>
-        <p></p>
-    </div>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <asp:Label ID="Msg" ForeColor="maroon" runat="server" /><br />
 
@@ -31,11 +25,11 @@
     <asp:GridView runat="server" ID="UsersInRoleGrid" AutoGenerateColumns="false" CssClass="table table-hover table-striped" Width="500px"
         GridLines="None" OnRowCommand="UsersInRoleGrid_RemoveFromRole">
         <RowStyle HorizontalAlign="Center" />
-        <Columns>            
-            <asp:TemplateField HeaderText="User Name" >
-            <ItemTemplate>
-                <%# ((RingDownCentralConsole.Models.ApplicationUser) Container.DataItem).UserName %>
-            </ItemTemplate>
+        <Columns>
+            <asp:TemplateField HeaderText="User Name">
+                <ItemTemplate>
+                    <%# ((RingDownCentralConsole.Models.ApplicationUser) Container.DataItem).UserName %>
+                </ItemTemplate>
             </asp:TemplateField>
             <asp:ButtonField Text="Remove From Role" ButtonType="Button" ControlStyle-CssClass="form-control btn-warning" ControlStyle-Width="160" />
         </Columns>

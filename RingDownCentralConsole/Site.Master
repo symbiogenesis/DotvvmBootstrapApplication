@@ -8,11 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Chicago Department of Aviation (CDA) Ring Down Central Console</title>
-
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/Content/site.css" rel="stylesheet" />
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
 </head>
 <body>
     <form runat="server">
@@ -20,61 +24,90 @@
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
-                <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
 
-        <img class="logo" src="<%= Page.ResolveUrl("~")%>Images/cda_logo_r.png" alt="Chicago Department of Aviation Ring Down Central Console" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                
-        <span class="application-title">Ring Down Central Console</span>              
-        <div class="row" style="margin: 0; padding: 10px 0;">
-            <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DynamicHorizontalOffset="2" Orientation="Horizontal">
-                <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
-                <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
-                <DynamicMenuStyle BackColor="#B5C7DE" />
-                <DynamicSelectedStyle BackColor="#507CD1" />
-                <Items>
-                    <asp:MenuItem NavigateUrl="Default.aspx" Target="_self" Text="Ring Down Central Console" ToolTip="Ring Down Central Console" Value="RDCC"></asp:MenuItem> 
-                    <asp:MenuItem Text="Locations" Value="Locations" Selectable="false" >
-                        <asp:MenuItem NavigateUrl="~/Administration/Locations.aspx" Target="_self" Text="Locations" ToolTip="Locations" Value="LocationsSub"></asp:MenuItem> 
-                        <asp:MenuItem NavigateUrl="~/Administration/LocationsArchive.aspx" Target="_self" Text="Locations Archive" ToolTip="Locations Archive" Value="LocationsArchive"></asp:MenuItem>      
-                    </asp:MenuItem>
-                                
-                        <asp:MenuItem NavigateUrl="~/Administration/Statuses.aspx" Target="_self" Text="Statuses" ToolTip="Statuses" Value="Statuses"></asp:MenuItem>   
-                      
-                
-                        <asp:MenuItem NavigateUrl="~/Account/ManagePassword.aspx" Target="_self" Text="Manage Password" ToolTip="Manage Password" Value="ManagePassword"></asp:MenuItem>                       
-                        <asp:MenuItem NavigateUrl="~/Administration/ManageUserRoles.aspx" Target="_self" Text="Manage User Roles"  ToolTip="Manage User Roles" Value="ManageUserRoles"></asp:MenuItem>
-                      
-                        <asp:MenuItem NavigateUrl="~/Reports/Report.aspx" Target="_self" Text="Report" ToolTip="Report" Value="Report"></asp:MenuItem>
-                </Items>
-            </asp:Menu>
-            <%--                        <asp:MenuItem>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white" style="background: #000;">
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="/">
+                <img src="/Images/cda_logo.svg" class="navbar-brand-img" alt="Chicago Department of Aviation" />
+            </a>
+
+            <!-- Collapse button -->
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" ID="navbarSupportedContent">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <asp:MenuItem NavigateUrl="~/Account/Register" Target="_self" Text="Register" ToolTip="Log Out" Value="Register"></asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/Account/Login" Target="_self" Text="Log In" ToolTip="Log Out" Value="Log In"></asp:MenuItem>
-                        </AnonymousTemplate>
+                        <RoleGroups>
+                            <asp:RoleGroup Roles="Administrator">
+                                <ContentTemplate>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white fa fa-home" href="/">Console</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link text-white dropdown-toggle fa fa-edit" data-toggle="dropdown">Locations</a>
+                                        <div class="dropdown-menu dropdown-primary" role="menu">                                            
+                                            <a class="dropdown-item" href="/Administration/Locations.aspx">Locations</a>
+                                            <a class="dropdown-item" href="/Administration/LocationsArchive.aspx">Locations Archive</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white fa fa-tags" href="/Administration/Statuses.aspx">Statuses</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link text-white dropdown-toggle fa fa-id-card-o" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/Account/ManagePassword.aspx">Manage Password</a>
+                                            <a class="dropdown-item" href="/Administration/ManageUserRoles.aspx">Manage User Roles</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white fa fa-chart-bar" href="/Reports/Report.aspx">Report</a>
+                                    </li>
+                                </ContentTemplate>
+                            </asp:RoleGroup>
+                        </RoleGroups>
                         <LoggedInTemplate>
-                            <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Manage" ToolTip="Manage" Value="Manage">
-                                Hello, <%: Context.User.Identity.GetUserName()  %> !
-                            </asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/Account/Manage" Target="_self" Text="Log off" ToolTip="Log off" Value="Log off">
-                            </asp:MenuItem>
+                            <li class="nav-item">
+                                <a class="nav-link text-white fa fa-home" href="/">Console</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white fa fa-id-card-o" href="/Account/ManagePassword.aspx">Manage Password</a>
+                            </li>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                </asp:MenuItem>--%>
+                </ul>
+                <!-- Links -->
 
-            <asp:LoginView runat="server" ViewStateMode="Disabled">
-                <LoggedInTemplate>
-                    <asp:LoginStatus ID="Login1Status1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                </LoggedInTemplate>
-            </asp:LoginView>
-        </div>  
+                <asp:LoginView runat="server" ViewStateMode="Disabled">                        
+                    <LoggedInTemplate>
+                        <span class="nav-item">
+                            <asp:LoginStatus ID="LoginStatus1" CssClass="nav-link text-white fa fa-logout" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                        </span>
+                    </LoggedInTemplate>
+                    <AnonymousTemplate>
+                        <li class="nav-item">
+                            <asp:LoginStatus ID="LoginStatus2" CssClass="nav-link text-white fa fa-login" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                        </li>
+                    </AnonymousTemplate>
+                </asp:LoginView>
 
+            </div>
+            <!-- Collapsible content -->
+        </nav>
+
+        <nav class="navbar navbar-dark text-white mb-3" runat="server" style="background: #3f51b5;"><%: Page.Title %></nav>
         
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>

@@ -103,6 +103,9 @@
       <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Owin" Version="1.0" />
+    <PackageReference Include="popper.js">
+      <Version>1.12.9</Version>
+    </PackageReference>
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.4.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.4.0" />
     <PackageReference Include="System.Security.AccessControl" Version="4.4.1" />
@@ -157,11 +160,7 @@
     <Content Include="Administration\ManageUserRoles.aspx" />
     <Content Include="Administration\Statuses.aspx" />
     <Content Include="Contact.aspx" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -174,10 +173,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\cda_logo_r.png" />
     <Content Include="Images\connected_t.png" />
     <Content Include="Images\no_dial_tone_t.png" />
@@ -201,8 +196,6 @@
     <Content Include="RDCC\Default.aspx" />
     <Content Include="Reports\rdccMainReport.aspx" />
     <Content Include="Reports\rdccReports.aspx" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
@@ -223,7 +216,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>

@@ -41,6 +41,7 @@ namespace RingDownConsole.App.Utils
         }
     }
 
-    public class PhoneStatusToStringConverter : EnumToStringConverter<PhoneStatus> { }
+    public class PhoneStatusToStringConverter : EnumToStringConverter<PhoneStatus> {
+    }
 
 }

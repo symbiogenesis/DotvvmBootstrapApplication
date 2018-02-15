@@ -562,7 +562,7 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
-        private static string FromCamelCase(PhoneStatus? currentPhoneStatus)
+        public static string FromCamelCase(PhoneStatus? currentPhoneStatus)
         {
             var statusName = currentPhoneStatus?.ToString();
 
