@@ -51,7 +51,6 @@
                 <asp:CommandField ShowEditButton="False" ValidationGroup="GridViewFields" />
 
             </Columns>
-            <AlternatingRowStyle BackColor="white" />
         </asp:GridView>
     </div>
 

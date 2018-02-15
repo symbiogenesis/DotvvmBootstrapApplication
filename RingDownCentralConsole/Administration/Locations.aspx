@@ -76,7 +76,6 @@
                     <asp:CommandField ShowEditButton="True" />
 
                 </Columns>
-                <AlternatingRowStyle BackColor="white" />
             </asp:GridView>
         </ContentTemplate>
         <Triggers>

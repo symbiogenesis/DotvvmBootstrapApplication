@@ -55,15 +55,6 @@ input[type="select"] {
     height: 24px;
 }
 
-th {
-    text-align: center;
-}
-
-.norecordsstyle {
-    border: solid;
-    border-color: red;
-}
-
 .Important {
     font-size: large;
     color: Red;
