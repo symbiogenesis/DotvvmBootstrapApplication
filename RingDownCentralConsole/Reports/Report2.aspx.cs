@@ -183,8 +183,8 @@ namespace RingDownCentralConsole.Reports
                 HtmlTextWriter hw = new HtmlTextWriter(sw);
 
                 //To Export all pages
-                GridView1.AllowPaging = false;
-                this.BindData();
+                GridView1.AllowPaging = false;          
+                this.GetData();
 
                 GridView1.HeaderRow.BackColor = Color.White;
                 foreach (TableCell cell in GridView1.HeaderRow.Cells)
@@ -237,12 +237,17 @@ namespace RingDownCentralConsole.Reports
                                                 "ON Statuses.Id = LocationStatuses.StatusId " +
                                                 "WHERE Locations.IsActive=1 ";
 
+             
+
+                    //ddlContinents.SelectedItem.Text
+
                 // instantiate the command object to fire
                 using (var cmd = new SqlCommand(sql, conn))
                 {
                     // get the adapter object and attach the command object to it
                     using (var ad = new SqlDataAdapter(cmd))
-                    {
+                    {                       
+                        
                         // fire Fill method to fetch the data and fill into DataTable
                         ad.Fill(table);
                     }
@@ -256,7 +261,6 @@ namespace RingDownCentralConsole.Reports
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
             BindData();
-
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -267,11 +271,12 @@ namespace RingDownCentralConsole.Reports
                 {
                     // using (var cmd = new SqlCommand("SELECT OrderID, OrderDate, ShipName, ShipCity FROM Orders WHERE OrderDate BETWEEN @From AND @To", con))
                     using (var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Locations.Code AS Code, Locations.Name AS LocationName, RecordedDate, " +
-                                                    "Statuses.Name AS Status, Statuses.Image, Locations.IsActive " +
+                                                    "Statuses.Name AS Status, Statuses.Id AS StatusID, Statuses.Image, Locations.IsActive " +
                                                     "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
                                                     "ON Statuses.Id = LocationStatuses.StatusId " +
-                                                    "WHERE (CAST(RecordedDate As DATE) >= @From) And (CAST(RecordedDate As DATE) <= @To) And Locations.IsActive=1 " +
-                                                    "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Image, Locations.IsActive, RecordedDate " +
+                                                    "WHERE (((CAST(RecordedDate As DATE) >= @From) And (CAST(RecordedDate As DATE) <= @To) And Locations.IsActive=1) " +
+                                                    "OR ((@LocationID IS NULL OR LocationID=@LocationID) AND (@StatusID IS NULL OR StatusID=@StatusID))) " +
+                                                    "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Id, Statuses.Image, Locations.IsActive, RecordedDate " +
                                                     "ORDER BY RecordedDate DESC, Locations.Name DESC", con))
                     {
                         using (var da = new SqlDataAdapter(cmd))
@@ -322,7 +327,28 @@ namespace RingDownCentralConsole.Reports
                             var startDate = String.Format("{0:MM/dd/yyyy}", start);
                             var endDate = String.Format("{0:MM/dd/yyyy}", end);
 
-                            // Msg.Text = DateTime.MinValue.ToString();
+                            // Additional filtering
+
+                            if (ddlLocations.SelectedItem.Value != null)
+                            {
+                                cmd.Parameters.AddWithValue("@LocationID", ddlLocations.SelectedItem.Value);
+                            }
+                            else
+                            {
+
+                                cmd.Parameters.AddWithValue("@LocationID", "");
+                            }
+
+                            if (ddlStatuses.SelectedItem.Value != null)
+                            {
+                                cmd.Parameters.AddWithValue("@StatusID", ddlStatuses.SelectedItem.Value);
+                            }
+                            else
+                            {
+
+                                cmd.Parameters.AddWithValue("@StatusID", "");
+                            }
+                           
 
                             cmd.Parameters.AddWithValue("@From", start);
                             cmd.Parameters.AddWithValue("@To", end);
