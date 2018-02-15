@@ -6,7 +6,7 @@
             <asp:Label ID="Msg" runat="server" ForeColor="maroon" Visible="false" />
 
             <asp:Timer ID="Timer1" runat="server" Interval="5000" OnTick="Timer1_Tick"></asp:Timer>
-            <asp:GridView ID="ConsoleGridView" runat="server" CssClass="table" GridLines="None" AutoGenerateColumns="false"
+            <asp:GridView ID="ConsoleGridView" runat="server" CssClass="table table-striped" GridLines="None" AutoGenerateColumns="false"
                 AllowSorting="True" OnSorting="ConsoleGridView_Sorting" EmptyDataText="No Records Available" OnRowDataBound="ConsoleGridView_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="Code" HeaderText="Location Code" HeaderStyle-Width="20%" ItemStyle-Wrap="true" SortExpression="Code" />
