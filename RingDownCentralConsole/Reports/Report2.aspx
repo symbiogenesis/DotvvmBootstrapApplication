@@ -32,7 +32,7 @@
             <div class="col-md-6">
                     Location:
                     <br />
-                    <asp:DropDownList ID="ddlLocations" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlLocations_SelectedIndexChanged">
+                    <asp:DropDownList ID="ddlLocations" runat="server"  OnSelectedIndexChanged="ddlLocations_SelectedIndexChanged">
                         <asp:ListItem Text="--Select Location | Code --" Value=""></asp:ListItem>
                     </asp:DropDownList>
 
@@ -42,7 +42,7 @@
                 <div class="col-md-6">
                     Status:
                     <br />
-                    <asp:DropDownList ID="ddlStatuses" runat="server" AutoPostBack="false" enbled="false">
+                    <asp:DropDownList ID="ddlStatuses" runat="server" >
                         <asp:ListItem Text="--Select Status --" Value=""></asp:ListItem>
                     </asp:DropDownList>
 
