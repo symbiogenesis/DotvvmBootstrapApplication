@@ -66,7 +66,7 @@
                                         <a class="nav-link text-white fa fa-tags" href="/Administration/Statuses.aspx">Statuses</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link text-white dropdown-toggle fa fa-id-card-o" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                        <a class="nav-link text-white dropdown-toggle fa fa-cog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="/Account/ManagePassword.aspx">Manage Password</a>
                                             <a class="dropdown-item" href="/Administration/ManageUserRoles.aspx">Manage User Roles</a>

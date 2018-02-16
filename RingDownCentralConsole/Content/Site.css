@@ -34,6 +34,10 @@ input[type="select"] {
     width: 175px;
 }
 
+a.nav-link {
+    cursor: pointer;
+}
+
 #MainContent_ConsoleGridView > tbody > tr > td {
     line-height: 65px;
     font-weight: bold;
