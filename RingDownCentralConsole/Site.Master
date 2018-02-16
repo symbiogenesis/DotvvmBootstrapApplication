@@ -82,9 +82,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white fa fa-home" href="/">Console</a>
                             </li>
-                            <li class="nav-item">
+<%--                            <li class="nav-item">
                                 <a class="nav-link text-white fa fa-id-card-o" href="/Account/ManagePassword.aspx">Manage Password</a>
-                            </li>
+                            </li>--%>
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </ul>
