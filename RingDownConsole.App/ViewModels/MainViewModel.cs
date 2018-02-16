@@ -40,6 +40,8 @@ namespace RingDownConsole.App.ViewModels
         private bool _isOffHook;
         private bool _isOnHook;
         private bool _isUnknown;
+        private bool _showPasswordEntry;
+        private string _password;
 
         public MainViewModel()
         {
@@ -73,6 +75,19 @@ namespace RingDownConsole.App.ViewModels
                     RaisePropertyChanged();
 
                     SetImageVisibility(_currentPhoneStatus);
+                }
+            }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                if (_password != value)
+                {
+                    _password = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -129,6 +144,11 @@ namespace RingDownConsole.App.ViewModels
             }
         }
 
+        public bool ShowEntry
+        {
+            get { return _showNameEntry || _showPasswordEntry; }
+        }
+
         public bool ShowNameEntry
         {
             get { return Settings.PromptForName && _showNameEntry; }
@@ -141,6 +161,21 @@ namespace RingDownConsole.App.ViewModels
 
                     _showNameEntry = value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(ShowEntry));
+                }
+            }
+        }
+
+        public bool ShowPasswordEntry
+        {
+            get { return _showPasswordEntry; }
+            set
+            {
+                if (_showPasswordEntry != value)
+                {
+                    _showPasswordEntry = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(ShowEntry));
                 }
             }
         }
@@ -161,6 +196,28 @@ namespace RingDownConsole.App.ViewModels
                 return new DelegateCommand
                 {
                     CommandAction = async () => await Initialize()
+                };
+            }
+        }
+
+        public ICommand SubmitPasswordCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => SubmitPassword()
+                };
+            }
+        }
+
+        public ICommand ShowSettingsCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => ShowPasswordEntry = true
                 };
             }
         }
@@ -254,6 +311,20 @@ namespace RingDownConsole.App.ViewModels
         }
 
         #endregion
+
+        private void SubmitPassword()
+        {
+            ShowPasswordEntry = false;
+
+            if (Password == Settings.Password)
+            {
+                ShowSettings = true;
+            }
+            else
+            {
+                MessageBox.Show("Password is incorrect", "Password Incorrect", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void SetImageVisibility(PhoneStatus? currentPhoneStatus)
         {

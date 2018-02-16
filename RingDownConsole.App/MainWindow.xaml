@@ -46,8 +46,8 @@
                 <Button Name="btnSearch" Command="{Binding FindDeviceCommand}" Content="Search Again" Width="100" />
             </StackPanel>
             <DockPanel>
-                <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
-                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Width="300">
+                <Button DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" Command="{Binding ShowSettingsCommand}"  />
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Visibility="{Binding ShowEntry, Converter={StaticResource InvertedBoolToVisibility}}">
                     <ContentControl Height="250" Visibility="{Binding IsCommunicationError, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource CommunicationErrorIcon}" />
                     <ContentControl Height="250" Visibility="{Binding IsConnected, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource ConnectedIcon}" />
                     <ContentControl Height="250" Visibility="{Binding IsOffHook, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource OffHookIcon}" />
@@ -55,7 +55,7 @@
                     <ContentControl Height="250" Visibility="{Binding IsNoDialTone, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource NoDialToneIcon}" />
                 </StackPanel>
 
-                <StackPanel Name="grpInfo" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowNameEntry, Converter={StaticResource InvertedBoolToVisibility}}" >
+                <StackPanel Name="grpInfo" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowEntry, Converter={StaticResource InvertedBoolToVisibility}}">
                     <Label Content="Status" FontWeight="Bold" FontSize="25" Foreground="Teal" />
                     <!--<Image "{Binding CurrentPhoneStatus}" />-->
                     <Label Content="{Binding CurrentPhoneStatus, Converter={StaticResource PhoneStatusToStringConverter}}" FontSize="25" Margin="5 0 5 10" />
@@ -69,9 +69,14 @@
 
         <StackPanel Name="grpNameEntry" Orientation="Horizontal" Visibility="{Binding ShowNameEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Enter your name:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-            <TextBox ToolTip="Enter your name" Text="{Binding CurrentPhoneUser}" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            <TextBox ToolTip="Enter your name" Text="{Binding CurrentPhoneUser}" utils:FocusExtension.IsFocused="{Binding ShowNameEntry}" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
         </StackPanel>
 
+        <StackPanel Name="grpPassword" Orientation="Horizontal" Visibility="{Binding ShowPasswordEntry, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Enter the password:" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+            <TextBox ToolTip="Enter the password" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" utils:FocusExtension.IsFocused="{Binding ShowPasswordEntry}" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" />
+            <Button Content="Submit" Command="{Binding SubmitPasswordCommand}" IsDefault="true" Background="Teal" Foreground="White" Margin="5" Padding="5" />
+        </StackPanel>
 
         <StackPanel Name="grpSettings" Orientation="Vertical" Background="LightGray" Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVisibility}}">
             <Label Content="Settings Panel" FontSize="15" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Foreground="Teal" />
@@ -103,11 +108,11 @@
                 <xctk:DecimalUpDown Value="{Binding Settings.MaxConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="No Dialtone:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <Label Content="No Dial Tone:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MaxNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
-            <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" Background="Teal" Foreground="White" Padding="0 3 0 5" />
+            <Button Content="Close" Command="{Binding CloseSettingsCommand}" Width="50" Margin="5" Background="Teal" Foreground="White" Padding="5" />
         </StackPanel>
     </Grid>
 </Window>

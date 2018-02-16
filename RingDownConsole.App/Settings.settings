@@ -41,5 +41,8 @@
     <Setting Name="WebApiConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://ringdownuat.flychicago.com:3456</Value>
     </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">secret1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

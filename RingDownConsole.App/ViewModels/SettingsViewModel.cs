@@ -183,5 +183,19 @@
                 }
             }
         }
+
+        public string Password
+        {
+            get { return Settings.Default.Password; }
+            set
+            {
+                if (Settings.Default.Password != value)
+                {
+                    Settings.Default.Password = value;
+                    Settings.Default.Save();
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }
