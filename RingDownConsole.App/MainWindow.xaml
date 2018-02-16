@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:RingDownConsole.App.ViewModels"
         xmlns:utils="clr-namespace:RingDownConsole.App.Utils"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d" Title="Ring Down status monitor" Height="350" Width="525">
+        mc:Ignorable="d" Title="Ring Down status monitor" Height="350" Width="650">
     <Window.Resources>
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Segoe UI" />
@@ -47,11 +47,12 @@
             </StackPanel>
             <DockPanel>
                 <ToggleButton DockPanel.Dock="Right" Content="{StaticResource GearIcon}" Style="{StaticResource GearButton}" IsChecked="{Binding ShowSettings}"  />
-                <StackPanel DockPanel.Dock="Left">
-                    <ContentControl Height="100" Visibility="{Binding IsCommunicationError}" Content="{StaticResource CommunicationErrorIcon}" />
-                    <ContentControl Height="100" Visibility="{Binding IsConnected}" Content="{StaticResource ConnectedIcon}" />
-                    <ContentControl Height="100" Visibility="{Binding IsOffHook}" Content="{StaticResource OffHookIcon}" />
-                    <ContentControl Height="100" Visibility="{Binding IsOnHook}" Content="{StaticResource OnHookIcon}" />
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Width="300">
+                    <ContentControl Height="250" Visibility="{Binding IsCommunicationError, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource CommunicationErrorIcon}" />
+                    <ContentControl Height="250" Visibility="{Binding IsConnected, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource ConnectedIcon}" />
+                    <ContentControl Height="250" Visibility="{Binding IsOffHook, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource OffHookIcon}" />
+                    <ContentControl Height="250" Visibility="{Binding IsOnHook, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource OnHookIcon}" />
+                    <ContentControl Height="250" Visibility="{Binding IsNoDialTone, Converter={StaticResource BoolToVisibility}}" Content="{StaticResource NoDialToneIcon}" />
                 </StackPanel>
 
                 <StackPanel Name="grpInfo" VerticalAlignment="Center" Orientation="Vertical" Visibility="{Binding ShowNameEntry, Converter={StaticResource InvertedBoolToVisibility}}" >
