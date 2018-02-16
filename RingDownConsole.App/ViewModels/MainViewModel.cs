@@ -146,7 +146,7 @@ namespace RingDownConsole.App.ViewModels
 
         public bool ShowEntry
         {
-            get { return _showNameEntry || _showPasswordEntry; }
+            get { return ShowNameEntry || ShowPasswordEntry; }
         }
 
         public bool ShowNameEntry
@@ -760,10 +760,24 @@ namespace RingDownConsole.App.ViewModels
         {
             var statusName = currentPhoneStatus?.ToString();
 
+            return FromCamelCase(statusName);
+        }
+
+        public static string FromCamelCase(string statusName)
+        {
             if (statusName == null)
                 return null;
 
             return Regex.Replace(statusName, "(\\B[A-Z])", " $1");
+        }
+
+        public static PhoneStatus? ToCamelCase(string separated)
+        {
+            if (separated == null)
+                return null;
+
+            var smushed = separated.Replace(" ", "");
+            return (PhoneStatus) Enum.Parse(typeof(PhoneStatus), smushed);
         }
 
         private void ConfigureAnalogChannels()
