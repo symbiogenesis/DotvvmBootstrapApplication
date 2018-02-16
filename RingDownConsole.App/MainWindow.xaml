@@ -103,7 +103,7 @@
                 <xctk:DecimalUpDown Value="{Binding Settings.MaxConnectedVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Off Hook:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
+                <Label Content="No Dialtone:" Width="100" HorizontalContentAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MinNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
                 <xctk:DecimalUpDown Value="{Binding Settings.MaxNoDialToneVoltage}" Width="50" Margin="5" Increment=".1" />
             </StackPanel>
