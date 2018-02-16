@@ -66,8 +66,8 @@ namespace RingDownCentralConsole.Reports
         protected void ddlLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-             ddlStatuses.Items.Clear();
-            ddlStatuses.Items.Add(new ListItem("--Select Status--", ""));
+            // ddlStatuses.Items.Clear();
+            //ddlStatuses.Items.Add(new ListItem("--Select Status--", ""));
             ddlStatuses.AppendDataBoundItems = true;
             var strQuery = "SELECT Distinct Statuses.Id As StatusID, Statuses.Name As StatusName " +
                               "FROM Statuses " +
@@ -90,15 +90,15 @@ namespace RingDownCentralConsole.Reports
                 ddlStatuses.DataValueField = "StatusID";
                 ddlStatuses.DataBind();
 
-                if (ddlStatuses.Items.Count > 1)
-                {
-                    ddlStatuses.Enabled = true;
-                }
-                else
-                {
+                //if (ddlStatuses.Items.Count > 1)
+                //{
+                //    ddlStatuses.Enabled = true;
+                //}
+                //else
+                //{
 
-                    ddlStatuses.Enabled = false;
-                }
+                //    ddlStatuses.Enabled = false;
+                //}
 
              
             }//try
@@ -176,51 +176,21 @@ namespace RingDownCentralConsole.Reports
 
         protected void btnExcelExport_Click(object sender, EventArgs e)
         {
+            //Exports entire contents of gridview 
             Response.Clear();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.xls");
+            Response.AddHeader("content-disposition", "attachment;filename=ExportData1.xls");
             Response.Charset = "";
-            Response.ContentType = "application/vnd.ms-excel";
-            using (var sw = new StringWriter())
-            {
-                var hw = new HtmlTextWriter(sw);
+            Response.ContentType = "application/vnd.xls";
+            var StringWriter = new System.IO.StringWriter();
+            var HtmlTextWriter = new HtmlTextWriter(StringWriter);
 
-                //To Export all pages
-                GridView1.AllowPaging = false;
-                GridView1.DataSource = ViewState["datasetname"];
-                //this.GetData();    
+            GridView1.AllowPaging = false;
+            GridView1.DataSource = ViewState["datasetname"];
+            GridView1.DataBind();
 
-                GridView1.HeaderRow.BackColor = Color.White;
-                foreach (TableCell cell in GridView1.HeaderRow.Cells)
-                {
-                    cell.BackColor = GridView1.HeaderStyle.BackColor;
-                }
-                foreach (GridViewRow row in GridView1.Rows)
-                {
-                    row.BackColor = Color.White;
-                    foreach (TableCell cell in row.Cells)
-                    {
-                        if (row.RowIndex % 2 == 0)
-                        {
-                            cell.BackColor = GridView1.AlternatingRowStyle.BackColor;
-                        }
-                        else
-                        {
-                            cell.BackColor = GridView1.RowStyle.BackColor;
-                        }
-                        cell.CssClass = "textmode";
-                    }
-                }
-
-                GridView1.RenderControl(hw);
-
-                //style to format numbers to string
-                string style = @"<style> .textmode { } </style>";
-                Response.Write(style);
-                Response.Output.Write(sw.ToString());
-                Response.Flush();
-                Response.End();
-            }
+            GridView1.RenderControl(HtmlTextWriter);
+            Response.Write(StringWriter.ToString());
+            Response.End();
         }
 
         public override void VerifyRenderingInServerForm(Control control)
@@ -260,7 +230,8 @@ namespace RingDownCentralConsole.Reports
         {
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataSource = ViewState["datasetname"];
-            BindData();
+            GridView1.DataBind();
+            
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -273,12 +244,12 @@ namespace RingDownCentralConsole.Reports
                 {
                     // using (var cmd = new SqlCommand("SELECT OrderID, OrderDate, ShipName, ShipCity FROM Orders WHERE OrderDate BETWEEN @From AND @To", con))
                     using (var cmd = new SqlCommand("SELECT Locations.Id AS LocationID, Locations.Code AS Code, Locations.Name AS LocationName, RecordedDate, " +
-                                                    "Statuses.Name AS Status, Statuses.Id AS StatusID, Statuses.Image, Locations.IsActive " +
+                                                    "Statuses.Name AS Status, Statuses.Image, Locations.IsActive " +
                                                     "FROM Statuses INNER JOIN(Locations INNER JOIN LocationStatuses ON Locations.Id = LocationStatuses.LocationId) " +
                                                     "ON Statuses.Id = LocationStatuses.StatusId " +
-                                                    "WHERE (((CAST(RecordedDate As DATE) >= @From) And (CAST(RecordedDate As DATE) <= @To) And Locations.IsActive=1) " +
-                                                    "OR ((@LocationID IS NULL OR LocationID=@LocationID) AND (@StatusID IS NULL OR StatusID=@StatusID))) " +
-                                                    "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Id, Statuses.Image, Locations.IsActive, RecordedDate " +
+                                                    "WHERE ((CAST(RecordedDate As DATE) >= @From) AND (CAST(RecordedDate As DATE) <= @To) AND (Locations.IsActive=1)) " +
+                                                    "AND (@LocationID='' OR LocationID=@LocationID) AND (@StatusID='' OR StatusID=@StatusID) " +
+                                                    "GROUP BY Locations.Id, Locations.Name, Locations.Code, Statuses.Name, Statuses.Image, Locations.IsActive, RecordedDate " +
                                                     "ORDER BY RecordedDate DESC, Locations.Name DESC", con))
                     {
                         using (var da = new SqlDataAdapter(cmd))
@@ -335,22 +306,13 @@ namespace RingDownCentralConsole.Reports
                             {
                                 cmd.Parameters.AddWithValue("@LocationID", ddlLocations.SelectedItem.Value);
                             }
-                            else
-                            {
-
-                                cmd.Parameters.AddWithValue("@LocationID", "");
-                            }
+                            
 
                             if (ddlStatuses.SelectedItem.Value != null)
                             {
                                 cmd.Parameters.AddWithValue("@StatusID", ddlStatuses.SelectedItem.Value);
                             }
-                            else
-                            {
-
-                                cmd.Parameters.AddWithValue("@StatusID", "");
-                            }
-
+                           
 
                             cmd.Parameters.AddWithValue("@From", start);
                             cmd.Parameters.AddWithValue("@To", end);
