@@ -146,6 +146,7 @@
     <Content Include="Account\ManagePassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Images\cda_logo.svg" />
+    <Content Include="Images\NoDialTone.svg" />
     <Content Include="Manager\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\ResetPassword.aspx" />
