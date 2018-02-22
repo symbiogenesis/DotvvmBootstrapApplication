@@ -193,24 +193,28 @@ namespace RingDownConsole.Models
         {
             string ip = null;
 
-            // todo support new "Forwarded" header (2014) https://en.wikipedia.org/wiki/X-Forwarded-For
+            try
+            {
+                // todo support new "Forwarded" header (2014) https://en.wikipedia.org/wiki/X-Forwarded-For
 
-            // X-Forwarded-For (csv list):  Using the First entry in the list seems to work
-            // for 99% of cases however it has been suggested that a better (although tedious)
-            // approach might be to read each IP from right to left and use the first public IP.
-            // http://stackoverflow.com/a/43554000/538763
-            //
-            if (tryUseXForwardHeader)
-                ip = GetHeaderValueAs<string>(httpContextAccessor, "X-Forwarded-For").SplitCsvAndGetFirst();
+                // X-Forwarded-For (csv list):  Using the First entry in the list seems to work
+                // for 99% of cases however it has been suggested that a better (although tedious)
+                // approach might be to read each IP from right to left and use the first public IP.
+                // http://stackoverflow.com/a/43554000/538763
+                //
+                if (tryUseXForwardHeader)
+                    ip = GetHeaderValueAs<string>(httpContextAccessor, "X-Forwarded-For").SplitCsvAndGetFirst();
 
-            // RemoteIpAddress is always null in DNX RC1 Update1 (bug).
-            if (string.IsNullOrWhiteSpace(ip) && httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress != null)
-                ip = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                // RemoteIpAddress is always null in DNX RC1 Update1 (bug).
+                if (string.IsNullOrWhiteSpace(ip) && httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress != null)
+                    ip = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
 
-            if (string.IsNullOrWhiteSpace(ip))
-                ip = GetHeaderValueAs<string>(httpContextAccessor, "REMOTE_ADDR");
+                if (string.IsNullOrWhiteSpace(ip))
+                    ip = GetHeaderValueAs<string>(httpContextAccessor, "REMOTE_ADDR");
 
-            // _httpContextAccessor.HttpContext?.Request?.Host this is the local host.
+                // _httpContextAccessor.HttpContext?.Request?.Host this is the local host.
+            }
+            catch { }
 
             return ip;
         }
