@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RingDownConsole.Interfaces;
+using DotvvmBootstrapApplication.Interfaces;
 using TrackableEntities.Common.Core;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
     public class ExampleRecord : IIdentifiable, ITrackable, IMergeable
     {

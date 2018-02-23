@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using RingDownConsole.Interfaces;
+using DotvvmBootstrapApplication.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using TrackableEntities.Common.Core;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
     public class User : IdentityUser<Guid>, IAdminLookup, ITrackable, IMergeable
     {

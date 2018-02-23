@@ -1,12 +1,12 @@
-﻿using RingDownConsole.Models;
+﻿using DotvvmBootstrapApplication.Models;
 
-namespace RingDownConsole.Services
+namespace DotvvmBootstrapApplication.Services
 {
     public class SettingsService
     {
-        private readonly RingDownConsoleDbContext _context;
+        private readonly BootstrapDbContext _context;
 
-        public SettingsService(RingDownConsoleDbContext context)
+        public SettingsService(BootstrapDbContext context)
         {
             _context = context;
         }

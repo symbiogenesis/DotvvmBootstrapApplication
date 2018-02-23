@@ -1,4 +1,4 @@
-﻿@viewModel RingDownConsole.ViewModels.LoginViewModel, RingDownConsole
+﻿@viewModel DotvvmBootstrapApplication.ViewModels.LoginViewModel, DotvvmBootstrapApplication
 @masterPage  Views/master.dotmaster
 
 <dot:Content ContentPlaceHolderID="MainContent" Validation.Enabled="false">

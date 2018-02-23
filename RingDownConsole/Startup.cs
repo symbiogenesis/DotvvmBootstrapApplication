@@ -18,13 +18,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Models.Utils;
-using RingDownConsole.Services;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Models.Utils;
+using DotvvmBootstrapApplication.Services;
 
-namespace RingDownConsole
+namespace DotvvmBootstrapApplication
 {
     public class Startup
     {
@@ -70,15 +70,15 @@ namespace RingDownConsole
 
             services.Configure<AppSettings>(Configuration);
 
-            services.AddDbContext<RingDownConsoleDbContext>(opt =>
+            services.AddDbContext<BootstrapDbContext>(opt =>
             {
-                opt.UseInMemoryDatabase("RingDownConsoleDb");
+                opt.UseInMemoryDatabase("BootstrapDb");
                 opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
 
-            //services.AddDbContext<RingDownConsoleDbContext>(opt => {
-            //    var ringDownConsoleDb = Configuration.GetValue<string>(nameof(AppSettings.RingDownConsoleDb));
-            //    opt.UseSqlServer(ringDownConsoleDb, o => o.UseRowNumberForPaging());
+            //services.AddDbContext<BootstrapDbContext>(opt => {
+            //    var bootstrapDb = Configuration.GetValue<string>(nameof(AppSettings.BootstrapDb));
+            //    opt.UseSqlServer(bootstrapDb, o => o.UseRowNumberForPaging());
             //    opt.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             //});
 
@@ -91,7 +91,7 @@ namespace RingDownConsole
                     config.Password.RequireUppercase = false;
                     config.Password.RequireNonAlphanumeric = false;
                 })
-                .AddEntityFrameworkStores<RingDownConsoleDbContext>()
+                .AddEntityFrameworkStores<BootstrapDbContext>()
                 .AddDefaultTokenProviders();
 
             services

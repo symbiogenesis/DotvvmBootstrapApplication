@@ -1,4 +1,4 @@
-﻿@viewModel RingDownConsole.ViewModels.SettingsViewModel, RingDownConsole
+﻿@viewModel DotvvmBootstrapApplication.ViewModels.SettingsViewModel, DotvvmBootstrapApplication
 @masterPage  Views/master.dotmaster
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -15,7 +15,7 @@
                 <div class="d-flex flex-column justify-content-center">
                     <div class="d-flex flex-row">
                         <strong class="vehicleinfo-row">Maximum days shown on User Dashboard:</strong>
-                        <dot:TextBox class="vehicleinfo-row" Text="{value: Settings.DaysOnUserDashboard}" Type="number" />
+                        <%--<dot:TextBox class="vehicleinfo-row" Text="{value: Settings.DaysOnUserDashboard}" Type="number" />--%>
                     </div>
                 </div>
             </fieldset>

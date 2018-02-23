@@ -1,4 +1,4 @@
-﻿namespace RingDownConsole.Interfaces
+﻿namespace DotvvmBootstrapApplication.Interfaces
 {
     public interface IAdminLookup : IIdentifiable
     {

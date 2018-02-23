@@ -1,4 +1,4 @@
-﻿namespace RingDownConsole.Models
+﻿namespace DotvvmBootstrapApplication.Models
 {
     public class AppSettings
     {
@@ -6,7 +6,7 @@
         public string Version { get; set; }
         public int PageSize { get; set; }
         public string SiteUri { get; set; }
-        public string RingDownConsoleDb { get; set; }
+        public string BootstrapDb { get; set; }
         public int MaxAgeForDashboardLogs { get; set; }
     }
 }

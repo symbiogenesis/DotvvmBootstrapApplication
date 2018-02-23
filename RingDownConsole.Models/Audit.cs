@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
     public class Audit : INotifyPropertyChanged
     {

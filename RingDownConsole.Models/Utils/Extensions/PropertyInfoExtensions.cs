@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace RingDownConsole.Utils.Extensions
+namespace DotvvmBootstrapApplication.Utils.Extensions
 {
     public static class PropertyInfoExtensions
     {

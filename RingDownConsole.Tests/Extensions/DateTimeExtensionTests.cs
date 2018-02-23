@@ -1,8 +1,8 @@
 using System;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Xunit;
 
-namespace RingDownConsole.Tests
+namespace DotvvmBootstrapApplication.Tests
 {
     public class DateTimeExtensionTests
     {

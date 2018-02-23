@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models;
 
-namespace RingDownConsole.Utils
+namespace DotvvmBootstrapApplication.Utils
 {
     public static class DataGenerator
     {

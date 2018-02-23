@@ -2,13 +2,13 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Runtime.Filters;
 using DotVVM.Framework.ViewModel;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using TrackableEntities.Common.Core;
 
-namespace RingDownConsole.ViewModels.Admin
+namespace DotvvmBootstrapApplication.ViewModels.Admin
 {
     [Authorize(Policy = nameof(Roles.Administrator))]
     public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup, ITrackable, IMergeable

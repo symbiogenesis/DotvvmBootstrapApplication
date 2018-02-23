@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
 
-namespace RingDownConsole.ViewModels
+namespace DotvvmBootstrapApplication.ViewModels
 {
     public class LoginViewModel : MasterViewModel
     {

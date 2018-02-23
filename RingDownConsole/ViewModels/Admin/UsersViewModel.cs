@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using DotVVM.Framework.Controls;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Utils.Extensions;
 
-namespace RingDownConsole.ViewModels.Admin
+namespace DotvvmBootstrapApplication.ViewModels.Admin
 {
     public class UsersViewModel : AdminViewModel<User>
     {

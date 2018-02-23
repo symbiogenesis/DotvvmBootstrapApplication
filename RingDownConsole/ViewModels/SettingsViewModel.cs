@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using DotVVM.Framework.Runtime.Filters;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Services;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Services;
 
-namespace RingDownConsole.ViewModels
+namespace DotvvmBootstrapApplication.ViewModels
 {
     [Authorize(Policy = nameof(Roles.Administrator))]
     public class SettingsViewModel : MasterViewModel

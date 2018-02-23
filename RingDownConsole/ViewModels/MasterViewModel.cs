@@ -6,14 +6,14 @@ using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ViewModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
-using RingDownConsole.ActionFilters;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.ActionFilters;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Serilog;
 
-namespace RingDownConsole.ViewModels
+namespace DotvvmBootstrapApplication.ViewModels
 {
     [ViewModelLoggingFilter]
     public class MasterViewModel : DotvvmViewModelBase, IViewModel

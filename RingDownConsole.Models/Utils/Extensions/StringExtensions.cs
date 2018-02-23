@@ -1,4 +1,4 @@
-﻿namespace RingDownConsole.Utils.Extensions
+﻿namespace DotvvmBootstrapApplication.Utils.Extensions
 {
     public static class StringExtensions
     {

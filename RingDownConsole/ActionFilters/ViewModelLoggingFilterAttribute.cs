@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Runtime.Filters;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Serilog;
 
-namespace RingDownConsole.ActionFilters
+namespace DotvvmBootstrapApplication.ActionFilters
 {
     [AttributeUsageAttribute(AttributeTargets.All, AllowMultiple = false)]
     public class ViewModelLoggingFilterAttribute : ExceptionFilterAttribute

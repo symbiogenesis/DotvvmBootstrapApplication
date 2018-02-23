@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using RingDownConsole.Interfaces;
+using DotvvmBootstrapApplication.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using TrackableEntities.Common.Core;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
     public class Role : IdentityRole<Guid>, IIdentifiable, ITrackable, IMergeable
     {

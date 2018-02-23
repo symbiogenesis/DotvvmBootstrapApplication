@@ -1,11 +1,11 @@
-﻿using RingDownConsole.Interfaces;
-using RingDownConsole.Utils.Extensions;
+﻿using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
 
-namespace RingDownConsole.Models.Utils
+namespace DotvvmBootstrapApplication.Models.Utils
 {
     public static class StaticUtils<T> where T : class, IIdentifiable
     {

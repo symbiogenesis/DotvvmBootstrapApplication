@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using RingDownConsole.Models;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Utils.Extensions;
 
-namespace RingDownConsole.Services
+namespace DotvvmBootstrapApplication.Services
 {
     public class ExampleRecordService
     {
-        private readonly RingDownConsoleDbContext _context;
+        private readonly BootstrapDbContext _context;
 
-        public ExampleRecordService(RingDownConsoleDbContext context)
+        public ExampleRecordService(BootstrapDbContext context)
         {
             _context = context;
         }

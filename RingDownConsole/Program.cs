@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace RingDownConsole
+namespace DotvvmBootstrapApplication
 {
     public static class Program
     {

@@ -1,4 +1,4 @@
-﻿@viewModel RingDownConsole.ViewModels.MasterViewModel, RingDownConsole
+﻿@viewModel DotvvmBootstrapApplication.ViewModels.MasterViewModel, DotvvmBootstrapApplication
 
 <!DOCTYPE html>
 
@@ -37,7 +37,7 @@
                 <dot:RoleView Roles="Administrator">
                     <IsMemberTemplate>
                         <li class="nav-item">
-                            <dot:RouteLink class="nav-link fa fa-home" RouteName="AdminDashboard" Text="Home" />
+                            <dot:RouteLink class="nav-link fa fa-home" RouteName="ExampleView" Text="Home" />
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fa fa-cog" ID="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
@@ -47,7 +47,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <dot:RouteLink class="nav-link fa fa-chart-bar" RouteName="Reporting" Text="Reporting" />
+                            <a class="nav-link fa fa-chart-bar" href="#">Reporting</a>
                         </li>
                     </IsMemberTemplate>
                     <IsNotMemberTemplate>

@@ -1,5 +1,5 @@
-﻿using RingDownConsole.Models.Utils;
-using RingDownConsole.Utils.Extensions;
+﻿using DotvvmBootstrapApplication.Models.Utils;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,16 +13,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
-    public class RingDownConsoleDbContext : IdentityDbContext<User, Role, Guid>
+    public class BootstrapDbContext : IdentityDbContext<User, Role, Guid>
     {
         private readonly IServiceProvider _serviceProvider;
 
         public DbSet<Audit> Audits { get; set; }
         public DbSet<ExampleRecord> ExampleTable { get; set; }
 
-        public RingDownConsoleDbContext(DbContextOptions<RingDownConsoleDbContext> options, IServiceProvider serviceProvider) : base(options)
+        public BootstrapDbContext(DbContextOptions<BootstrapDbContext> options, IServiceProvider serviceProvider) : base(options)
         {
             _serviceProvider = serviceProvider;
         }

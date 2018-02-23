@@ -2,10 +2,10 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using RingDownConsole.Interfaces;
+using DotvvmBootstrapApplication.Interfaces;
 using Newtonsoft.Json;
 
-namespace RingDownConsole.Utils.Extensions
+namespace DotvvmBootstrapApplication.Utils.Extensions
 {
     public static class HttpClientExtensions
     {

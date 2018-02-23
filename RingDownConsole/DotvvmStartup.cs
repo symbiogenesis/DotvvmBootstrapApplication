@@ -1,9 +1,9 @@
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.ResourceManagement;
-using RingDownConsole.Models.Enums;
+using DotvvmBootstrapApplication.Models.Enums;
 
-namespace RingDownConsole
+namespace DotvvmBootstrapApplication
 {
     public class DotvvmStartup : IDotvvmStartup
     {

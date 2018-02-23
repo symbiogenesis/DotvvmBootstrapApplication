@@ -1,4 +1,4 @@
-﻿namespace RingDownConsole.Models.Enums
+﻿namespace DotvvmBootstrapApplication.Models.Enums
 {
     public enum Roles
     {

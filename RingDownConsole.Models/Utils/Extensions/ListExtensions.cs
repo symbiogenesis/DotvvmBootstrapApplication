@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RingDownConsole.Utils.Extensions
+namespace DotvvmBootstrapApplication.Utils.Extensions
 {
     public static class ListExtensions
     {

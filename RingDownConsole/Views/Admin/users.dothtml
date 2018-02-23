@@ -1,4 +1,4 @@
-﻿@viewModel RingDownConsole.ViewModels.Admin.UsersViewModel, RingDownConsole
+﻿@viewModel DotvvmBootstrapApplication.ViewModels.Admin.UsersViewModel, DotvvmBootstrapApplication
 @masterPage Views/master.dotmaster
 
 <dot:Content ContentPlaceHolderID="MainContent">

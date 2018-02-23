@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RingDownConsole.Interfaces
+namespace DotvvmBootstrapApplication.Interfaces
 {
     public interface IIdentifiable
     {

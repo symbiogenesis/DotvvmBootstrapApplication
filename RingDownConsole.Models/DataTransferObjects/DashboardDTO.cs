@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RingDownConsole.Models
+namespace DotvvmBootstrapApplication.Models
 {
     public class DashboardDTO
     {
@@ -9,6 +9,7 @@ namespace RingDownConsole.Models
         public string Name { get; set; }
 
         public DateTime DateTimeValue { get; set; }
+
         public string RecordNum { get; set; }
     }
 }

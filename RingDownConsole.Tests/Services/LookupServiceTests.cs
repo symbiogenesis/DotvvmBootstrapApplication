@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace RingDownConsole.Tests
+namespace DotvvmBootstrapApplication.Tests
 {
     public class LookupServiceTests
     {

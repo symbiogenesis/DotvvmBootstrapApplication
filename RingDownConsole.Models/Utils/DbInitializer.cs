@@ -2,21 +2,21 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Interfaces;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Utils;
+using DotvvmBootstrapApplication.Interfaces;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Utils;
 
-namespace RingDownConsole.Models.Utils
+namespace DotvvmBootstrapApplication.Models.Utils
 {
     public class DbInitializer : IDbInitializer
     {
-        private readonly RingDownConsoleDbContext _context;
+        private readonly BootstrapDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public DbInitializer(
-            RingDownConsoleDbContext context,
+            BootstrapDbContext context,
             IOptionsSnapshot<AppSettings> appSettings,
             UserManager<User> userManager,
             RoleManager<Role> roleManager)

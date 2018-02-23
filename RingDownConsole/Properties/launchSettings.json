@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RingDownConsole": {
+    "DotvvmBootstrapApplication": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

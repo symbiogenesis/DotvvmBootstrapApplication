@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using RingDownConsole.Models;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Utils.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
 
-namespace RingDownConsole.Tests
+namespace DotvvmBootstrapApplication.Tests
 {
     public class DbContextExtensionTests
     {
-        private readonly RingDownConsoleDbContext _context;
+        private readonly BootstrapDbContext _context;
 
         public DbContextExtensionTests()
         {
@@ -23,7 +23,7 @@ namespace RingDownConsole.Tests
             // Create a mock set and context
             var set = new Mock<DbSet<ExampleRecord>>();
 
-            var context = new Mock<RingDownConsoleDbContext>();
+            var context = new Mock<BootstrapDbContext>();
             context.Setup(c => c.ExampleTable).Returns(set.Object);
 
             _context = context.Object;

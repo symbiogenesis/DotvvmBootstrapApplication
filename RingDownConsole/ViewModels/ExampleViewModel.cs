@@ -7,12 +7,12 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Runtime.Filters;
 using DotVVM.Framework.ViewModel;
 using Microsoft.Extensions.Options;
-using RingDownConsole.Models;
-using RingDownConsole.Models.Enums;
-using RingDownConsole.Services;
-using RingDownConsole.Utils.Extensions;
+using DotvvmBootstrapApplication.Models;
+using DotvvmBootstrapApplication.Models.Enums;
+using DotvvmBootstrapApplication.Services;
+using DotvvmBootstrapApplication.Utils.Extensions;
 
-namespace RingDownConsole.ViewModels
+namespace DotvvmBootstrapApplication.ViewModels
 {
     [Authorize(Policy = nameof(Roles.User))]
     public class ExampleViewModel : MasterViewModel

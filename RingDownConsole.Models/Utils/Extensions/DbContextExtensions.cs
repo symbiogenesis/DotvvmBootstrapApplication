@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-namespace RingDownConsole.Utils.Extensions
+namespace DotvvmBootstrapApplication.Utils.Extensions
 {
     public static class DbContextExtensions
     {
