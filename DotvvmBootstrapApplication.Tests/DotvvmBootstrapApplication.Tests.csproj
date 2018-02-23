@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RingDownConsole.Models\DotvvmBootstrapApplication.Models.csproj" />
+    <ProjectReference Include="..\DotvvmBootstrapApplication.Models\DotvvmBootstrapApplication.Models.csproj" />
   </ItemGroup>
 
 </Project>

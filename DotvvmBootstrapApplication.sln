@@ -2,13 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication", "RingDownConsole\DotvvmBootstrapApplication.csproj", "{B9DE0531-4E6C-416F-81A4-D207EEE7B01C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication", "DotvvmBootstrapApplication\DotvvmBootstrapApplication.csproj", "{B9DE0531-4E6C-416F-81A4-D207EEE7B01C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.Models", "RingDownConsole.Models\DotvvmBootstrapApplication.Models.csproj", "{7A5A7C17-E55E-4E2C-B439-D6D97C164C05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.Models", "DotvvmBootstrapApplication.Models\DotvvmBootstrapApplication.Models.csproj", "{7A5A7C17-E55E-4E2C-B439-D6D97C164C05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.Tests", "RingDownConsole.Tests\DotvvmBootstrapApplication.Tests.csproj", "{06BFC0E4-83B7-4ACC-B610-0598128A3190}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.Tests", "DotvvmBootstrapApplication.Tests\DotvvmBootstrapApplication.Tests.csproj", "{06BFC0E4-83B7-4ACC-B610-0598128A3190}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.WebAPI", "RingDownConsole.WebAPI\DotvvmBootstrapApplication.WebAPI.csproj", "{2C288C3B-CDF5-4B38-86FD-DF2D26B9ADBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmBootstrapApplication.WebAPI", "DotvvmBootstrapApplication.WebAPI\DotvvmBootstrapApplication.WebAPI.csproj", "{2C288C3B-CDF5-4B38-86FD-DF2D26B9ADBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
