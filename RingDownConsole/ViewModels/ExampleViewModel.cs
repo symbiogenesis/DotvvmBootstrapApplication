@@ -149,7 +149,7 @@ namespace DotvvmBootstrapApplication.ViewModels
             return base.Init();
         }
 
-        public async Task DateFilterChanged()
+        public async Task FilterChanged()
         {
             Data.LoadFromQueryable(GetQueryable());
         }
