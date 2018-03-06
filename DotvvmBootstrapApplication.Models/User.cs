@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using DotvvmBootstrapApplication.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-using TrackableEntities.Common.Core;
 
 namespace DotvvmBootstrapApplication.Models
 {
-    public class User : IdentityUser<Guid>, IAdminLookup, ITrackable, IMergeable
+    public class User : IdentityUser<Guid>, IAdminLookup
     {
         public User() : base()
         {
@@ -37,14 +35,5 @@ namespace DotvvmBootstrapApplication.Models
         [NotMapped]
         [JsonIgnore]
         public string Comments { get; set; }
-
-        [NotMapped]
-        public TrackingState TrackingState { get; set; }
-
-        [NotMapped]
-        public ICollection<string> ModifiedProperties { get; set; }
-
-        [NotMapped]
-        public Guid EntityIdentifier { get; set; }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using DotvvmBootstrapApplication.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using TrackableEntities.Common.Core;
 
 namespace DotvvmBootstrapApplication.Models
 {
-    public class Role : IdentityRole<Guid>, IIdentifiable, ITrackable, IMergeable
+    public class Role : IdentityRole<Guid>, IIdentifiable
     {
         public Role() : base()
         {
@@ -22,14 +20,5 @@ namespace DotvvmBootstrapApplication.Models
 
         [NotMapped]
         public bool IsSaved { get; set; } = true;
-
-        [NotMapped]
-        public TrackingState TrackingState { get; set; }
-
-        [NotMapped]
-        public ICollection<string> ModifiedProperties { get; set; }
-
-        [NotMapped]
-        public Guid EntityIdentifier { get; set; }
     }
 }
