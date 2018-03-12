@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Windows;
 using Dataq.Devices;
-using Dataq.Devices.DI1100;
+using Dataq.Devices.DI1120;
 using Serilog;
 
 namespace RingDownConsole.App.ViewModels

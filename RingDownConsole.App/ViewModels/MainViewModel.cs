@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Dataq.Devices;
-using Dataq.Devices.DI1100;
+using Dataq.Devices.DI1120;
 using Dataq.Misc;
 using Dataq.Protocols.Enums;
 using Microsoft.Win32;
@@ -446,7 +446,7 @@ namespace RingDownConsole.App.ViewModels
             {
                 DisposeDevice();
 
-                //  Get a list of devices with model DI-1100
+                //  Get a list of devices with model DI-1120
                 var allDevices = await Discovery.ByModelAsync(typeof(Device));
 
                 var anyDevice = allDevices.Count > 0;
@@ -455,9 +455,9 @@ namespace RingDownConsole.App.ViewModels
                 {
                     HideError();
 
-                    Log.Information("Found a DI-1100.");
+                    Log.Information("Found a DI-1120.");
 
-                    //  Cast first device from generic device to specific DI-1100 type
+                    //  Cast first device from generic device to specific DI-1120 type
                     _targetDevice = ((Device) (allDevices[0]));
 
                     await GetLocation(_targetDevice.Serial);
@@ -466,7 +466,7 @@ namespace RingDownConsole.App.ViewModels
                 }
                 else
                 {
-                    ShowError("No DI-1100 found.");
+                    ShowError("No DI-1120 found.");
                     return false;
                 }
 
