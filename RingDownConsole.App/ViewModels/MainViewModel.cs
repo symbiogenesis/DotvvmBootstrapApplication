@@ -139,6 +139,7 @@ namespace RingDownConsole.App.ViewModels
                 if (_showSettings != value)
                 {
                     _showSettings = value;
+                    Password = null;
                     RaisePropertyChanged();
                 }
             }
