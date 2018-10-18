@@ -6,12 +6,11 @@ using DotvvmBootstrapApplication.Interfaces;
 using DotvvmBootstrapApplication.Models;
 using DotvvmBootstrapApplication.Models.Enums;
 using DotvvmBootstrapApplication.Utils.Extensions;
-using TrackableEntities.Common.Core;
 
 namespace DotvvmBootstrapApplication.ViewModels.Admin
 {
     [Authorize(Policy = nameof(Roles.Administrator))]
-    public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup, ITrackable, IMergeable
+    public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup
     {
         public GridViewDataSet<T> Data { get; set; }
 
