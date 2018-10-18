@@ -1,0 +1,8 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Edward Miller",
+    "classifications": [ "Common", "Console" ],
+    "identity": "DotvvmBootstrapApplicaton",
+    "name": "DotVVM Bootstrap Application",
+    "shortName": "dotvvmbootstrap"
+}
