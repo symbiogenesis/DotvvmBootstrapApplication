@@ -4,5 +4,7 @@
     "classifications": [ "Common", "Console" ],
     "identity": "DotvvmBootstrapApplicaton",
     "name": "DotVVM Bootstrap Application",
-    "shortName": "dotvvmbootstrap"
+    "shortName": "dotvvmbootstrap",
+    "preferNameDirectory": true,
+    "sourceName": "DotvvmBootstrapApplication"
 }
