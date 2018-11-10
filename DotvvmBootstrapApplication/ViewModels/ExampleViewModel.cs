@@ -88,7 +88,7 @@ namespace DotvvmBootstrapApplication.ViewModels
             if (Data.SortingOptions.SortExpression == logDateTimeValue && Data.SortingOptions.SortDescending)
                 return;
 
-            Data.SetSortExpression(logDateTimeValue);
+            Data.SortingOptions.SortExpression = logDateTimeValue;
 
             if (Data.SortingOptions.SortDescending)
                 return;
