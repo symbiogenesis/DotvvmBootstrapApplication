@@ -36,13 +36,15 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public bool IsFiltered { get; private set; }
 
-        public GridViewDataSet<DashboardDTO> Data { get; set; }
+        public GridViewDataSet<DashboardDTO> Data { get; set; } = new GridViewDataSet<DashboardDTO>();
 
         public ExampleViewModel(
             IOptionsSnapshot<AppSettings> appSettings,
             ExampleRecordService exampleRecordService) : base(appSettings)
         {
             PageTitle = "Example";
+
+            //Data.PagingOptions.PageSize = appSettings.PageSize;
 
             _exampleRecordService = exampleRecordService;
         }
@@ -52,23 +54,21 @@ namespace DotvvmBootstrapApplication.ViewModels
             GoToRoute(Routes.ExampleView);
         }
 
-        private GridViewDataSetLoadedData<DashboardDTO> GetData(IGridViewDataSetLoadOptions options)
+        private IQueryable<DashboardDTO> GetData()
         {
             var queryable = GetQueryable();
 
             if (queryable == null)
                 throw new Exception($"Ring Down Console data could not be retrieved from server. Check your connection and try again.");
 
-            ApplyDefaultSorting(options.SortingOptions);
-
             try
             {
-                return queryable.GetDataFromQueryable(options);
+                return queryable;
             }
             catch (InvalidOperationException e)
             {
                 ShowError("No records found");
-                return new GridViewDataSetLoadedData<DashboardDTO>(new List<DashboardDTO>(), 0);
+                return new List<DashboardDTO>().AsQueryable();
             }
         }
 
@@ -144,7 +144,7 @@ namespace DotvvmBootstrapApplication.ViewModels
 
             // NOTE: You can also create the DataSet with factory.
             // Just call static Create with delegate and pagesize.            
-            Data = GridViewDataSet.Create(gridViewDataSetLoadDelegate: GetData, pageSize: _appSettings.PageSize);
+            Data.LoadFromQueryable(GetData());
 
             return base.Init();
         }

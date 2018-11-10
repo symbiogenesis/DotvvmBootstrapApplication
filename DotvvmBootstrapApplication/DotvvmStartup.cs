@@ -29,7 +29,7 @@ namespace DotvvmBootstrapApplication
         private void ConfigureControls(DotvvmConfiguration config)
         {
             // register code-only controls and markup controls
-            config.Markup.AddCodeControls("dot", typeof(BootstrapDataPager));
+            //config.Markup.AddCodeControls("dot", typeof(BootstrapDataPager));
 
             //config.AddBusinessPackConfiguration();
             //config.AddReactBridgeConfiguration();
@@ -42,7 +42,7 @@ namespace DotvvmBootstrapApplication
         private void ConfigureResources(DotvvmConfiguration config)
         {
             // register custom resources and adjust paths to the built-in resources
-            config.Resources.Register(ResourceConstants.JQueryResourceName, new ScriptResource { Location = new UrlResourceLocation("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"), RenderPosition = ResourceRenderPosition.Head });
+            config.Resources.Register("jquery", new ScriptResource { Location = new UrlResourceLocation("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"), RenderPosition = ResourceRenderPosition.Head });
         }
     }
 }

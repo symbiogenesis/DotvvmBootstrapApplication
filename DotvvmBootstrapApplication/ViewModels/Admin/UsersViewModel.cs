@@ -33,7 +33,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
             if (!item.IsSaved)
                 await Delete(item);
 
-            await Data.RequestRefreshAsync(true);
+            Data.RequestRefresh();
         }
 
         public async Task Delete(User item)
@@ -47,7 +47,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
             var user = await _userManager.FindByIdAsync(item.Id.ToString());
             await _userManager.UpdateSecurityStampAsync(user);
             await _userManager.DeleteAsync(user);
-            await Data.RequestRefreshAsync(true);
+            Data.RequestRefresh();
         }
 
         public void Edit(User item)
@@ -74,7 +74,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
 
             PasswordToChange = null;
 
-            await Data.RequestRefreshAsync(true);
+            Data.RequestRefresh();
             Data.RowEditOptions.EditRowId = null;
         }
 
@@ -115,7 +115,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
                 await _userManager.AddToRoleAsync(user, role);
             }
 
-            await Data.RequestRefreshAsync();
+            Data.RequestRefresh();
         }
 
         private string[] GetRoles(bool isAdmin)
@@ -136,20 +136,14 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
             return items;
         }
 
-        private GridViewDataSetLoadedData<User> GetData(IGridViewDataSetLoadOptions options)
+        private IQueryable<User> GetData()
         {
             if (_userManager.Users == null)
                 throw new Exception($"{typeof(User).Name} data could not be retrieved from server");
 
             var items = GetItems(_userManager.Users);
 
-            if (options.SortingOptions.SortExpression == null)
-            {
-                options.SortingOptions.SortExpression = nameof(IAdminLookup.Name);
-                options.SortingOptions.SortDescending = false;
-            }
-
-            return items.GetDataFromQueryable(options);
+            return items;
         }
 
         public virtual void AddRecord()
@@ -176,7 +170,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
         {
             // NOTE: You can also create the DataSet with factory.
             // Just call static Create with delegate and pagesize.
-            Data = GridViewDataSet.Create(GetData, pageSize: _appSettings.PageSize);
+            Data.LoadFromQueryable(GetData());
             Data.RowEditOptions = new RowEditOptions { PrimaryKeyPropertyName = nameof(IIdentifiable.Id) };
 
             return base.Init();

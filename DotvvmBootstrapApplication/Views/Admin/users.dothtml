@@ -42,6 +42,6 @@
     </dot:GridView>
 
 
-    <dot:BootstrapDataPager DataSet="{value: Data}" />
+    <dot:DataPager DataSet="{value: Data}" />
 
 </dot:Content>

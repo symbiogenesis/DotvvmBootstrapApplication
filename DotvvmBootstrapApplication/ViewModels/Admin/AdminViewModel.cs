@@ -12,7 +12,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
     [Authorize(Policy = nameof(Roles.Administrator))]
     public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup
     {
-        public GridViewDataSet<T> Data { get; set; }
+        public GridViewDataSet<T> Data { get; set; } = new GridViewDataSet<T>();
 
         public bool IsNotEditing => Data?.RowEditOptions?.EditRowId == null;
 
@@ -25,6 +25,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
         public AdminViewModel(
             IOptionsSnapshot<AppSettings> appSettings) : base(appSettings)
         {
+            //Data.PagingOptions.PageSize = appSettings.PageSize;
         }
     }
 }
