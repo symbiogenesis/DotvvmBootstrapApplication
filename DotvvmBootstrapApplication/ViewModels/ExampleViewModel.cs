@@ -63,7 +63,16 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public void ApplySorting(string sortColumn)
         {
-            Data.SortingOptions.SortExpression = sortColumn;
+            if (Data.SortingOptions.SortExpression == sortColumn)
+            {
+                Data.SortingOptions.SortDescending = !Data.SortingOptions.SortDescending;
+            }
+            else
+            {
+                Data.SortingOptions.SortExpression = sortColumn;
+                Data.SortingOptions.SortDescending = true;
+            }
+            
             Data.RequestRefresh();
         }
 
