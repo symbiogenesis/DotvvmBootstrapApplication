@@ -60,6 +60,11 @@ namespace DotvvmBootstrapApplication.ViewModels
             GoToRoute(Routes.ExampleView);
         }
 
+        public async Task ApplySorting(string sortColumn)
+        {
+            Data.SortExpression = sortColumn;
+        }
+
         private IQueryable<DashboardDTO> GetData()
         {
             var queryable = GetQueryable();
