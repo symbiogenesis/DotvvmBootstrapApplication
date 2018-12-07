@@ -59,7 +59,7 @@ namespace DotvvmBootstrapApplication.ViewModels
             var queryable = GetQueryable();
 
             if (queryable == null)
-                throw new Exception($"Ring Down Console data could not be retrieved from server. Check your connection and try again.");
+                throw new Exception($"Data could not be retrieved from server. Check your connection and try again.");
 
             try
             {
