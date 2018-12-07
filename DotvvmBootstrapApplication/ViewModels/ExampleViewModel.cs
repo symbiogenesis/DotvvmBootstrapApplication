@@ -64,6 +64,7 @@ namespace DotvvmBootstrapApplication.ViewModels
         public void ApplySorting(string sortColumn)
         {
             Data.SortingOptions.SortExpression = sortColumn;
+            Data.RequestRefresh();
         }
 
         private IQueryable<DashboardDTO> GetData()
