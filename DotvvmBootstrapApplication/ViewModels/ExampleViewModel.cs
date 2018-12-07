@@ -46,7 +46,7 @@ namespace DotvvmBootstrapApplication.ViewModels
 
             Data = new GridViewDataSet<DashboardDTO>
             {
-                RowOptions = { PrimaryKeyPropertyName = nameof(IIdentifiable.Id)},
+                RowEditOptions = { PrimaryKeyPropertyName = nameof(IIdentifiable.Id)},
                 PagingOptions = { PageSize = _appSettings.PageSize },
                 SortingOptions = { SortExpression = nameof(DashboardDTO.DateTimeValue),
                                         SortDescending = true}

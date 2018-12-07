@@ -26,7 +26,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
         {
             Data = new GridViewDataSet<T>
             {
-                RowOptions = { PrimaryKeyPropertyName = nameof(IIdentifiable.Id)},
+                RowEditOptions = { PrimaryKeyPropertyName = nameof(IIdentifiable.Id)},
                 PagingOptions = { PageSize = _appSettings.PageSize },
                 SortingOptions = { SortExpression = nameof(IAdminLookup.Name),
                                     SortDescending = true}
