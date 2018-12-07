@@ -49,7 +49,7 @@
         <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="6.3.0" />
     </ItemGroup>
     <ItemGroup>
-        <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.7" />
+        <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="2.0.3" />
     </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\config.json" />
