@@ -9,7 +9,7 @@
             <dot:Button class="btn btn-sm btn-secondary fa fa-filter p-2 ml-0 mr-auto" Text=" Clear" Click="{command: ClearFilters()}" ButtonTagName="button" />
         </div>
 
-        <dot:GridView class="table table-striped thead-inverse table-sortable responsive w-100" DataSource="{value: Data}" ShowHeaderWhenNoData="true" FilterPlacement="HeaderRow" SortChanged="{value: ApplySorting}">
+        <dot:GridView class="table table-striped thead-inverse table-sortable responsive w-100" DataSource="{value: Data}" ShowHeaderWhenNoData="true" FilterPlacement="HeaderRow" SortChanged="{command: ApplySorting}">
             <Columns>
                 <dot:GridViewTemplateColumn HeaderText="Date" AllowSorting="true" SortExpression="DateTimeValue" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
                     <ContentTemplate>
