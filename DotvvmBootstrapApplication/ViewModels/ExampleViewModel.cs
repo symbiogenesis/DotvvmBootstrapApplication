@@ -61,7 +61,7 @@ namespace DotvvmBootstrapApplication.ViewModels
             GoToRoute(Routes.ExampleView);
         }
 
-        public async Task ApplySorting(string sortColumn)
+        public void ApplySorting(string sortColumn)
         {
             Data.SortingOptions.SortExpression = sortColumn;
         }
