@@ -62,7 +62,7 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public async Task ApplySorting(string sortColumn)
         {
-            Data.SortExpression = sortColumn;
+            Data.SortingOptions.SortExpression = sortColumn;
         }
 
         private IQueryable<DashboardDTO> GetData()
