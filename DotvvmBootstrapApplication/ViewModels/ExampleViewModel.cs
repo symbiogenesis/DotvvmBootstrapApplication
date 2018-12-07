@@ -7,6 +7,7 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Runtime.Filters;
 using DotVVM.Framework.ViewModel;
 using Microsoft.Extensions.Options;
+using DotvvmBootstrapApplication.Interfaces;
 using DotvvmBootstrapApplication.Models;
 using DotvvmBootstrapApplication.Models.Enums;
 using DotvvmBootstrapApplication.Services;
