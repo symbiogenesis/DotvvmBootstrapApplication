@@ -36,7 +36,7 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public bool IsFiltered { get; private set; }
 
-        public GridViewDataSet<DashboardDTO> Data { get; set; } = new GridViewDataSet<DashboardDTO>();
+        public GridViewDataSet<DashboardDTO> Data { get; set; }
 
         public ExampleViewModel(
             IOptionsSnapshot<AppSettings> appSettings,
@@ -44,7 +44,13 @@ namespace DotvvmBootstrapApplication.ViewModels
         {
             PageTitle = "Example";
 
-            //Data.PagingOptions.PageSize = appSettings.PageSize;
+            Data = new GridViewDataSet<DashboardDTO>
+            {
+                PrimaryKeyPropertyName = nameof(IIdentifiable.Id),
+                PagingOptions = { PageSize = _appSettings.PageSize },
+                SortingOptions = { SortExpression = nameof(DashboardDTO.DateTimeValue),
+                                        SortDescending = true}
+            };
 
             _exampleRecordService = exampleRecordService;
         }
@@ -70,30 +76,6 @@ namespace DotvvmBootstrapApplication.ViewModels
                 ShowError("No records found");
                 return new List<DashboardDTO>().AsQueryable();
             }
-        }
-
-        private void ApplyDefaultSorting(ISortingOptions sortingOptions)
-        {
-            if (sortingOptions.SortExpression == null)
-            {
-                sortingOptions.SortExpression = nameof(Filter.DateTimeValue);
-                sortingOptions.SortDescending = true;
-            }
-        }
-
-        private void ForceDefaultSorting()
-        {
-            const string logDateTimeValue = nameof(Filter.DateTimeValue);
-
-            if (Data.SortingOptions.SortExpression == logDateTimeValue && Data.SortingOptions.SortDescending)
-                return;
-
-            Data.SortingOptions.SortExpression = logDateTimeValue;
-
-            if (Data.SortingOptions.SortDescending)
-                return;
-
-            ForceDefaultSorting();
         }
 
         private IQueryable<DashboardDTO> GetQueryable()

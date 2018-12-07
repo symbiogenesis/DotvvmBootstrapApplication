@@ -171,7 +171,6 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
             // NOTE: You can also create the DataSet with factory.
             // Just call static Create with delegate and pagesize.
             Data.LoadFromQueryable(GetData());
-            Data.RowEditOptions = new RowEditOptions { PrimaryKeyPropertyName = nameof(IIdentifiable.Id) };
 
             return base.Init();
         }

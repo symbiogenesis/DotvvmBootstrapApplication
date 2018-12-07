@@ -12,7 +12,7 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
     [Authorize(Policy = nameof(Roles.Administrator))]
     public class AdminViewModel<T> : MasterViewModel where T : class, IAdminLookup
     {
-        public GridViewDataSet<T> Data { get; set; } = new GridViewDataSet<T>();
+        public GridViewDataSet<T> Data { get; set; }
 
         public bool IsNotEditing => Data?.RowEditOptions?.EditRowId == null;
 
@@ -22,10 +22,15 @@ namespace DotvvmBootstrapApplication.ViewModels.Admin
         [Bind(Direction.ServerToClientFirstRequest)]
         public override string PageTitle => $"Admin > {DataType}s";
 
-        public AdminViewModel(
-            IOptionsSnapshot<AppSettings> appSettings) : base(appSettings)
+        public AdminViewModel(IOptionsSnapshot<AppSettings> appSettings) : base(appSettings)
         {
-            //Data.PagingOptions.PageSize = appSettings.PageSize;
+            Data = new GridViewDataSet<T>
+            {
+                PrimaryKeyPropertyName = nameof(IIdentifiable.Id),
+                PagingOptions = { PageSize = _appSettings.PageSize },
+                SortingOptions = { SortExpression = nameof(IAdminLookup.Name),
+                                    SortDescending = true}
+            };
         }
     }
 }
