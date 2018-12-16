@@ -26,6 +26,8 @@ namespace DotvvmBootstrapApplication.ViewModels
             ExampleRecordService exampleRecordService) : base(appSettings)
         {
             PageTitle = "Add Record";
+
+            _exampleRecordService = exampleRecordService;
         }
 
         public void Save()
