@@ -21,14 +21,15 @@ namespace DotvvmBootstrapApplication.ViewModels
         private readonly ExampleRecordService _exampleRecordService;
         public DashboardDTO RecordToBeAdded { get; set; }
 
-        public ExampleViewModel(
+        public AddViewModel(
             IOptionsSnapshot<AppSettings> appSettings,
             ExampleRecordService exampleRecordService) : base(appSettings)
         {
             PageTitle = "Add";
         }
 
-        public void Save(){
+        public void Save()
+        {
             _exampleRecordService.Add(RecordToBeAdded);
             GoToRoute(Routes.Example);
         }
