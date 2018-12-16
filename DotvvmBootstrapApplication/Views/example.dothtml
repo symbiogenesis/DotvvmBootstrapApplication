@@ -7,6 +7,7 @@
 
         <div class="d-flex flex-row flex-nowrap align-items-center justify-content-start">
             <dot:Button class="btn btn-sm btn-secondary fa fa-filter p-2 ml-0 mr-auto" Text=" Clear" Click="{command: ClearFilters()}" ButtonTagName="button" />
+            <dot:Button class="btn btn-sm btn-success fa fa-plus p-2 m-0" Text=" Add" Click="{command: AddRecord()}" ButtonTagName="button" />
         </div>
 
         <dot:GridView class="table table-striped thead-inverse table-sortable responsive w-100" DataSource="{value: Data}" ShowHeaderWhenNoData="true" FilterPlacement="HeaderRow" SortChanged="{command: ApplySorting}">
@@ -16,7 +17,7 @@
                         <dot:Literal Text="{value: DateTimeValue }" />
                     </ContentTemplate>
                 </dot:GridViewTemplateColumn>
-                <dot:GridViewTextColumn ValueBinding="{value: Name}" HeaderText="Location Name" AllowSorting="true" SortExpression="Name" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
+                <dot:GridViewTextColumn ValueBinding="{value: Name}" HeaderText="Contact Name" AllowSorting="true" SortExpression="Name" SortAscendingHeaderCssClass="asc" SortDescendingHeaderCssClass="desc">
                     <FilterTemplate>
                         <dot:TextBox class="mt-1" Text="{value: Filter.Name}" Changed="{command: FilterChanged()}"  Type="Search" placeholder="Filter" />
                     </FilterTemplate>
