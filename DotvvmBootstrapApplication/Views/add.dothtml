@@ -3,12 +3,19 @@
 
 <dot:Content ContentPlaceHolderID="MainContent" Validation.Enabled="false">
 
-    <div class="px-4">
+    <fieldset class="px-4">
 
-
+        <div class="d-flex flex-row flex-nowrap align-items-center justify-content-start">
             <dot:Label Text="Contact Name" />
             <dot:TextBox Text="{value: RecordToBeAdded.Name}" />
-            <dot:Button class="btn btn-sm btn-success fa fa-save p-2 m-0" Text=" Save" Click="{command: AddRecord()}" ButtonTagName="button" />
+        </div>
+
+        <div class="d-flex flex-row flex-nowrap align-items-center justify-content-start">
+            <dot:Label Text="Record Number" />
+            <dot:TextBox Text="{value: RecordToBeAdded.RecordNumber}" />
+        </div>
+
+        <dot:Button class="btn btn-sm btn-success fa fa-save p-2 m-0" Text=" Save" Click="{command: Save()}" ButtonTagName="button" />
             
-    </div>
+    </fieldset>
 </dot:Content>

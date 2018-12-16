@@ -27,5 +27,10 @@ namespace DotvvmBootstrapApplication.ViewModels
         {
             PageTitle = "Add";
         }
+
+        public void Save(){
+            _exampleRecordService.Add(RecordToBeAdded);
+            GoToRoute(Routes.Example);
+        }
     }
 }
