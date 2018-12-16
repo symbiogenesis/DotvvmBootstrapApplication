@@ -30,7 +30,7 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public void Save()
         {
-            _exampleRecordService.Add(RecordToBeAdded);
+            _exampleRecordService.Submit(RecordToBeAdded);
             GoToRoute(Routes.Example);
         }
     }

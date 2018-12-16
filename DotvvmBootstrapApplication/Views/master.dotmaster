@@ -37,7 +37,7 @@
                 <dot:RoleView Roles="Administrator">
                     <IsMemberTemplate>
                         <li class="nav-item">
-                            <dot:RouteLink class="nav-link fa fa-home" RouteName="ExampleView" Text="Home" />
+                            <dot:RouteLink class="nav-link fa fa-home" RouteName="Example" Text="Home" />
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fa fa-cog" ID="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
