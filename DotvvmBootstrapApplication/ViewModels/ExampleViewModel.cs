@@ -58,12 +58,12 @@ namespace DotvvmBootstrapApplication.ViewModels
 
         public async Task AddRecord()
         {
-            GoToRoute(Routes.AddView);
+            GoToRoute(Routes.Add);
         }
 
         public async Task ClearFilters()
         {
-            GoToRoute(Routes.ExampleView);
+            GoToRoute(Routes.Example);
         }
 
         public void ApplySorting(string sortColumn)
