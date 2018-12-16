@@ -66,7 +66,7 @@ namespace DotvvmBootstrapApplication.ViewModels
         public async Task SignOut()
         {
             await Context.GetAuthentication().SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            GoToRoute(Routes.ExampleView);
+            GoToRoute(Routes.Example);
         }
 
         public void GoToRoute(Routes route, string queryString = null)

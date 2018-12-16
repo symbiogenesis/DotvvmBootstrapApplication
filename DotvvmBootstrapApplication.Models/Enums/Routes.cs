@@ -2,7 +2,8 @@
 {
     public enum Routes
     {
-        ExampleView,
+        Example,
+        Add,
         Login,
         AdminUsers,
         AdminSettings

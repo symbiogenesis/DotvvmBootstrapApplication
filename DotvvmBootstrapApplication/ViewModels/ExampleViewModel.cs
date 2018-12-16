@@ -56,6 +56,11 @@ namespace DotvvmBootstrapApplication.ViewModels
             _exampleRecordService = exampleRecordService;
         }
 
+        public async Task AddRecord()
+        {
+            GoToRoute(Routes.AddView);
+        }
+
         public async Task ClearFilters()
         {
             GoToRoute(Routes.ExampleView);
