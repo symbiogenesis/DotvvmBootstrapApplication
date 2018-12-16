@@ -25,7 +25,7 @@ namespace DotvvmBootstrapApplication.ViewModels
             IOptionsSnapshot<AppSettings> appSettings,
             ExampleRecordService exampleRecordService) : base(appSettings)
         {
-            PageTitle = "Add";
+            PageTitle = "Add Record";
         }
 
         public void Save()
