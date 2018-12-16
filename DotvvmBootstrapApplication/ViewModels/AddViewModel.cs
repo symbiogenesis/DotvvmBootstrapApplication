@@ -19,7 +19,7 @@ namespace DotvvmBootstrapApplication.ViewModels
     public class AddViewModel : MasterViewModel
     {
         private readonly ExampleRecordService _exampleRecordService;
-        public ExampleRecord RecordToBeAdded { get; set; }
+        public ExampleRecord RecordToBeAdded { get; set; } = new ExampleRecord();
 
         public AddViewModel(
             IOptionsSnapshot<AppSettings> appSettings,
